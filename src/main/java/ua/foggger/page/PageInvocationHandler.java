@@ -10,64 +10,36 @@ import java.lang.invoke.MethodType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.List;
+
 
 public class PageInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        // Method invoke, should return clickable element
+        //TODO: Will we have different annotations for different element types? Like dropdowns or something?
         WebElement webElAnnotation = method.getAnnotation(WebElement.class);
         if (webElAnnotation != null) {
             Class<?> clazz = method.getReturnType();
-            //TODO: Add list wrapper
             if (IClickableElement.class.isAssignableFrom(clazz)) {
                 if (clazz.isInterface()) {
                     if (method.isDefault()) {
-                        final float version = Float.parseFloat(System.getProperty("java.class.version"));
-                        if (version <= 52) {
-                            final Constructor<MethodHandles.Lookup> constructor = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
-                            constructor.setAccessible(true);
-
-                            final Class<?> clazz2 = method.getDeclaringClass();
-                            return constructor.newInstance(clazz2)
-                                    .in(clazz2)
-                                    .unreflectSpecial(method, clazz2)
-                                    .bindTo(proxy)
-                                    .invokeWithArguments(args);
-                        } else {
-                            return MethodHandles.lookup()
-                                    .findSpecial(
-                                            method.getDeclaringClass(),
-                                            method.getName(),
-                                            MethodType.methodType(method.getReturnType(), new Class[0]),
-                                            method.getDeclaringClass()
-                                    ).bindTo(proxy)
-                                    .invokeWithArguments(args);
-                        }
+                        return invokeDefaultMethodImpl(proxy, method, args);
                     } else {
-                        // Create instance based on args
-                        ClickableElement element = ClickableElement.class.getConstructor().newInstance();
-                        String name = "".equals(webElAnnotation.name()) ? method.getName() : webElAnnotation.name();
-                        element.setName(name);
-                        //String locator = webElAnnotation.value();
-                        //element.setLocator();
-                        //TODO: form proper By locator based on
-                        //TODO: need to set InvocationHandler here for fields
-                        return (IClickableElement) element;
+                        //Create default exact implementation
+                        IClickableElement element = ClickableElement.class.getConstructor().newInstance();
+                        return createObjectBasedOnAnnotation(element, method, webElAnnotation);
                     }
                 } else {
-                    IClickableElement clickableElement = (IClickableElement) clazz.getConstructor().newInstance();
-                    String name = "".equals(webElAnnotation.name()) ? method.getName() : webElAnnotation.name();
-                    clickableElement.setName(name);
-                    //String locator = webElAnnotation.value();
-                    //element.setLocator();
-                    //TODO: form proper By locator based on
-                    //TODO: need to set InvocationHandler here for fields
-                    return (IClickableElement) clickableElement;
+                    //Create exact implementation
+                    IClickableElement element = (IClickableElement) clazz.getConstructor().newInstance();
+                    return createObjectBasedOnAnnotation(element, method, webElAnnotation);
                 }
             }
+            if (List.class.isAssignableFrom(clazz)) {
+                //TODO: Add list wrapper
+            }
         }
-        // Temp null return
         return null;
     }
 
@@ -95,14 +67,52 @@ public class PageInvocationHandler implements InvocationHandler {
         return locator.matches("^([a-zA-Z]+)?(#[\\w-]+)?(\\.[\\w-]+)*$");
     }
 
-    //TODO: link text should be specified directly
     private static boolean isLinkText(String locator) {
         return locator.matches("^link=[\\s\\S]+$");
     }
 
-    //TODO: id should be specified directly
     private static boolean isID(String locator) {
         return locator.matches("^id=[\\w-]+$");
+    }
+
+    /**
+     * Invokes default implementation of specified method using reflection, and returns result object.
+     *
+     * @param proxy  proxy object
+     * @param method method to be invoked
+     * @param args   method arguments
+     * @return object created by methods, default implementation.
+     */
+    private Object invokeDefaultMethodImpl(Object proxy, Method method, Object[] args) throws Throwable {
+        final float version = Float.parseFloat(System.getProperty("java.class.version"));
+        if (version <= 52) {
+            final Constructor<MethodHandles.Lookup> constructor = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
+            constructor.setAccessible(true);
+
+            final Class<?> clazz2 = method.getDeclaringClass();
+            return constructor.newInstance(clazz2)
+                    .in(clazz2)
+                    .unreflectSpecial(method, clazz2)
+                    .bindTo(proxy)
+                    .invokeWithArguments(args);
+        } else {
+            return MethodHandles.lookup()
+                    .findSpecial(
+                            method.getDeclaringClass(),
+                            method.getName(),
+                            MethodType.methodType(method.getReturnType(), new Class[0]),
+                            method.getDeclaringClass()
+                    ).bindTo(proxy)
+                    .invokeWithArguments(args);
+        }
+    }
+
+    private Object createObjectBasedOnAnnotation(IClickableElement element, Method method, WebElement webElementAnnotation) {
+        String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
+        element.setName(name);
+        //TODO: form proper By locator based on
+        //TODO: need to set InvocationHandler here for fields
+        return element;
     }
 
 }
