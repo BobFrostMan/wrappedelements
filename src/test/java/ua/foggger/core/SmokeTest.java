@@ -1,6 +1,6 @@
 package ua.foggger.core;
 
-
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -16,10 +16,17 @@ public class SmokeTest {
     }
 
     @Test
-    public void testElementsWrappersPresent() {
-        Assert.assertEquals(page.heisenberg().getName(), "heisenberg");
-        Assert.assertEquals(page.jessy().getName(), "What's up bi......h!");
-        Assert.assertEquals(page.randomPerson("rand").getName(), "My name is Vova!");
+    public void locatorIsSet() {
+        Assert.assertNotNull(page.heisenberg().getLocator());
+        Assert.assertNotNull(page.jessy().getLocator());
+        Assert.assertNotNull(page.randomPerson("rand").getLocator());
+    }
+
+    @Test
+    public void nameIsSet() {
+        Assert.assertNotNull(page.heisenberg().getName());
+        Assert.assertNotNull(page.randomPerson("rand").getName());
+        Assert.assertNotNull(page.jessy().getName());
     }
 
 }

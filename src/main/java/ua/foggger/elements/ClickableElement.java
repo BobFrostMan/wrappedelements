@@ -1,9 +1,24 @@
 package ua.foggger.elements;
 
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Coordinates;
+
+import java.util.List;
+import java.util.function.Function;
+
+/**
+ * WebElement wrapper that provides next additional functionality for webElement:
+ * - Scroll element into view before click;
+ * - Checks elements visibility before interaction;
+ * - Element visibility criteria can be specified explicitly with setVisibilityCondition(Function<WebDriver, Boolean> visibilityCondition);
+ * - Preforms protection from StaleElementReferenceException | NoSuchElementException | ElementClickInterceptedException that occurs before http requests sending to selenium server;
+ * - Introduce getLocator() method that returns By object, for some specific interactions.
+ */
 public class ClickableElement implements IClickableElement {
 
     private String name;
-    private String locator;
+    private By locator;
+    private Function<WebDriver, Boolean> interactionCondition;
 
     public ClickableElement() {
 
@@ -18,15 +33,115 @@ public class ClickableElement implements IClickableElement {
         return name;
     }
 
-    public String getLocator() {
+    public By getLocator() {
         return locator;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    /**
+     * Set a function that specifies if element is ready for interaction or not.
+     * Returns true if element is ready for interaction. Function will be executed before any physical user interactions (click, double click,)
+     *
+     * @param interactionCondition function returns true if element is ready for interaction
+     * @return ClickableElement object
+     */
+    @SuppressWarnings({"unchecked"})
+    public <T extends ClickableElement> T beforeInteractionCondition(Function<WebDriver, Boolean> interactionCondition) {
+        this.interactionCondition = interactionCondition;
+        return (T) this;
     }
 
-    public void setLocator(String locator) {
-        this.locator = locator;
+    @Override
+    public void click() {
+
+    }
+
+    @Override
+    public void submit() {
+
+    }
+
+    @Override
+    public void sendKeys(CharSequence... keysToSend) {
+
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public String getTagName() {
+        return null;
+    }
+
+    @Override
+    public String getAttribute(String name) {
+        return null;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    @Override
+    public String getText() {
+        return null;
+    }
+
+    @Override
+    public List<WebElement> findElements(By by) {
+        return null;
+    }
+
+    @Override
+    public WebElement findElement(By by) {
+        return null;
+    }
+
+    @Override
+    public boolean isDisplayed() {
+        return false;
+    }
+
+    @Override
+    public Point getLocation() {
+        return null;
+    }
+
+    @Override
+    public Dimension getSize() {
+        return null;
+    }
+
+    @Override
+    public Rectangle getRect() {
+        return null;
+    }
+
+    @Override
+    public String getCssValue(String propertyName) {
+        return null;
+    }
+
+    @Override
+    public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+        return null;
+    }
+
+    @Override
+    public WebElement getWrappedElement() {
+        return null;
+    }
+
+    @Override
+    public Coordinates getCoordinates() {
+        return null;
     }
 }

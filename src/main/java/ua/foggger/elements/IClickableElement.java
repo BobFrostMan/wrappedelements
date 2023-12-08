@@ -1,8 +1,14 @@
 package ua.foggger.elements;
 
-public interface IClickableElement {
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WrapsElement;
+import org.openqa.selenium.interactions.Locatable;
+
+public interface IClickableElement extends WebElement, Locatable, WrapsElement {
 
     String getName();
 
-    void setName(String name);
+    By getLocator();
+
 }

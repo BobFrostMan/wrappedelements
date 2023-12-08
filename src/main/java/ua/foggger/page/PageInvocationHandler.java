@@ -8,11 +8,15 @@ import ua.foggger.elements.IClickableElement;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.List;
 
 
+/**
+ * InvocationHandler for interfaces that extends IPage
+ */
 public class PageInvocationHandler implements InvocationHandler {
 
     @Override
@@ -24,16 +28,17 @@ public class PageInvocationHandler implements InvocationHandler {
             if (IClickableElement.class.isAssignableFrom(clazz)) {
                 if (clazz.isInterface()) {
                     if (method.isDefault()) {
-                        return invokeDefaultMethodImpl(proxy, method, args);
+                        IClickableElement element = (IClickableElement) invokeDefaultMethodImpl(proxy, method, args);
+                        return setValuesFromAnnotations(element, method, webElAnnotation);
                     } else {
                         //Create default exact implementation
                         IClickableElement element = ClickableElement.class.getConstructor().newInstance();
-                        return createObjectBasedOnAnnotation(element, method, webElAnnotation);
+                        return setValuesFromAnnotations(element, method, webElAnnotation);
                     }
                 } else {
                     //Create exact implementation
                     IClickableElement element = (IClickableElement) clazz.getConstructor().newInstance();
-                    return createObjectBasedOnAnnotation(element, method, webElAnnotation);
+                    return setValuesFromAnnotations(element, method, webElAnnotation);
                 }
             }
             if (List.class.isAssignableFrom(clazz)) {
@@ -107,12 +112,25 @@ public class PageInvocationHandler implements InvocationHandler {
         }
     }
 
-    private Object createObjectBasedOnAnnotation(IClickableElement element, Method method, WebElement webElementAnnotation) {
+    private <T> Object setValuesFromAnnotations(T element, Method method, WebElement webElementAnnotation) {
         String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
-        element.setName(name);
+        setFieldValue(element, "name", name);
+        setFieldValue(element, "locator", locatorFromString(webElementAnnotation.value()));
         //TODO: form proper By locator based on
         //TODO: need to set InvocationHandler here for fields
-        return element;
+        return (T) element;
+    }
+
+    private void setFieldValue(Object element, String fieldName, Object fieldValue) {
+        Field nameField = null;
+        try {
+            nameField = element.getClass()
+                    .getDeclaredField(fieldName);
+            nameField.setAccessible(true);
+            nameField.set(element, fieldValue);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
 }
