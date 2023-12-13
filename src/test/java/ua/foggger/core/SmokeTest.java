@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ua.foggger.elements.detection.Detections;
 import ua.foggger.page.WrappedPage;
 
 public class SmokeTest {
@@ -27,6 +28,14 @@ public class SmokeTest {
         Assert.assertNotNull(page.heisenberg().getName());
         Assert.assertNotNull(page.randomPerson("rand").getName());
         Assert.assertNotNull(page.jessy().getName());
+    }
+
+    @Test
+    public void detectionIsSet() {
+        Assert.assertNotNull(page.heisenberg().getDetectionName());
+        Assert.assertNotNull(page.randomPerson("rand").getDetectionName());
+        Assert.assertNotNull(page.jessy().getDetectionName());
+        Assert.assertEquals(page.combo().getDetectionName(), Detections.UNTIL_CLICKABLE);
     }
 
 }

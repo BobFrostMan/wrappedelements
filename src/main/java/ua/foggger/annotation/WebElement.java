@@ -1,5 +1,7 @@
 package ua.foggger.annotation;
 
+import ua.foggger.elements.detection.Detections;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -37,5 +39,11 @@ public @interface WebElement {
      * @return element name as String
      */
     String name() default "";
+
+    /**
+     * Wait for specified condition before element interaction. Supports custom conditions.
+     * @return String condition name;
+     */
+    String waitUntil() default Detections.STANDARD;
 
 }

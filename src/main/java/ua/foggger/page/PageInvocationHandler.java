@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
+import ua.foggger.elements.detection.Detections;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
@@ -22,6 +23,7 @@ public class PageInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         //TODO: Will we have different annotations for different element types? Like dropdowns or something?
+        //TODO: How to avoid new objects creation on each method invocation? Shouldn't
         WebElement webElAnnotation = method.getAnnotation(WebElement.class);
         if (webElAnnotation != null) {
             Class<?> clazz = method.getReturnType();
@@ -29,30 +31,39 @@ public class PageInvocationHandler implements InvocationHandler {
                 if (clazz.isInterface()) {
                     if (method.isDefault()) {
                         IClickableElement element = (IClickableElement) invokeDefaultMethodImpl(proxy, method, args);
-                        return setValuesFromAnnotations(element, method, webElAnnotation);
+                        return setValuesFromAnnotations(element, method, webElAnnotation, args);
                     } else {
                         //Create default exact implementation
                         IClickableElement element = ClickableElement.class.getConstructor().newInstance();
-                        return setValuesFromAnnotations(element, method, webElAnnotation);
+                        return setValuesFromAnnotations(element, method, webElAnnotation, args);
                     }
                 } else {
                     //Create exact implementation
                     IClickableElement element = (IClickableElement) clazz.getConstructor().newInstance();
-                    return setValuesFromAnnotations(element, method, webElAnnotation);
+                    return setValuesFromAnnotations(element, method, webElAnnotation, args);
                 }
             }
             if (List.class.isAssignableFrom(clazz)) {
                 //TODO: Add list wrapper
             }
         }
-        return null;
+        return invokeDefaultMethodImpl(proxy, method, args);
     }
 
-    private By locatorFromString(String locator) {
+    private String resolvePlaceholders(String target, Object[] args) {
+        if (target.contains("%s")) {
+            return String.format(target, args);
+        }
+        return target;
+    }
+
+    private By formLocator(String locator, Object[] args) {
+        locator = resolvePlaceholders(locator, args);
+
         if (isXPath(locator)) {
             return new By.ByXPath(locator);
         }
-        if (isCSSSelector(locator)) {
+       if (isCSSSelector(locator)) {
             return new By.ByCssSelector(locator);
         }
         if (isLinkText(locator)) {
@@ -69,7 +80,7 @@ public class PageInvocationHandler implements InvocationHandler {
     }
 
     private static boolean isCSSSelector(String locator) {
-        return locator.matches("^([a-zA-Z]+)?(#[\\w-]+)?(\\.[\\w-]+)*$");
+        return locator.startsWith(".") || locator.startsWith("#") || locator.contains(">");
     }
 
     private static boolean isLinkText(String locator) {
@@ -112,24 +123,39 @@ public class PageInvocationHandler implements InvocationHandler {
         }
     }
 
-    private <T> Object setValuesFromAnnotations(T element, Method method, WebElement webElementAnnotation) {
-        String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
-        setFieldValue(element, "name", name);
-        setFieldValue(element, "locator", locatorFromString(webElementAnnotation.value()));
-        //TODO: form proper By locator based on
+    private <T> Object setValuesFromAnnotations(T element, Method method, WebElement webElementAnnotation, Object[] args) {
+        //if (getFieldValue(element, "name") == null) {
+            String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
+            setFieldValue(element, "name", name);
+        //}
+        setFieldValue(element,"detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
+        setFieldValue(element, "locator", formLocator(webElementAnnotation.value(),args));
         //TODO: need to set InvocationHandler here for fields
-        return (T) element;
+        return element;
     }
 
     private void setFieldValue(Object element, String fieldName, Object fieldValue) {
-        Field nameField = null;
+        Field field = null;
         try {
-            nameField = element.getClass()
+            field = element.getClass()
                     .getDeclaredField(fieldName);
-            nameField.setAccessible(true);
-            nameField.set(element, fieldValue);
+            field.setAccessible(true);
+            field.set(element, fieldValue);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    private Object getFieldValue(Object element, String fieldName) {
+        Field field = null;
+        try {
+            field = element.getClass()
+                    .getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return field.get(element);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

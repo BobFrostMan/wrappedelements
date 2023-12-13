@@ -1,4 +1,4 @@
-package ua.foggger.elements;
+package ua.foggger.elements.handler;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

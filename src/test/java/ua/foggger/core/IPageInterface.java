@@ -24,4 +24,10 @@ public interface IPageInterface extends IPage {
         return new ClickableElement("I'm a lawyer");
     }
 
+    @WebElement(value = "p > tuco_%s")
+    IClickableElement randomTuco(String text);
+
+    @WebElement(value = "//combo", waitUntil = UNTIL_CLICKABLE)
+    IClickableElement combo();
+
 }

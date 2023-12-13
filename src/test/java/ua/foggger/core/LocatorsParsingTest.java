@@ -22,4 +22,25 @@ public class LocatorsParsingTest {
     public void locatorIsDefinedAsXpath() {
         Assert.assertEquals(page.heisenberg().getLocator(), By.xpath("//p"));
     }
+
+    @Test
+    public void locatorIsDefinedAsCSS() {
+        Assert.assertEquals(page.randomTuco("salamanka").getLocator(), By.cssSelector("p > tuco_salamanka"));
+    }
+
+    @Test
+    public void locatorIsDefinedAsID() {
+
+    }
+
+    @Test
+    public void locatorIsDefinedAsLinkText() {
+
+    }
+
+    @Test
+    public void locatorPlaceholderProperlyResolved() {
+
+    }
+
 }

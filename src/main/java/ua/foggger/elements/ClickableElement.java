@@ -2,9 +2,9 @@ package ua.foggger.elements;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
+import ua.foggger.elements.detection.IElementDetection;
 
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * WebElement wrapper that provides next additional functionality for webElement:
@@ -18,7 +18,7 @@ public class ClickableElement implements IClickableElement {
 
     private String name;
     private By locator;
-    private Function<WebDriver, Boolean> interactionCondition;
+    private IElementDetection detection;
 
     public ClickableElement() {
 
@@ -37,17 +37,9 @@ public class ClickableElement implements IClickableElement {
         return locator;
     }
 
-    /**
-     * Set a function that specifies if element is ready for interaction or not.
-     * Returns true if element is ready for interaction. Function will be executed before any physical user interactions (click, double click,)
-     *
-     * @param interactionCondition function returns true if element is ready for interaction
-     * @return ClickableElement object
-     */
-    @SuppressWarnings({"unchecked"})
-    public <T extends ClickableElement> T beforeInteractionCondition(Function<WebDriver, Boolean> interactionCondition) {
-        this.interactionCondition = interactionCondition;
-        return (T) this;
+    @Override
+    public String getDetectionName() {
+        return detection.name();
     }
 
     @Override
