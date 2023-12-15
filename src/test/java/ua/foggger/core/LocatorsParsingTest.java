@@ -28,19 +28,4 @@ public class LocatorsParsingTest {
         Assert.assertEquals(page.randomTuco("salamanka").getLocator(), By.cssSelector("p > tuco_salamanka"));
     }
 
-    @Test
-    public void locatorIsDefinedAsID() {
-
-    }
-
-    @Test
-    public void locatorIsDefinedAsLinkText() {
-
-    }
-
-    @Test
-    public void locatorPlaceholderProperlyResolved() {
-
-    }
-
 }

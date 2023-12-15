@@ -39,13 +39,4 @@ public interface IElementDetection {
     default boolean isReadyForInteraction(Method method, By by, WebDriver webDriver) {
         return isReadyForInteraction(by, webDriver);
     }
-
-    /**
-     * Returns detection timeout in seconds.
-     *
-     * @return timeout in seconds as long
-     */
-    default long timeout() {
-        return 30;
-    }
 }

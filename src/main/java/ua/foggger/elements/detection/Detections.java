@@ -74,10 +74,8 @@ public class Detections {
     }
 
     private static IElementDetection standard() {
-        IElementDetection defaultDetection = WrappedElements.settings().getElementDetection();
-        return defaultDetection != null
-                ? defaultDetection
-                : new IElementDetection() {
+        IElementDetection detection = WrappedElements.settings().getElementDetection();
+        return detection != null ? detection : new IElementDetection() {
             @Override
             public String name() {
                 return STANDARD;

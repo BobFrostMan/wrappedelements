@@ -1,11 +1,11 @@
 package ua.foggger.config;
 
 /**
- * General configurations entrypoint
+ * General configurations entry point
  */
-public class WrappedElements {
+public final class WrappedElements {
 
-    private static WrappedElementsSettings settings = new WrappedElementsSettings();
+    private static final WrappedElementsSettings settings = new WrappedElementsSettings();
 
     public static WrappedElementsSettings settings() {
         return settings;

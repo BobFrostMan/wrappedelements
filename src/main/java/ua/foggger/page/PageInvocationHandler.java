@@ -23,7 +23,7 @@ public class PageInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         //TODO: Will we have different annotations for different element types? Like dropdowns or something?
-        //TODO: How to avoid new objects creation on each method invocation? Shouldn't
+        //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects
         WebElement webElAnnotation = method.getAnnotation(WebElement.class);
         if (webElAnnotation != null) {
             Class<?> clazz = method.getReturnType();

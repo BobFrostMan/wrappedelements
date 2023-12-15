@@ -19,6 +19,7 @@ public class ClickableElement implements IClickableElement {
     private String name;
     private By locator;
     private IElementDetection detection;
+    private int timeoutInSeconds;
 
     public ClickableElement() {
 

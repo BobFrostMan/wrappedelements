@@ -42,8 +42,16 @@ public @interface WebElement {
 
     /**
      * Wait for specified condition before element interaction. Supports custom conditions.
+     *
      * @return String condition name;
      */
     String waitUntil() default Detections.STANDARD;
+
+    /**
+     * Timeout for waitUntil detection function.
+     *
+     * @return timeout in seconds
+     */
+    int during() default 30;
 
 }
