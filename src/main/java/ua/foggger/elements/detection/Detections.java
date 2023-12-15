@@ -74,18 +74,7 @@ public class Detections {
     }
 
     private static IElementDetection standard() {
-        IElementDetection detection = WrappedElements.settings().getElementDetection();
-        return detection != null ? detection : new IElementDetection() {
-            @Override
-            public String name() {
-                return STANDARD;
-            }
-
-            @Override
-            public boolean isReadyForInteraction(By by, WebDriver webDriver) {
-                return true;
-            }
-        };
+        return WrappedElements.settings().getElementDetection();
     }
 
 }

@@ -29,18 +29,8 @@ public class ClickableElement implements IClickableElement {
         this.name = name;
     }
 
-    @Override
     public String getName() {
         return name;
-    }
-
-    public By getLocator() {
-        return locator;
-    }
-
-    @Override
-    public String getDetectionName() {
-        return detection.name();
     }
 
     @Override

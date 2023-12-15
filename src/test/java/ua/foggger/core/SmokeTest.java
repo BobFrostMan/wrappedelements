@@ -1,13 +1,12 @@
 package ua.foggger.core;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.elements.detection.Detections;
 import ua.foggger.page.WrappedPage;
 
-public class SmokeTest {
+public class SmokeTest extends BaseTest {
 
     private IPageInterface page;
 
@@ -18,9 +17,9 @@ public class SmokeTest {
 
     @Test
     public void locatorIsSet() {
-        Assert.assertNotNull(page.heisenberg().getLocator());
-        Assert.assertNotNull(page.jessy().getLocator());
-        Assert.assertNotNull(page.randomPerson("rand").getLocator());
+        Assert.assertNotNull(getLocator(page.heisenberg()));
+        Assert.assertNotNull(getLocator(page.jessy()));
+        Assert.assertNotNull(getLocator(page.randomPerson("rand")));
     }
 
     @Test
@@ -32,10 +31,18 @@ public class SmokeTest {
 
     @Test
     public void detectionIsSet() {
-        Assert.assertNotNull(page.heisenberg().getDetectionName());
-        Assert.assertNotNull(page.randomPerson("rand").getDetectionName());
-        Assert.assertNotNull(page.jessy().getDetectionName());
-        Assert.assertEquals(page.combo().getDetectionName(), Detections.UNTIL_CLICKABLE);
+        Assert.assertNotNull(getDetection(page.heisenberg()));
+        Assert.assertNotNull(getDetection(page.randomPerson("rand")));
+        Assert.assertNotNull(getDetection(page.jessy()));
+        Assert.assertEquals(getDetection(page.combo()).name(), Detections.UNTIL_CLICKABLE);
+    }
+
+    @Test
+    public void timeoutIsSet() {
+        Assert.assertNotNull(getTimeout(page.heisenberg()));
+        Assert.assertNotNull(getTimeout(page.randomPerson("rand")));
+        Assert.assertNotNull(getTimeout(page.jessy()));
+        Assert.assertNotNull(getDetection(page.combo()));
     }
 
 }

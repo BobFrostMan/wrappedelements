@@ -8,7 +8,7 @@ import ua.foggger.page.WrappedPage;
 /**
  * Check that element name properly set for different usecases.
  */
-public class NameSetTest {
+public class NameSetTest extends BaseTest{
 
     private IPageInterface page;
 

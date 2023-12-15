@@ -5,6 +5,7 @@ import ua.foggger.annotation.WebElement;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
 import ua.foggger.elements.detection.Detections;
+import ua.foggger.helper.IHaveReflectionAccess;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * InvocationHandler for interfaces that extends IPage
  */
-public class PageInvocationHandler implements InvocationHandler {
+public class PageInvocationHandler implements InvocationHandler, IHaveReflectionAccess {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -129,34 +130,10 @@ public class PageInvocationHandler implements InvocationHandler {
             setFieldValue(element, "name", name);
         //}
         setFieldValue(element,"detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
-        setFieldValue(element, "locator", formLocator(webElementAnnotation.value(),args));
+        setFieldValue(element, "locator", formLocator(webElementAnnotation.value(), args));
+        setFieldValue(element, "timeoutInSeconds", webElementAnnotation.during());
         //TODO: need to set InvocationHandler here for fields
         return element;
-    }
-
-    private void setFieldValue(Object element, String fieldName, Object fieldValue) {
-        Field field = null;
-        try {
-            field = element.getClass()
-                    .getDeclaredField(fieldName);
-            field.setAccessible(true);
-            field.set(element, fieldValue);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Object getFieldValue(Object element, String fieldName) {
-        Field field = null;
-        try {
-            field = element.getClass()
-                    .getDeclaredField(fieldName);
-            field.setAccessible(true);
-            return field.get(element);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
 }

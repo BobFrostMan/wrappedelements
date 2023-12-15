@@ -9,7 +9,7 @@ import ua.foggger.page.WrappedPage;
 /**
  * Check that element locator properly set for different usecases.
  */
-public class LocatorsParsingTest {
+public class LocatorsParsingTest extends BaseTest {
 
     private IPageInterface page;
 
@@ -20,12 +20,12 @@ public class LocatorsParsingTest {
 
     @Test
     public void locatorIsDefinedAsXpath() {
-        Assert.assertEquals(page.heisenberg().getLocator(), By.xpath("//p"));
+        Assert.assertEquals(getLocator(page.heisenberg()), By.xpath("//p"));
     }
 
     @Test
     public void locatorIsDefinedAsCSS() {
-        Assert.assertEquals(page.randomTuco("salamanka").getLocator(), By.cssSelector("p > tuco_salamanka"));
+        Assert.assertEquals(getLocator(page.randomTuco("salamanka")), By.cssSelector("p > tuco_salamanka"));
     }
 
 }
