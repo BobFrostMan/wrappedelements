@@ -9,7 +9,7 @@ public class WrappedElementsSettings {
 
     private long interactionTimeout;
     private IElementDetection elementDetection;
-    private Supplier<WebDriver> driverSupplier;
+    private Supplier<WebDriver> driverSupplier = null;
 
     void setInteractionTimeout(long interactionTimeout) {
         this.interactionTimeout = interactionTimeout;

@@ -10,7 +10,6 @@ import ua.foggger.helper.IHaveReflectionAccess;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -64,7 +63,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         if (isXPath(locator)) {
             return new By.ByXPath(locator);
         }
-       if (isCSSSelector(locator)) {
+        if (isCSSSelector(locator)) {
             return new By.ByCssSelector(locator);
         }
         if (isLinkText(locator)) {
@@ -125,11 +124,9 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
     }
 
     private <T> Object setValuesFromAnnotations(T element, Method method, WebElement webElementAnnotation, Object[] args) {
-        //if (getFieldValue(element, "name") == null) {
-            String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
-            setFieldValue(element, "name", name);
-        //}
-        setFieldValue(element,"detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
+        String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
+        setFieldValue(element, "name", name);
+        setFieldValue(element, "detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
         setFieldValue(element, "locator", formLocator(webElementAnnotation.value(), args));
         setFieldValue(element, "timeoutInSeconds", webElementAnnotation.during());
         //TODO: need to set InvocationHandler here for fields

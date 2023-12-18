@@ -1,6 +1,8 @@
 package ua.foggger.page;
 
 import org.openqa.selenium.WebDriver;
+import ua.foggger.config.SettingsProvider;
+import ua.foggger.driver.DriverStorage;
 import ua.foggger.elements.detection.Detections;
 
 public interface IPage {
@@ -12,4 +14,8 @@ public interface IPage {
 
     WebDriver getWebDriver();
 
+    default void get(String url) {
+        DriverStorage.setDriverSupplier(SettingsProvider.provide().getDriverSupplier());
+        DriverStorage.get().get(url);
+    }
 }

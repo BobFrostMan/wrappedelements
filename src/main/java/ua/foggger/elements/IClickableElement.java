@@ -4,14 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WrapsElement;
 import org.openqa.selenium.interactions.Locatable;
-import ua.foggger.driver.DriverSupplier;
+import ua.foggger.driver.DriverStorage;
 
 public interface IClickableElement extends WebElement, Locatable, WrapsElement {
 
     String getName();
 
     default WebDriver driver() {
-        return DriverSupplier.supply();
+        return DriverStorage.get();
     }
 
 }

@@ -2,6 +2,7 @@ package ua.foggger.elements.detection;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import ua.foggger.config.SettingsProvider;
 import ua.foggger.config.WrappedElements;
 
 import java.util.HashMap;
@@ -74,7 +75,7 @@ public class Detections {
     }
 
     private static IElementDetection standard() {
-        return WrappedElements.settings().getElementDetection();
+        return SettingsProvider.provide().getElementDetection();
     }
 
 }
