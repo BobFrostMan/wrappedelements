@@ -126,7 +126,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
     private <T> Object setValuesFromAnnotations(T element, Method method, WebElement webElementAnnotation, Object[] args) {
         String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
         setFieldValue(element, "name", name);
-        setFieldValue(element, "detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
+         setFieldValue(element, "detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
         setFieldValue(element, "locator", formLocator(webElementAnnotation.value(), args));
         setFieldValue(element, "timeoutInSeconds", webElementAnnotation.during());
         //TODO: need to set InvocationHandler here for fields

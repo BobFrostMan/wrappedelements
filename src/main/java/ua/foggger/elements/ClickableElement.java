@@ -2,6 +2,7 @@ package ua.foggger.elements;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
+import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.elements.detection.IElementDetection;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class ClickableElement implements IClickableElement {
     private By locator;
     private IElementDetection detection;
     private int timeoutInSeconds;
+    private WebElement innerElement;
 
     public ClickableElement() {
 
@@ -35,96 +37,96 @@ public class ClickableElement implements IClickableElement {
 
     @Override
     public void click() {
-
+        getWrappedElement().click();
     }
 
     @Override
     public void submit() {
-
+        getWrappedElement().submit();
     }
 
     @Override
     public void sendKeys(CharSequence... keysToSend) {
-
+        getWrappedElement().sendKeys(keysToSend);
     }
 
     @Override
     public void clear() {
-
+        getWrappedElement().clear();
     }
 
     @Override
     public String getTagName() {
-        return null;
+        return getWrappedElement().getTagName();
     }
 
     @Override
     public String getAttribute(String name) {
-        return null;
+        return getWrappedElement().getAttribute(name);
     }
 
     @Override
     public boolean isSelected() {
-        return false;
+        return getWrappedElement().isSelected();
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return getWrappedElement().isEnabled();
     }
 
     @Override
     public String getText() {
-        return null;
+        return getWrappedElement().getText();
     }
 
     @Override
     public List<WebElement> findElements(By by) {
-        return null;
+        return getWrappedElement().findElements(by);
     }
 
     @Override
     public WebElement findElement(By by) {
-        return null;
+        return getWrappedElement().findElement(by);
     }
 
     @Override
     public boolean isDisplayed() {
-        return false;
+        return getWrappedElement().isDisplayed();
     }
 
     @Override
     public Point getLocation() {
-        return null;
+        return getWrappedElement().getLocation();
     }
 
     @Override
     public Dimension getSize() {
-        return null;
+        return getWrappedElement().getSize();
     }
 
     @Override
     public Rectangle getRect() {
-        return null;
+        return getWrappedElement().getRect();
     }
 
     @Override
     public String getCssValue(String propertyName) {
-        return null;
+        return getWrappedElement().getCssValue(propertyName);
     }
 
     @Override
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
-        return null;
+        return getWrappedElement().getScreenshotAs(target);
     }
 
     @Override
     public WebElement getWrappedElement() {
-        return null;
+        return innerElement;
     }
 
     @Override
     public Coordinates getCoordinates() {
-        return null;
+        return ((Locatable)getWrappedElement()).getCoordinates();
     }
 }
