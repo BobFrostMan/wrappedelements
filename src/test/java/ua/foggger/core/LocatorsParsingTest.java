@@ -21,6 +21,7 @@ public class LocatorsParsingTest extends BaseTest {
     @Test
     public void locatorIsDefinedAsXpath() {
         Assert.assertEquals(getLocator(page.heisenberg()), By.xpath("//p"));
+        Assert.assertEquals(getLocator(page.heisenberg2()), By.xpath("(//form//input)[2]"));
     }
 
     @Test
