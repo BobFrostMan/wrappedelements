@@ -12,13 +12,14 @@ import java.lang.reflect.Method;
 
 public class ClickableElementsInvocationHandler implements InvocationHandler, IHaveReflectionAccess, ICanWait {
 
+    //TODO: do we need to make elements invocation handler or it's better to handle via internal mechanism
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         ClickableElement element = (ClickableElement) proxy;
         IElementDetection detection = (IElementDetection) getFieldValue(element, "detection");
         By locator = (By) getFieldValue(element, "locator");
         int timeoutSeconds = (Integer) getFieldValue(element, "timeoutInSeconds");
-        boolean isReady = waitFor(() -> detection.isReadyForInteraction(method, locator, DriverStorage.get()), timeoutSeconds);
+        boolean isReady = waitFor(() -> detection.isReadyForInteraction(method.getName(), locator, DriverStorage.get()), timeoutSeconds);
         //TODO: Redesign invocation conditions
         if (isReady) {
             return method.invoke(args);

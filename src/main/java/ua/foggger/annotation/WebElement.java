@@ -47,11 +47,12 @@ public @interface WebElement {
      */
     String waitUntil() default Detections.STANDARD;
 
+    //TODO: Have to think about interval override
     /**
      * Timeout for waitUntil detection function.
      *
      * @return timeout in seconds
      */
-    int during() default 30;
+    int during() default 10;
 
 }

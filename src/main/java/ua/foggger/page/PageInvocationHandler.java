@@ -5,13 +5,12 @@ import ua.foggger.annotation.WebElement;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
 import ua.foggger.elements.detection.Detections;
+import ua.foggger.elements.handler.ClickableElementsInvocationHandler;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.List;
 
 
@@ -30,6 +29,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
             if (IClickableElement.class.isAssignableFrom(clazz)) {
                 if (clazz.isInterface()) {
                     if (method.isDefault()) {
+                        //TODO: What to do with default implementations?
                         IClickableElement element = (IClickableElement) invokeDefaultMethodImpl(proxy, method, args);
                         return setValuesFromAnnotations(element, method, webElAnnotation, args);
                     } else {
@@ -76,7 +76,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
     }
 
     private static boolean isXPath(String locator) {
-        return locator.matches("^//(.+)|^\\./(.+)");
+        return locator.matches("^//(.+)|^\\./(.+)|^(\\(\\/\\/.+)");
     }
 
     private static boolean isCSSSelector(String locator) {
@@ -126,11 +126,16 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
     private <T> Object setValuesFromAnnotations(T element, Method method, WebElement webElementAnnotation, Object[] args) {
         String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
         setFieldValue(element, "name", name);
-         setFieldValue(element, "detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
+        setFieldValue(element, "detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
         setFieldValue(element, "locator", formLocator(webElementAnnotation.value(), args));
         setFieldValue(element, "timeoutInSeconds", webElementAnnotation.during());
         //TODO: need to set InvocationHandler here for fields
         return element;
+    }
+
+    //FIXME: Proxy object is not actually an object, it can't be used to set values for detection and any values at all. All of this required actual objects, or some other hacks
+    private IClickableElement createElementProxy(Class clazz) {
+        return (IClickableElement) Proxy.newProxyInstance(clazz.getClassLoader(),  new Class[]{IClickableElement.class}, new ClickableElementsInvocationHandler());
     }
 
 }

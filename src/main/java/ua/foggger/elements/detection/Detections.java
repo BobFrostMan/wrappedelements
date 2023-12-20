@@ -3,7 +3,6 @@ package ua.foggger.elements.detection;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ua.foggger.config.SettingsProvider;
-import ua.foggger.config.WrappedElements;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +13,8 @@ public class Detections {
     public static final String UNTIL_CLICKABLE = "untilClickable";
     public static final String VERTICAL_SCROLL_UNTIL_VISIBLE = "verticalScrollUntilVisible";
     public static final String STANDARD = "standard";
+    //TODO: do we need no wait action?
+    public static final String NO_WAIT = "noWait";
 
     private static final Map<String, IElementDetection> detectionsMap = new HashMap<>();
 
@@ -22,6 +23,7 @@ public class Detections {
         registerDetection(untilClickable());
         registerDetection(verticalScrollUntilVisible());
         registerDetection(standard());
+        registerDetection(nothing());
     }
 
     public static void registerDetection(IElementDetection elementDetection) {
@@ -65,6 +67,20 @@ public class Detections {
             @Override
             public String name() {
                 return VERTICAL_SCROLL_UNTIL_VISIBLE;
+            }
+
+            @Override
+            public boolean isReadyForInteraction(By by, WebDriver webDriver) {
+                return true;
+            }
+        };
+    }
+
+    private static IElementDetection nothing() {
+        return new IElementDetection() {
+            @Override
+            public String name() {
+                return NO_WAIT;
             }
 
             @Override

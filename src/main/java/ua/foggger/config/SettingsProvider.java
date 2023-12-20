@@ -1,5 +1,7 @@
 package ua.foggger.config;
 
+import ua.foggger.driver.DriverStorage;
+
 public class SettingsProvider {
 
     private static WrappedElementsSettings wrappedElementsSettings;
@@ -10,5 +12,6 @@ public class SettingsProvider {
 
     public static void registerSettings(WrappedElementsSettings settings) {
         wrappedElementsSettings = settings;
+        DriverStorage.setDriverSupplier(settings.getDriverSupplier());
     }
 }

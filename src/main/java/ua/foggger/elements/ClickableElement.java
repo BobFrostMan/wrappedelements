@@ -3,7 +3,9 @@ package ua.foggger.elements;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
+import ua.foggger.driver.DriverStorage;
 import ua.foggger.elements.detection.IElementDetection;
+import ua.foggger.helper.ICanWait;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
  * - Preforms protection from StaleElementReferenceException | NoSuchElementException | ElementClickInterceptedException that occurs before http requests sending to selenium server;
  * - Introduce getLocator() method that returns By object, for some specific interactions.
  */
-public class ClickableElement implements IClickableElement {
+public class ClickableElement implements IClickableElement, ICanWait {
 
     private String name;
     private By locator;
@@ -37,87 +39,87 @@ public class ClickableElement implements IClickableElement {
 
     @Override
     public void click() {
-        getWrappedElement().click();
+        detectElement("click").click();
     }
 
     @Override
     public void submit() {
-        getWrappedElement().submit();
+        detectElement("submit").submit();
     }
 
     @Override
     public void sendKeys(CharSequence... keysToSend) {
-        getWrappedElement().sendKeys(keysToSend);
+        detectElement("sendKeys").sendKeys(keysToSend);
     }
 
     @Override
     public void clear() {
-        getWrappedElement().clear();
+        detectElement("clear").clear();
     }
 
     @Override
     public String getTagName() {
-        return getWrappedElement().getTagName();
+        return detectElement("getTagName").getTagName();
     }
 
     @Override
     public String getAttribute(String name) {
-        return getWrappedElement().getAttribute(name);
+        return detectElement("getAttribute").getAttribute(name);
     }
 
     @Override
     public boolean isSelected() {
-        return getWrappedElement().isSelected();
+        return detectElement("isSelected").isSelected();
     }
 
     @Override
     public boolean isEnabled() {
-        return getWrappedElement().isEnabled();
+        return detectElement("isEnabled").isEnabled();
     }
 
     @Override
     public String getText() {
-        return getWrappedElement().getText();
+        return detectElement("getText").getText();
     }
 
     @Override
     public List<WebElement> findElements(By by) {
-        return getWrappedElement().findElements(by);
+        return detectElement("findElements").findElements(by);
     }
 
     @Override
     public WebElement findElement(By by) {
-        return getWrappedElement().findElement(by);
+        return detectElement("findElement").findElement(by);
     }
 
     @Override
     public boolean isDisplayed() {
-        return getWrappedElement().isDisplayed();
+        return detectElement("isDisplayed").isDisplayed();
     }
 
     @Override
     public Point getLocation() {
-        return getWrappedElement().getLocation();
+        return detectElement("getLocation").getLocation();
     }
 
     @Override
     public Dimension getSize() {
-        return getWrappedElement().getSize();
+        return detectElement("getSize").getSize();
     }
 
     @Override
     public Rectangle getRect() {
-        return getWrappedElement().getRect();
+        return detectElement("getRect").getRect();
     }
 
     @Override
     public String getCssValue(String propertyName) {
-        return getWrappedElement().getCssValue(propertyName);
+        return detectElement("getCssValue").getCssValue(propertyName);
     }
 
     @Override
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
-        return getWrappedElement().getScreenshotAs(target);
+        return detectElement("getScreenshotAs").getScreenshotAs(target);
     }
 
     @Override
@@ -127,6 +129,15 @@ public class ClickableElement implements IClickableElement {
 
     @Override
     public Coordinates getCoordinates() {
-        return ((Locatable)getWrappedElement()).getCoordinates();
+        return ((Locatable) getWrappedElement()).getCoordinates();
+    }
+
+    protected WebElement detectElement(String methodName) {
+        boolean isReady = waitFor(() -> detection.isReadyForInteraction(methodName, locator, DriverStorage.get()), timeoutInSeconds);
+        if (isReady) {
+            return driver().findElement(locator);
+        } else {
+            throw new RuntimeException("Element " + this + " not found in DOM!");
+        }
     }
 }
