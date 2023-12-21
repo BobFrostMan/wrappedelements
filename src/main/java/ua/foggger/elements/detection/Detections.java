@@ -19,11 +19,15 @@ public class Detections {
     private static final Map<String, IElementDetection> detectionsMap = new HashMap<>();
 
     static {
-        registerDetection(untilVisible());
-        registerDetection(untilClickable());
-        registerDetection(verticalScrollUntilVisible());
-        registerDetection(standard());
-        registerDetection(nothing());
+        try {
+            registerDetection(untilVisible());
+            registerDetection(untilClickable());
+            registerDetection(verticalScrollUntilVisible());
+            registerDetection(standard());
+            registerDetection(nothing());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     public static void registerDetection(IElementDetection elementDetection) {

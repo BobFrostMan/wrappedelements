@@ -5,9 +5,10 @@ import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.driver.DriverStorage;
 import ua.foggger.elements.detection.IElementDetection;
-import ua.foggger.helper.ICanWait;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * WebElement wrapper that provides next additional functionality for webElement:
@@ -17,7 +18,7 @@ import java.util.List;
  * - Preforms protection from StaleElementReferenceException | NoSuchElementException | ElementClickInterceptedException that occurs before http requests sending to selenium server;
  * - Introduce getLocator() method that returns By object, for some specific interactions.
  */
-public class ClickableElement implements IClickableElement, ICanWait {
+public class ClickableElement implements IClickableElement {
 
     private String name;
     private By locator;
@@ -139,5 +140,29 @@ public class ClickableElement implements IClickableElement, ICanWait {
         } else {
             throw new RuntimeException("Element " + this + " not found in DOM!");
         }
+    }
+
+    /**
+     * Waits for function to return true with timeout.
+     * Returns result of last function execution.
+     *
+     * @param func       - wait function to execute
+     * @param timeOutSec - execution timeout (in seconds)
+     * @return true if wait was successful
+     */
+    protected Boolean waitFor(Callable<Boolean> func, int timeOutSec) {
+        long startTime = System.currentTimeMillis();
+        long endTime = startTime + TimeUnit.SECONDS.toMillis(timeOutSec);
+        while (System.currentTimeMillis() <= endTime) {
+            try {
+                Boolean res = func.call();
+                if (res) {
+                    return res;
+                }
+            } catch (Throwable e) {
+                //do nothing
+            }
+        }
+        return false;
     }
 }

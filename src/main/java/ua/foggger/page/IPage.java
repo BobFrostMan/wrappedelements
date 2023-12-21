@@ -1,5 +1,6 @@
 package ua.foggger.page;
 
+import ua.foggger.annotation.WebElement;
 import ua.foggger.config.SettingsProvider;
 import ua.foggger.driver.DriverStorage;
 import ua.foggger.elements.detection.Detections;

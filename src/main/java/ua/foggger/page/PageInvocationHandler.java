@@ -5,12 +5,13 @@ import ua.foggger.annotation.WebElement;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
 import ua.foggger.elements.detection.Detections;
-import ua.foggger.elements.handler.ClickableElementsInvocationHandler;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.util.List;
 
 
@@ -50,6 +51,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         return invokeDefaultMethodImpl(proxy, method, args);
     }
 
+    //TODO: How to read parameter names and replace it
     private String resolvePlaceholders(String target, Object[] args) {
         if (target.contains("%s")) {
             return String.format(target, args);
@@ -59,20 +61,16 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
 
     private By formLocator(String locator, Object[] args) {
         locator = resolvePlaceholders(locator, args);
-
+        if (isLocatorTypeDefined(locator)) {
+            return getDefinedTypeLocator(locator);
+        }
         if (isXPath(locator)) {
             return new By.ByXPath(locator);
         }
         if (isCSSSelector(locator)) {
             return new By.ByCssSelector(locator);
         }
-        if (isLinkText(locator)) {
-            return new By.ByLinkText(locator);
-        }
-        if (isID(locator)) {
-            return new By.ById(locator);
-        }
-        return new By.ByTagName(locator);
+        return new By.ByXPath(String.format("//%s|//*[@id='%s']|//*[@name='%s']|//*[@class='%s'])", locator, locator, locator, locator));
     }
 
     private static boolean isXPath(String locator) {
@@ -83,12 +81,37 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         return locator.startsWith(".") || locator.startsWith("#") || locator.contains(">");
     }
 
-    private static boolean isLinkText(String locator) {
-        return locator.matches("^link=[\\s\\S]+$");
+    private static boolean isLocatorTypeDefined(String locator) {
+        return locator.startsWith("id=") ||
+                locator.startsWith("tag=") ||
+                locator.startsWith("name=") ||
+                locator.startsWith("class=") ||
+                locator.startsWith("xpath=") ||
+                locator.startsWith("css=") ||
+                locator.startsWith("text=") ||
+                locator.startsWith("linkText=");
     }
 
-    private static boolean isID(String locator) {
-        return locator.matches("^id=[\\w-]+$");
+    private static By getDefinedTypeLocator(String locator) {
+        if (locator.startsWith("id=")) {
+            return By.id(locator.replace("id=", "").trim());
+        }
+        if (locator.startsWith("tag=")) {
+            return By.tagName(locator.replace("tag=", "").trim());
+        }
+        if (locator.startsWith("name=")) {
+            return By.name(locator.replace("name=", "").trim());
+        }
+        if (locator.startsWith("class=")) {
+            return By.className(locator.replace("class=", "").trim());
+        }
+        if (locator.startsWith("xpath=")) {
+            return By.xpath(locator.replace("xpath=", "").trim());
+        }
+        if (locator.startsWith("css=")) {
+            return By.cssSelector(locator.replace("css=", "").trim());
+        }
+        return new By.ByLinkText(locator.replace("linkText=", "").trim());
     }
 
     /**
@@ -129,13 +152,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         setFieldValue(element, "detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
         setFieldValue(element, "locator", formLocator(webElementAnnotation.value(), args));
         setFieldValue(element, "timeoutInSeconds", webElementAnnotation.during());
-        //TODO: need to set InvocationHandler here for fields
         return element;
-    }
-
-    //FIXME: Proxy object is not actually an object, it can't be used to set values for detection and any values at all. All of this required actual objects, or some other hacks
-    private IClickableElement createElementProxy(Class clazz) {
-        return (IClickableElement) Proxy.newProxyInstance(clazz.getClassLoader(),  new Class[]{IClickableElement.class}, new ClickableElementsInvocationHandler());
     }
 
 }
