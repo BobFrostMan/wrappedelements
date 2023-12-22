@@ -16,7 +16,7 @@ public class WrappedElementsSettings {
 
     }
 
-    public void setInteractionTimeout(long interactionTimeout) {
+    void setInteractionTimeout(long interactionTimeout) {
         this.interactionTimeout = interactionTimeout;
     }
 
@@ -28,7 +28,7 @@ public class WrappedElementsSettings {
         return driverSupplier;
     }
 
-    public void setDriverSupplier(Supplier<WebDriver> driverSupplier) {
+    void setDriverSupplier(Supplier<WebDriver> driverSupplier) {
         this.driverSupplier = driverSupplier;
     }
 
@@ -36,7 +36,7 @@ public class WrappedElementsSettings {
         return elementDetection;
     }
 
-    public void setElementDetection(IElementInteractor elementDetection) {
+    void setElementDetection(IElementInteractor elementDetection) {
         this.elementDetection = elementDetection;
     }
 }
