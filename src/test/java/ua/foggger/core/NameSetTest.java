@@ -3,18 +3,18 @@ package ua.foggger.core;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ua.foggger.page.WrappedPage;
+import ua.foggger.WrappedElements;
 
 /**
  * Check that element name properly set for different usecases.
  */
-public class NameSetTest extends BaseTest{
+public class NameSetTest extends BaseTest {
 
     private IPageInterface page;
 
     @BeforeClass
     public void setUp() {
-        page = WrappedPage.create(IPageInterface.class);
+        page = WrappedElements.initPage(IPageInterface.class);
     }
 
     @Test

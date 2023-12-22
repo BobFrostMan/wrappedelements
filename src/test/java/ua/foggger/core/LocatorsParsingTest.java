@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ua.foggger.page.WrappedPage;
+import ua.foggger.WrappedElements;
 
 /**
  * Check that element locator properly set for different usecases.
@@ -15,7 +15,7 @@ public class LocatorsParsingTest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        page = WrappedPage.create(LocatorPageInterface.class);
+        page = WrappedElements.initPage(LocatorPageInterface.class);
     }
 
     @Test

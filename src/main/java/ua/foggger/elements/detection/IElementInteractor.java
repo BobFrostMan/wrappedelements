@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 /**
  * Provides functionality to set condition for element to be ready for interactions
  */
-public interface IElementDetection {
+public interface IElementInteractor {
 
     /**
      * Returns name of this element detection implementation

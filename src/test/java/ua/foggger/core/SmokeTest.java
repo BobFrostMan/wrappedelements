@@ -3,8 +3,8 @@ package ua.foggger.core;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ua.foggger.elements.detection.Detections;
-import ua.foggger.page.WrappedPage;
+import ua.foggger.WrappedElements;
+import ua.foggger.elements.detection.Interactors;
 
 public class SmokeTest extends BaseTest {
 
@@ -12,7 +12,7 @@ public class SmokeTest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        page = WrappedPage.create(IPageInterface.class);
+        page = WrappedElements.initPage(IPageInterface.class);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class SmokeTest extends BaseTest {
         Assert.assertNotNull(getDetection(page.heisenberg()));
         Assert.assertNotNull(getDetection(page.randomPerson("rand")));
         Assert.assertNotNull(getDetection(page.jessy()));
-        Assert.assertEquals(getDetection(page.combo()).name(), Detections.UNTIL_CLICKABLE);
+        Assert.assertEquals(getDetection(page.combo()).name(), Interactors.UNTIL_CLICKABLE);
     }
 
     @Test

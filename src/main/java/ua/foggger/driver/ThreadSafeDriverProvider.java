@@ -9,6 +9,7 @@ public class ThreadSafeDriverProvider implements IDriverProvider {
     private static final ThreadLocal<WebDriver> DRIVERS_MAP = new ThreadLocal<>();
 
     private Supplier<WebDriver> supplier;
+
     /**
      * Creates web driver (if not created) and returns it's object.
      *
@@ -23,7 +24,7 @@ public class ThreadSafeDriverProvider implements IDriverProvider {
     }
 
     @Override
-    public void setSupplier(Supplier<WebDriver> driverSupplier){
+    public void setSupplier(Supplier<WebDriver> driverSupplier) {
         supplier = driverSupplier;
     }
 }

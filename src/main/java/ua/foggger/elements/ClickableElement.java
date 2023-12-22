@@ -4,7 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.driver.DriverStorage;
-import ua.foggger.elements.detection.IElementDetection;
+import ua.foggger.elements.detection.IElementInteractor;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -22,7 +22,7 @@ public class ClickableElement implements IClickableElement {
 
     private String name;
     private By locator;
-    private IElementDetection detection;
+    private IElementInteractor detection;
     private int timeoutInSeconds;
     private WebElement innerElement;
 

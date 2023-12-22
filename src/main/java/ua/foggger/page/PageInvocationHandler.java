@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
-import ua.foggger.elements.detection.Detections;
+import ua.foggger.elements.detection.Interactors;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 import java.lang.invoke.MethodHandles;
@@ -149,7 +149,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
     private <T> Object setValuesFromAnnotations(T element, Method method, WebElement webElementAnnotation, Object[] args) {
         String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
         setFieldValue(element, "name", name);
-        setFieldValue(element, "detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
+        setFieldValue(element, "detection", Interactors.getRegisteredDetection(webElementAnnotation.waitUntil()));
         setFieldValue(element, "locator", formLocator(webElementAnnotation.value(), args));
         setFieldValue(element, "timeoutInSeconds", webElementAnnotation.during());
         return element;

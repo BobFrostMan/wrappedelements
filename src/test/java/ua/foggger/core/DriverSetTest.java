@@ -2,24 +2,23 @@ package ua.foggger.core;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-import ua.foggger.config.WrappedElements;
+import ua.foggger.WrappedElements;
 
 public class DriverSetTest extends BaseTest {
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNoDriverSupplier() {
-        WrappedElements.driverCreateFunction(null);
-        WrappedElements.init();
+        WrappedElements.config().driverCreator(null);
     }
 
     @Test
     public void testDriverSupplier() {
-        WrappedElements.driverCreateFunction(() -> null).init();
+        WrappedElements.config().driverCreator(() -> null);
     }
 
     @AfterClass
     public void cleanUp() {
-        WrappedElements.driverCreateFunction(() -> null).init();
+        WrappedElements.config().driverCreator(() -> null);
     }
 
 }

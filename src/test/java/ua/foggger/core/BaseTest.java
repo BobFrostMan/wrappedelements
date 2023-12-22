@@ -1,7 +1,7 @@
 package ua.foggger.core;
 
 import ua.foggger.elements.IClickableElement;
-import ua.foggger.elements.detection.IElementDetection;
+import ua.foggger.elements.detection.IElementInteractor;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 public abstract class BaseTest implements IHaveReflectionAccess {
@@ -10,8 +10,8 @@ public abstract class BaseTest implements IHaveReflectionAccess {
         return getFieldValue(element, "locator");
     }
 
-    protected IElementDetection getDetection(IClickableElement element) {
-        return (IElementDetection) getFieldValue(element, "detection");
+    protected IElementInteractor getDetection(IClickableElement element) {
+        return (IElementInteractor) getFieldValue(element, "detection");
     }
 
     protected Object getTimeout(IClickableElement element) {

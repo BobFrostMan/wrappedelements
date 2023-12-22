@@ -1,17 +1,22 @@
-package ua.foggger.config;
+package ua.foggger.config.register;
 
 import org.openqa.selenium.WebDriver;
-import ua.foggger.elements.detection.IElementDetection;
+import ua.foggger.elements.detection.IElementInteractor;
 
 import java.util.function.Supplier;
 
 public class WrappedElementsSettings {
 
     private long interactionTimeout;
-    private IElementDetection elementDetection;
-    private Supplier<WebDriver> driverSupplier = null;
+    private IElementInteractor elementDetection;
+    private Supplier<WebDriver> driverSupplier;
 
-    void setInteractionTimeout(long interactionTimeout) {
+    //default constructor for hiding access from other modules
+    WrappedElementsSettings() {
+
+    }
+
+    public void setInteractionTimeout(long interactionTimeout) {
         this.interactionTimeout = interactionTimeout;
     }
 
@@ -27,11 +32,11 @@ public class WrappedElementsSettings {
         this.driverSupplier = driverSupplier;
     }
 
-    public IElementDetection getElementDetection() {
+    public IElementInteractor getElementDetection() {
         return elementDetection;
     }
 
-    public void setElementDetection(IElementDetection elementDetection) {
+    public void setElementDetection(IElementInteractor elementDetection) {
         this.elementDetection = elementDetection;
     }
 }
