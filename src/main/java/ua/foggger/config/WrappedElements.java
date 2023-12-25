@@ -27,11 +27,10 @@ public final class WrappedElements {
         settingsRepository = new InMemorySettingsRepository();
         settingsManager = new DefaultSettingsManagerImpl(settingsRepository);
         wrappedElementsConfig = new WrappedElementsConfig(settingsManager);
-
-        WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
-        settingsRepository.save(wrappedElementsSettings);
         IWebDriverProvider driverProvider = new ThreadSafeWebDriverManager();
         DriverProvider.setDriverProvider(driverProvider);
+        WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
+        settingsRepository.save(wrappedElementsSettings);
     }
 
     private WrappedElements() {
@@ -51,9 +50,6 @@ public final class WrappedElements {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, IPage.class}, new PageInvocationHandler());
     }
 
-    /**
-     * @return
-     */
     public static WebDriver getDriver() {
         return DriverProvider.get();
     }

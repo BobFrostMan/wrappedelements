@@ -10,9 +10,6 @@ public interface IPageInterface extends IPage {
     @WebElement(value = "//p")
     IClickableElement heisenberg();
 
-    @WebElement(value = "(//form//input)[2]")
-    IClickableElement heisenberg2();
-
     @WebElement(value = "//p[contains(text(), '%s')]", name = "My name is Vova!")
     IClickableElement randomPerson(String text);
 
@@ -26,9 +23,6 @@ public interface IPageInterface extends IPage {
     default IClickableElement saulGoodman() {
         return new ClickableElement("I'm a lawyer");
     }
-
-    @WebElement(value = "p > tuco_%s")
-    IClickableElement randomTuco(String text);
 
     @WebElement(value = "//combo", waitUntil = UNTIL_CLICKABLE)
     IClickableElement combo();
