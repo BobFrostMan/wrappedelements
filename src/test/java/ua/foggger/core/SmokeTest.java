@@ -3,7 +3,7 @@ package ua.foggger.core;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ua.foggger.WrappedElements;
+import ua.foggger.config.WrappedElements;
 import ua.foggger.elements.detection.Interactors;
 
 public class SmokeTest extends BaseTest {

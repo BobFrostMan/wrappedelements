@@ -1,7 +1,7 @@
 package ua.foggger.config;
 
 import org.openqa.selenium.WebDriver;
-import ua.foggger.config.register.SettingsRegister;
+import ua.foggger.config.manager.SettingsManager;
 import ua.foggger.elements.detection.IElementInteractor;
 
 import java.util.function.Supplier;
@@ -11,10 +11,10 @@ import java.util.function.Supplier;
  */
 public class WrappedElementsConfig {
 
-    private SettingsRegister settingsRegister;
+    private SettingsManager settingsManager;
 
-    public WrappedElementsConfig(SettingsRegister settingsRegister) {
-        this.settingsRegister = settingsRegister;
+    WrappedElementsConfig(SettingsManager settingsManager) {
+        this.settingsManager = settingsManager;
     }
 
     /**
@@ -26,7 +26,7 @@ public class WrappedElementsConfig {
      */
 
     public WrappedElementsConfig driverCreator(Supplier<WebDriver> driverSupplier) {
-        settingsRegister.driverCreator(driverSupplier);
+        settingsManager.setDefaultDriverCreator(driverSupplier);
         return this;
     }
 
@@ -38,7 +38,7 @@ public class WrappedElementsConfig {
      * @return this
      */
     public WrappedElementsConfig defaultElementInteractor(IElementInteractor elementInteractor) {
-        settingsRegister.defaultElementInteractor(elementInteractor);
+        settingsManager.setDefaultElementInteractor(elementInteractor);
         return this;
     }
 }

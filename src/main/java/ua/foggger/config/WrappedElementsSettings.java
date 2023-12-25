@@ -1,4 +1,4 @@
-package ua.foggger.config.register;
+package ua.foggger.config;
 
 import org.openqa.selenium.WebDriver;
 import ua.foggger.elements.detection.IElementInteractor;

@@ -3,7 +3,7 @@ package ua.foggger.core;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ua.foggger.WrappedElements;
+import ua.foggger.config.WrappedElements;
 
 /**
  * Check that element name properly set for different usecases.

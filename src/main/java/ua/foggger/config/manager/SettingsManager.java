@@ -1,27 +1,23 @@
-package ua.foggger.config.register;
+package ua.foggger.config.manager;
 
 import org.openqa.selenium.WebDriver;
+import ua.foggger.config.WrappedElementsSettings;
 import ua.foggger.elements.detection.IElementInteractor;
 
 import java.util.function.Supplier;
 
-public class InMemorySettingsRegister implements SettingsRegister {
 
-    private WrappedElementsSettings wrappedElementsSettings;
-
-    public InMemorySettingsRegister() {
-        wrappedElementsSettings = new WrappedElementsSettings();
-    }
+/**
+ * Manages global framework settings objects
+ */
+public interface SettingsManager {
 
     /**
      * Returns WrappedElementSettings object, received somehow (from in-memory, remote server).
      *
      * @return WrappedElementSettings object
      */
-    @Override
-    public WrappedElementsSettings get() {
-        return wrappedElementsSettings;
-    }
+    WrappedElementsSettings get();
 
     /**
      * Sets default driver creation function.
@@ -29,18 +25,13 @@ public class InMemorySettingsRegister implements SettingsRegister {
      *
      * @param driverSupplier driver creation function as Supplier<WebDriver>
      */
-    @Override
-    public void driverCreator(Supplier<WebDriver> driverSupplier) {
-        wrappedElementsSettings.setDriverSupplier(driverSupplier);
-    }
+    void setDefaultDriverCreator(Supplier<WebDriver> driverSupplier);
 
     /**
      * Sets default element interaction function. Function defines how to interact with element (wait for visibility, or clickability before clicks or getting attributes).
      *
      * @param elementInteractor element interaction function
      */
-    @Override
-    public void defaultElementInteractor(IElementInteractor elementInteractor) {
-        wrappedElementsSettings.setElementDetection(elementInteractor);
-    }
+    void setDefaultElementInteractor(IElementInteractor elementInteractor);
+
 }

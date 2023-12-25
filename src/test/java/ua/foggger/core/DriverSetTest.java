@@ -2,7 +2,7 @@ package ua.foggger.core;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-import ua.foggger.WrappedElements;
+import ua.foggger.config.WrappedElements;
 
 public class DriverSetTest extends BaseTest {
 
