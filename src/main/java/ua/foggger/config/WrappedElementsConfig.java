@@ -2,7 +2,7 @@ package ua.foggger.config;
 
 import org.openqa.selenium.WebDriver;
 import ua.foggger.config.manager.SettingsManager;
-import ua.foggger.elements.detection.IElementInteractor;
+import ua.foggger.elements.interactor.IElementInteractor;
 
 import java.util.function.Supplier;
 

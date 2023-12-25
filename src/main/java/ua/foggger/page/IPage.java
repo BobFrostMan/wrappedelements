@@ -1,7 +1,7 @@
 package ua.foggger.page;
 
-import ua.foggger.driver.DriverStorage;
-import ua.foggger.elements.detection.Interactors;
+import ua.foggger.driver.DriverProvider;
+import ua.foggger.elements.interactor.Interactors;
 
 public interface IPage {
 
@@ -9,9 +9,8 @@ public interface IPage {
     String UNTIL_CLICKABLE = Interactors.UNTIL_CLICKABLE;
     String VERTICAL_SCROLL_UNTIL_VISIBLE = Interactors.VERTICAL_SCROLL_UNTIL_VISIBLE;
     String STANDARD = Interactors.STANDARD;
-    String NO_WAIT = Interactors.NO_WAIT;
 
     default void get(String url) {
-        DriverStorage.get().get(url);
+        DriverProvider.get().get(url);
     }
 }

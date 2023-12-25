@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
-import ua.foggger.elements.detection.Interactors;
+import ua.foggger.elements.interactor.Interactors;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 import java.lang.invoke.MethodHandles;

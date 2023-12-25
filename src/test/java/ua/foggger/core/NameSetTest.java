@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.config.WrappedElements;
+import ua.foggger.core.page.IPageInterface;
 
 /**
  * Check that element name properly set for different usecases.
@@ -14,6 +15,7 @@ public class NameSetTest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
+        super.setUp();
         page = WrappedElements.initPage(IPageInterface.class);
     }
 

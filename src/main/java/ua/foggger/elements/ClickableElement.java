@@ -3,8 +3,8 @@ package ua.foggger.elements;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
-import ua.foggger.driver.DriverStorage;
-import ua.foggger.elements.detection.IElementInteractor;
+import ua.foggger.driver.DriverProvider;
+import ua.foggger.elements.interactor.IElementInteractor;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -134,7 +134,7 @@ public class ClickableElement implements IClickableElement {
     }
 
     protected WebElement detectElement(String methodName) {
-        boolean isReady = waitFor(() -> detection.isReadyForInteraction(methodName, locator, DriverStorage.get()), timeoutInSeconds);
+        boolean isReady = waitFor(() -> detection.isReadyForInteraction(methodName, locator, DriverProvider.get()), timeoutInSeconds);
         if (isReady) {
             return driver().findElement(locator);
         } else {

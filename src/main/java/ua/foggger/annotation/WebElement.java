@@ -1,6 +1,6 @@
 package ua.foggger.annotation;
 
-import ua.foggger.elements.detection.Interactors;
+import ua.foggger.elements.interactor.Interactors;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

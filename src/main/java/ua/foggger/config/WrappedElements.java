@@ -4,6 +4,9 @@ import ua.foggger.config.manager.DefaultSettingsManagerImpl;
 import ua.foggger.config.manager.SettingsManager;
 import ua.foggger.config.repo.InMemorySettingsRepository;
 import ua.foggger.config.repo.SettingsRepository;
+import ua.foggger.driver.IWebDriverProvider;
+import ua.foggger.driver.DriverProvider;
+import ua.foggger.driver.ThreadSafeWebDriverManager;
 import ua.foggger.page.IPage;
 import ua.foggger.page.PageInvocationHandler;
 
@@ -25,6 +28,8 @@ public final class WrappedElements {
 
         WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
         settingsRepository.save(wrappedElementsSettings);
+        IWebDriverProvider driverProvider = new ThreadSafeWebDriverManager();
+        DriverProvider.setDriverProvider(driverProvider);
     }
 
     private WrappedElements() {
@@ -37,6 +42,10 @@ public final class WrappedElements {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static <T> T initPage(Class clazz) {
+        if (settingsManager.get().getDriverSupplier() == null) {
+            //TODO: add documentation reference
+            throw new IllegalArgumentException("You need to specify function that creates webdriver using WrappedElements.config().driverCreator() function!");
+        }
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, IPage.class}, new PageInvocationHandler());
     }
 

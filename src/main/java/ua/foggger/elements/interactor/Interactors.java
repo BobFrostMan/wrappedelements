@@ -1,4 +1,4 @@
-package ua.foggger.elements.detection;
+package ua.foggger.elements.interactor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,8 +13,6 @@ public class Interactors {
     public static final String UNTIL_CLICKABLE = "untilClickable";
     public static final String VERTICAL_SCROLL_UNTIL_VISIBLE = "verticalScrollUntilVisible";
     public static final String STANDARD = "standard";
-    //TODO: do we need no wait action?
-    public static final String NO_WAIT = "noWait";
 
     private static final Map<String, IElementInteractor> detectionsMap = new HashMap<>();
 
@@ -24,9 +22,8 @@ public class Interactors {
             registerDetection(untilClickable());
             registerDetection(verticalScrollUntilVisible());
             registerDetection(standard());
-            registerDetection(nothing());
         } catch (Throwable t) {
-            t.printStackTrace();
+            throw new RuntimeException(t.getCause());
         }
     }
 
@@ -71,20 +68,6 @@ public class Interactors {
             @Override
             public String name() {
                 return VERTICAL_SCROLL_UNTIL_VISIBLE;
-            }
-
-            @Override
-            public boolean isReadyForInteraction(By by, WebDriver webDriver) {
-                return true;
-            }
-        };
-    }
-
-    private static IElementInteractor nothing() {
-        return new IElementInteractor() {
-            @Override
-            public String name() {
-                return NO_WAIT;
             }
 
             @Override
