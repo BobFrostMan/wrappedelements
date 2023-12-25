@@ -1,11 +1,12 @@
 package ua.foggger.config;
 
+import org.openqa.selenium.WebDriver;
 import ua.foggger.config.manager.DefaultSettingsManagerImpl;
 import ua.foggger.config.manager.SettingsManager;
 import ua.foggger.config.repo.InMemorySettingsRepository;
 import ua.foggger.config.repo.SettingsRepository;
-import ua.foggger.driver.IWebDriverProvider;
 import ua.foggger.driver.DriverProvider;
+import ua.foggger.driver.IWebDriverProvider;
 import ua.foggger.driver.ThreadSafeWebDriverManager;
 import ua.foggger.page.IPage;
 import ua.foggger.page.PageInvocationHandler;
@@ -13,7 +14,8 @@ import ua.foggger.page.PageInvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
- * General configurations and framework entry point
+ * General configurations and framework entry point.
+ * Before any interactions, config().driverCreator() should be invoked.
  */
 public final class WrappedElements {
 
@@ -47,6 +49,13 @@ public final class WrappedElements {
             throw new IllegalArgumentException("You need to specify function that creates webdriver using WrappedElements.config().driverCreator() function!");
         }
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, IPage.class}, new PageInvocationHandler());
+    }
+
+    /**
+     * @return
+     */
+    public static WebDriver getDriver() {
+        return DriverProvider.get();
     }
 
 }
