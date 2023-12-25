@@ -1,6 +1,5 @@
 package ua.foggger.helper;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 /**

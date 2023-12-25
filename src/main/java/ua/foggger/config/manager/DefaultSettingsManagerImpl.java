@@ -33,9 +33,9 @@ public class DefaultSettingsManagerImpl implements SettingsManager {
      */
     @Override
     public void setDefaultDriverCreator(Supplier<WebDriver> driverSupplier) {
-       WrappedElementsSettings settings = settingsRepository.get();
-       settings.setDriverSupplier(driverSupplier);
-       settingsRepository.save(settings);
+        WrappedElementsSettings settings = settingsRepository.get();
+        settings.setDriverSupplier(driverSupplier);
+        settingsRepository.save(settings);
     }
 
     /**

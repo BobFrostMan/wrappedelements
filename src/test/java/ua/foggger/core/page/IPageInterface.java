@@ -23,7 +23,7 @@ public interface IPageInterface extends IPage {
     }
 
     @WebElement(value = "//p[3]", name = "Saul Goodman")
-    default IClickableElement saulGoodman(){
+    default IClickableElement saulGoodman() {
         return new ClickableElement("I'm a lawyer");
     }
 
