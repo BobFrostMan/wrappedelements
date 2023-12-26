@@ -53,9 +53,18 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
 
     //TODO: How to read parameter names and replace it
     private String resolvePlaceholders(String target, Object[] args) {
-        if (target.contains("%s")) {
-            return String.format(target, args);
+        if (args == null) {
+            return target;
         }
+        if (args.length == 1 && target.contains("%")) {
+            if (target.contains("%s")) {
+                return target.replaceAll("%s", String.valueOf(args[0]));
+            }
+            if (target.contains("%d")) {
+                return target.replaceAll("%d", String.valueOf(args[0]));
+            }
+        }
+        //TODO: handle named parameters from annotation here
         return target;
     }
 
@@ -154,5 +163,4 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         setFieldValue(element, "timeoutInSeconds", webElementAnnotation.during());
         return element;
     }
-
 }

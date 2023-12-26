@@ -1,5 +1,6 @@
 package ua.foggger.core.page;
 
+import ua.foggger.annotation.Parameter;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
@@ -36,4 +37,13 @@ public interface LocatorPageInterface extends IPage {
 
     @WebElement(value = "p > tuco_%s")
     IClickableElement randomTuco(String text);
+
+    @WebElement(value = "//div[text() = '%s']|//span[contains(text(), '%s')]")
+    IClickableElement elementWithFewPlaceHoldersAndOneParameter(String text);
+
+    @WebElement(value = "//div[text() = '%d']|//span[contains(text(), '%d')]")
+    IClickableElement elementWithFewDigitPlaceHoldersAndOneParameter(int number);
+
+    @WebElement(value = "p > tuco_{{ last_name }}")
+    IClickableElement elementWithNamedParameter(@Parameter("last_name") String text);
 }

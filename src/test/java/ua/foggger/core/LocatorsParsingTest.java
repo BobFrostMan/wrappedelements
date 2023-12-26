@@ -32,6 +32,12 @@ public class LocatorsParsingTest extends BaseTest {
     }
 
     @Test
+    public void locatorIsWithFewPlaceHoldersAndOneParameterXpath() {
+        Assert.assertEquals(getLocator(page.elementWithFewPlaceHoldersAndOneParameter("text")), By.xpath("//div[text() = 'text']|//span[contains(text(), 'text')]"));
+        Assert.assertEquals(getLocator(page.elementWithFewDigitPlaceHoldersAndOneParameter(5)), By.xpath("//div[text() = '5']|//span[contains(text(), '5')]"));
+    }
+
+    @Test
     public void locatorIsAutoDefined() {
         String locator = "id";
         String expectedLocatorValue = String.format("//%s|//*[@id='%s']|//*[@name='%s']|//*[@class='%s'])", locator, locator, locator, locator);
