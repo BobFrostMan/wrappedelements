@@ -4,19 +4,19 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.TimeoutsPageInterface;
+import ua.foggger.core.page.TimeoutsPage;
 
 /**
  * Check that element locator properly set for different usecases.
  */
 public class TimeoutsManagementTest extends BaseTest {
 
-    private TimeoutsPageInterface page;
+    private TimeoutsPage page;
 
     @BeforeClass
     public void setUp() {
         super.setUp();
-        page = WrappedElements.initPage(TimeoutsPageInterface.class);
+        page = WrappedElements.initPage(TimeoutsPage.class);
     }
 
     @Test

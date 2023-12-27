@@ -76,3 +76,4 @@ Default identification mechanism, try to categorize provided locator is it xpath
 27.12.2023
 - Added resolving named parameters. Named parameters marked with @Parameter annotation and it's value will be replaced using ${parameter} placeholder
 - According test added to LocatorsParsingTest class
+- Implemented pretty name generation based on class name and method name

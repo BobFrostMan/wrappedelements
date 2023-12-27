@@ -5,19 +5,19 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.LocatorPageInterface;
+import ua.foggger.core.page.LocatorsPage;
 
 /**
  * Check that element locator properly set for different usecases.
  */
 public class LocatorsParsingTest extends BaseTest {
 
-    private LocatorPageInterface page;
+    private LocatorsPage page;
 
     @BeforeClass
     public void setUp() {
         super.setUp();
-        page = WrappedElements.initPage(LocatorPageInterface.class);
+        page = WrappedElements.initPage(LocatorsPage.class);
     }
 
     @Test

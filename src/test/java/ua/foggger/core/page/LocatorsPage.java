@@ -6,7 +6,7 @@ import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
 import ua.foggger.page.IPage;
 
-public interface LocatorPageInterface extends IPage {
+public interface LocatorsPage extends IPage {
 
     @WebElement("id=someId")
     ClickableElement elementSpecifiedById();

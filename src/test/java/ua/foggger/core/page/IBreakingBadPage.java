@@ -5,7 +5,7 @@ import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
 import ua.foggger.page.IPage;
 
-public interface IPageInterface extends IPage {
+public interface IBreakingBadPage extends IPage {
 
     @WebElement(value = "//p")
     IClickableElement heisenberg();

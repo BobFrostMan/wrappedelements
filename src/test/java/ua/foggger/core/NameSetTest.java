@@ -4,24 +4,24 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.IPageInterface;
+import ua.foggger.core.page.IBreakingBadPage;
 
 /**
  * Check that element name properly set for different usecases.
  */
 public class NameSetTest extends BaseTest {
 
-    private IPageInterface page;
+    private IBreakingBadPage page;
 
     @BeforeClass
     public void setUp() {
         super.setUp();
-        page = WrappedElements.initPage(IPageInterface.class);
+        page = WrappedElements.initPage(IBreakingBadPage.class);
     }
 
     @Test
     public void nameIsSetFromMethodName() {
-        Assert.assertEquals(page.heisenberg().getName(), "heisenberg");
+        Assert.assertEquals(page.heisenberg().getName(), "Heisenberg on Breaking bad page");
     }
 
     @Test
@@ -31,7 +31,7 @@ public class NameSetTest extends BaseTest {
 
     @Test
     public void nameIsSetIfBasedOnMethodManeIfMethodIsDefault() {
-        Assert.assertEquals(page.jessy().getName(), "jessy");
+        Assert.assertEquals(page.jessy().getName(), "Jessy on Breaking bad page");
     }
 
     @Test

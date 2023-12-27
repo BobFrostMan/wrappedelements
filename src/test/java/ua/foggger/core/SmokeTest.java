@@ -4,17 +4,17 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.IPageInterface;
+import ua.foggger.core.page.IBreakingBadPage;
 import ua.foggger.elements.interactor.Interactors;
 
 public class SmokeTest extends BaseTest {
 
-    private IPageInterface page;
+    private IBreakingBadPage page;
 
     @BeforeClass
     public void setUp() {
         super.setUp();
-        page = WrappedElements.initPage(IPageInterface.class);
+        page = WrappedElements.initPage(IBreakingBadPage.class);
     }
 
     @Test

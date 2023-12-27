@@ -5,7 +5,7 @@ import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
 import ua.foggger.page.IPage;
 
-public interface TimeoutsPageInterface extends IPage {
+public interface TimeoutsPage extends IPage {
 
     @WebElement(value = "//p", during = 15)
     IClickableElement customTimeout();
