@@ -1,4 +1,4 @@
-package ua.foggger.elements.detection;
+package ua.foggger.elements.interactor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 /**
  * Provides functionality to set condition for element to be ready for interactions
  */
-public interface IElementDetection {
+public interface IElementInteractor {
 
     /**
      * Returns name of this element detection implementation

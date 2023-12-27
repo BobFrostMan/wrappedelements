@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
-import ua.foggger.elements.detection.Detections;
+import ua.foggger.elements.interactor.Interactors;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 import java.lang.invoke.MethodHandles;
@@ -12,6 +12,7 @@ import java.lang.invoke.MethodType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.List;
 
 
@@ -51,16 +52,29 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         return invokeDefaultMethodImpl(proxy, method, args);
     }
 
-    //TODO: How to read parameter names and replace it
-    private String resolvePlaceholders(String target, Object[] args) {
-        if (target.contains("%s")) {
-            return String.format(target, args);
+    private String resolvePlaceholders(String target, Method method, Object[] args) {
+        if (args == null) {
+            return target;
+        }
+        if (args.length == 1 && target.contains("%")) {
+            if (target.contains("%s")) {
+                return target.replaceAll("%s", String.valueOf(args[0]));
+            }
+            if (target.contains("%d")) {
+                return target.replaceAll("%d", String.valueOf(args[0]));
+            }
+        }
+
+        for (int i = 0; i < method.getParameters().length; i++) {
+            Parameter parameter = method.getParameters()[i];
+            ua.foggger.annotation.Parameter annotation = parameter.getAnnotation(ua.foggger.annotation.Parameter.class);
+            target = target.replaceAll("\\$\\{\\s?" + annotation.value() + "\\s?\\}", String.valueOf(args[i]));
         }
         return target;
     }
 
-    private By formLocator(String locator, Object[] args) {
-        locator = resolvePlaceholders(locator, args);
+    private By formLocator(String locator, Method method, Object[] args) {
+        locator = resolvePlaceholders(locator, method, args);
         if (isLocatorTypeDefined(locator)) {
             return getDefinedTypeLocator(locator);
         }
@@ -149,10 +163,9 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
     private <T> Object setValuesFromAnnotations(T element, Method method, WebElement webElementAnnotation, Object[] args) {
         String name = "".equals(webElementAnnotation.name()) ? method.getName() : webElementAnnotation.name();
         setFieldValue(element, "name", name);
-        setFieldValue(element, "detection", Detections.getRegisteredDetection(webElementAnnotation.waitUntil()));
-        setFieldValue(element, "locator", formLocator(webElementAnnotation.value(), args));
+        setFieldValue(element, "detection", Interactors.getRegisteredDetection(webElementAnnotation.waitUntil()));
+        setFieldValue(element, "locator", formLocator(webElementAnnotation.value(), method, args));
         setFieldValue(element, "timeoutInSeconds", webElementAnnotation.during());
         return element;
     }
-
 }

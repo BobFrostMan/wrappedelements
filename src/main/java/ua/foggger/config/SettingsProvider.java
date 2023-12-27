@@ -1,17 +1,17 @@
 package ua.foggger.config;
 
-import ua.foggger.driver.DriverStorage;
+/**
+ * Provides configurations internally for WrappedElements framework
+ */
+public interface SettingsProvider {
 
-public class SettingsProvider {
-
-    private static WrappedElementsSettings wrappedElementsSettings;
-
-    public static WrappedElementsSettings provide() {
-        return wrappedElementsSettings;
+    /**
+     * Returns existing settings object
+     *
+     * @return settings object
+     */
+    default WrappedElementsSettings getSettings() {
+        return WrappedElements.settingsManager.get();
     }
 
-    public static void registerSettings(WrappedElementsSettings settings) {
-        wrappedElementsSettings = settings;
-        DriverStorage.setDriverSupplier(settings.getDriverSupplier());
-    }
 }

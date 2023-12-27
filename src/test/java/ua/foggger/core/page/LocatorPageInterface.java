@@ -1,5 +1,6 @@
-package ua.foggger.core;
+package ua.foggger.core.page;
 
+import ua.foggger.annotation.Parameter;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
@@ -34,20 +35,15 @@ public interface LocatorPageInterface extends IPage {
     @WebElement(value = "(//form//input)[2]")
     IClickableElement heisenberg2();
 
-    @WebElement(value = "//p[contains(text(), '%s')]", name = "My name is Vova!")
-    IClickableElement randomPerson(String text);
-
-    @WebElement(value = "//p[2]")
-    default IClickableElement jessy() {
-        ClickableElement clickableElement = new ClickableElement("What's up bi......h!");
-        return clickableElement;
-    }
-
-    @WebElement(value = "//p[3]", name = "Saul Goodman")
-    default IClickableElement saulGoodman() {
-        return new ClickableElement("I'm a lawyer");
-    }
-
     @WebElement(value = "p > tuco_%s")
     IClickableElement randomTuco(String text);
+
+    @WebElement(value = "//div[text() = '%s']|//span[contains(text(), '%s')]")
+    IClickableElement elementWithFewPlaceHoldersAndOneParameter(String text);
+
+    @WebElement(value = "//div[text() = '%d']|//span[contains(text(), '%d')]")
+    IClickableElement elementWithFewDigitPlaceHoldersAndOneParameter(int number);
+
+    @WebElement(value = "//li/a[contains(text(), '${first_name} ${ last_name }')]")
+    IClickableElement elementWithNamedParameter(@Parameter("last_name") String lastName, @Parameter("first_name") String firstName);
 }

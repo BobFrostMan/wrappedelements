@@ -4,7 +4,8 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ua.foggger.page.WrappedPage;
+import ua.foggger.config.WrappedElements;
+import ua.foggger.core.page.LocatorPageInterface;
 
 /**
  * Check that element locator properly set for different usecases.
@@ -15,7 +16,8 @@ public class LocatorsParsingTest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        page = WrappedPage.create(LocatorPageInterface.class);
+        super.setUp();
+        page = WrappedElements.initPage(LocatorPageInterface.class);
     }
 
     @Test
@@ -27,6 +29,17 @@ public class LocatorsParsingTest extends BaseTest {
     @Test
     public void locatorIsAutoDefinedAsCSS() {
         Assert.assertEquals(getLocator(page.randomTuco("salamanka")), By.cssSelector("p > tuco_salamanka"));
+    }
+
+    @Test
+    public void locatorIsWithFewPlaceHoldersAndOneParameterXpath() {
+        Assert.assertEquals(getLocator(page.elementWithFewPlaceHoldersAndOneParameter("text")), By.xpath("//div[text() = 'text']|//span[contains(text(), 'text')]"));
+        Assert.assertEquals(getLocator(page.elementWithFewDigitPlaceHoldersAndOneParameter(5)), By.xpath("//div[text() = '5']|//span[contains(text(), '5')]"));
+    }
+
+    @Test
+    public void locatorIsWithNamedParameters() {
+        Assert.assertEquals(getLocator(page.elementWithNamedParameter("Salamanka", "Tuco")), By.xpath("//li/a[contains(text(), 'Tuco Salamanka')]"));
     }
 
     @Test

@@ -1,98 +1,57 @@
 package ua.foggger.config;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import ua.foggger.elements.detection.Detections;
-import ua.foggger.elements.detection.IElementDetection;
+import ua.foggger.config.manager.DefaultSettingsManagerImpl;
+import ua.foggger.config.manager.SettingsManager;
+import ua.foggger.config.repo.InMemorySettingsRepository;
+import ua.foggger.config.repo.SettingsRepository;
+import ua.foggger.driver.DriverProvider;
+import ua.foggger.driver.IWebDriverProvider;
+import ua.foggger.driver.ThreadSafeWebDriverManager;
+import ua.foggger.page.IPage;
+import ua.foggger.page.PageInvocationHandler;
 
-import java.util.function.Supplier;
+import java.lang.reflect.Proxy;
 
 /**
- * General configurations entry point
+ * General configurations and framework entry point.
+ * Before any interactions, config().driverCreator() should be invoked.
  */
 public final class WrappedElements {
 
-    private static final WrappedElements wrappedElements;
-    private static final WrappedElementsSettings settings;
+    static final SettingsManager settingsManager;
+    private static final SettingsRepository settingsRepository;
+    private static final WrappedElementsConfig wrappedElementsConfig;
 
     static {
-        wrappedElements = new WrappedElements();
-        settings = new WrappedElementsSettings();
-        //TODO: It's not very convenient to define IElementDetection implementation here
-        defaultElementsDetection(new IElementDetection() {
-            @Override
-            public String name() {
-                return Detections.STANDARD;
-            }
-
-            @Override
-            public boolean isReadyForInteraction(By by, WebDriver webDriver) {
-                return (Boolean) ((JavascriptExecutor) webDriver).executeScript(
-                        "var elem = arguments[0],                 " +
-                                "  box = elem.getBoundingClientRect(),    " +
-                                "  cx = box.left + box.width / 2,         " +
-                                "  cy = box.top + box.height / 2,         " +
-                                "  e = document.elementFromPoint(cx, cy); " +
-                                "for (; e; e = e.parentElement) {         " +
-                                "  if (e === elem)                        " +
-                                "    return true;                         " +
-                                "}                                        " +
-                                "return false;                            "
-                        , webDriver.findElement(by));
-            }
-
-            @Override
-            public boolean isReadyForInteraction(String methodName, By by, WebDriver webDriver) {
-                switch (methodName) {
-                    case "click":
-                    case "submit":
-                    case "sendKeys":
-                    case "clear":
-                    case "isSelected":
-                    case "isEnabled":
-                    case "getText":
-                    case "findElements":
-                    case "findElement":
-                    case "isDisplayed":
-                        return isReadyForInteraction(by, webDriver);
-                    default:
-//                    case "getAttribute":
-//                    case "getTagName":
-//                    case "getLocation":
-//                    case "getSize":
-//                    case "getRect":
-//                    case "getCssValue":
-//                    case "getScreenshotAs":
-                        return true;
-                }
-            }
-        });
-
-        withInteractionTimeout(30);
-
+        settingsRepository = new InMemorySettingsRepository();
+        settingsManager = new DefaultSettingsManagerImpl(settingsRepository);
+        wrappedElementsConfig = new WrappedElementsConfig(settingsManager);
+        IWebDriverProvider driverProvider = new ThreadSafeWebDriverManager();
+        DriverProvider.setDriverProvider(driverProvider);
+        WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
+        settingsRepository.save(wrappedElementsSettings);
     }
 
-    public static WrappedElements withInteractionTimeout(long interactionTimeout) {
-        settings.setInteractionTimeout(interactionTimeout);
-        return wrappedElements;
+    private WrappedElements() {
+        throw new UnsupportedOperationException("No way you can create WrappedElements");
     }
 
-    public static WrappedElements driverCreateFunction(Supplier<WebDriver> driverSupplier) {
-        settings.setDriverSupplier(driverSupplier);
-        return wrappedElements;
+    public static WrappedElementsConfig config() {
+        return wrappedElementsConfig;
     }
 
-    public static WrappedElements defaultElementsDetection(IElementDetection elementDetection) {
-        settings.setElementDetection(elementDetection);
-        return wrappedElements;
-    }
-
-    public static void init() {
-        if (settings.getDriverSupplier() == null) {
-            throw new IllegalArgumentException("WrappedElements framework need to know how to create webdriver. Please provide Supply<WebDriver> function using WrappedElements.driverCreateFunction(Supplier<WebDriver> driverSupplier)!");
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static <T> T initPage(Class clazz) {
+        if (settingsManager.get().getDriverSupplier() == null) {
+            //TODO: add documentation reference
+            throw new IllegalArgumentException("You need to specify function that creates webdriver using WrappedElements.config().driverCreator() function!");
         }
-        SettingsProvider.registerSettings(settings);
+        return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, IPage.class}, new PageInvocationHandler());
+    }
+
+    public static WebDriver getDriver() {
+        return DriverProvider.get();
     }
 
 }

@@ -1,6 +1,6 @@
 package ua.foggger.annotation;
 
-import ua.foggger.elements.detection.Detections;
+import ua.foggger.elements.interactor.Interactors;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -45,9 +45,10 @@ public @interface WebElement {
      *
      * @return String condition name;
      */
-    String waitUntil() default Detections.STANDARD;
+    String waitUntil() default Interactors.STANDARD;
 
     //TODO: Have to think about interval override
+
     /**
      * Timeout for waitUntil detection function.
      *

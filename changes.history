@@ -1,0 +1,78 @@
+13.12.2023
+- Added WrappedElements class as a main framework's configuration entry point
+- Added IElementDetection interface that provides opportunity to set elements interaction behavior
+- Added Detections class with IElementDetection
+- IElementDetection name now can be specified in @WebElement using waitUntil field
+- Added IDriverSupplier and default implementation
+- PageInvocationHandler now can set IElementDetection to element
+
+14.12.2023
+- Fixed issue with standard detection in Detections class
+
+15.12.2023
+- Standard detection declaration moved to WrappedElements class since it's main entry point
+- Implemented IHaveReflectionAccess interface for testing purposes and for PageInvocationHandler
+- Removed getLocator and getTimeout methods from IClickableElement interface
+- Added set timeout from WebElement annotation
+- Added isTimeoutSet test added
+
+18.12.2023
+- Removed IDriverSupplier
+- Added SettingsProvider for hidden settings providence
+- Added IDriverProvider interface that provides functionality for managing webdrivers
+- Added ThreadSafeDriverProvider as a Default driver provider mechanism
+- WrappedElements no does not return WrappedElementsSettings directly anymore
+- IPage has get(String) method now that initializes webdriver supplier mechanism and internally creates WebDriver object before usage
+- DriverSetTest is added
+
+19.12.2023
+- Implemented simple Clickable elements wrappers
+- Implemented sendKeys with delay after each character sendKeys(CharSequence, long)
+- Initial implementation of ClickableElementInvocationHandler added
+
+20.12.2023
+- IPage get doesn't work now - need to find solution
+- ClickableElementInvocationHandler is not in use right now due to impossibility to set values to Proxy object
+- Added No wait detection
+- SettingsProvider now sets default driver supplier
+- Xpath definition function fixed in PageInvocationHandler
+- Added additional xpath testcase check in LocatorsParsingTest
+- POC is ready
+
+21.12.2023
+- Removed redundant ICanWait interface, replaced it's usage by single method in clickable element
+- Added automatic locator identification mechanism along side with explicit specification. You can now explicitly specify locator type using text prefix in @WebElement annotation.
+Available prefixes:
+ "id="
+ "tag="
+ "name="
+ "class="
+ "xpath="
+ "css="
+ "linkText="
+Default identification mechanism, try to categorize provided locator is it xpath or css, otherwise tries to search by locator as id, name, tagName, or class.
+- Found stability issue with static blocks initialization caught by tests 'java.lang.AssertionError: expected object to not be null', or 'java.lang.NullPointerException: Cannot invoke "ua.foggger.config.WrappedElementsSettings.getElementDetection()" because the return value of "ua.foggger.InternalSettingsProvider.provide()" is null' Config module should be redesigned.
+- testng dependency now has test scope
+
+22.12.2023
+- Started architectural redesign to increase stability
+- Config module fully reworked
+- Added InternalSettingsProvider as SettingsProvider interface
+- Simplified entrypoint - WrappedElements. WrappedElements now wraps pages instead of WrappedPage class
+- WrappedPage class removed
+
+25.12.2023
+- Config module redesigned, WrappedElements is now a part of config module
+- Added global configurations providence using SettingsProvider
+- Added DummyWebDriver for testing purposes
+- Simplified interfaces
+- Added TimeoutsManagementTest
+
+26.12.2023
+- Added @Parameter annotation
+- Minor fix for resolve a few %s placeholders with one argument
+- Added according test locatorIsWithFewPlaceHoldersAndOneParameterXpath
+
+27.12.2023
+- Added resolving named parameters. Named parameters marked with @Parameter annotation and it's value will be replaced using ${parameter} placeholder
+- According test added to LocatorsParsingTest class
