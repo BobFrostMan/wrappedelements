@@ -44,6 +44,6 @@ public interface LocatorPageInterface extends IPage {
     @WebElement(value = "//div[text() = '%d']|//span[contains(text(), '%d')]")
     IClickableElement elementWithFewDigitPlaceHoldersAndOneParameter(int number);
 
-    @WebElement(value = "p > tuco_{{ last_name }}")
-    IClickableElement elementWithNamedParameter(@Parameter("last_name") String text);
+    @WebElement(value = "//li/a[contains(text(), '${first_name} ${ last_name }')]")
+    IClickableElement elementWithNamedParameter(@Parameter("last_name") String lastName, @Parameter("first_name") String firstName);
 }

@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  */
 public class WrappedElementsConfig {
 
-    private SettingsManager settingsManager;
+    private final SettingsManager settingsManager;
 
     WrappedElementsConfig(SettingsManager settingsManager) {
         this.settingsManager = settingsManager;

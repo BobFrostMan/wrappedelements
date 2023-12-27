@@ -38,6 +38,11 @@ public class LocatorsParsingTest extends BaseTest {
     }
 
     @Test
+    public void locatorIsWithNamedParameters() {
+        Assert.assertEquals(getLocator(page.elementWithNamedParameter("Salamanka", "Tuco")), By.xpath("//li/a[contains(text(), 'Tuco Salamanka')]"));
+    }
+
+    @Test
     public void locatorIsAutoDefined() {
         String locator = "id";
         String expectedLocatorValue = String.format("//%s|//*[@id='%s']|//*[@name='%s']|//*[@class='%s'])", locator, locator, locator, locator);

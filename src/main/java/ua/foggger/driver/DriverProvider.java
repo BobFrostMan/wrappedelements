@@ -2,6 +2,9 @@ package ua.foggger.driver;
 
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Provides driver object across framework
+ */
 public class DriverProvider {
 
     private static IWebDriverProvider driverProvider;
