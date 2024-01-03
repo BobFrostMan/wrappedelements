@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * Class contains default element interaction behaviors used for @WebElement annotation handling.
+ *
  * @see ua.foggger.annotation.WebElement
  */
 public class Interactors {
@@ -33,6 +34,7 @@ public class Interactors {
 
     /**
      * Register additional behavior
+     *
      * @param elementDetection object that defines element interaction behavior
      */
     public static void registerDetection(IElementInteractor elementDetection) {

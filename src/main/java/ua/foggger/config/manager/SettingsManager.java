@@ -38,7 +38,8 @@ public interface SettingsManager {
 
     /**
      * Adds clickable element custom decorator
-     * @param clazz class that will be handled
+     *
+     * @param clazz            class that will be handled
      * @param elementDecorator decorator that will be used for clazz decoration
      */
     void addElementDecorator(Class<? extends IClickableElement> clazz, IElementDecorator elementDecorator);

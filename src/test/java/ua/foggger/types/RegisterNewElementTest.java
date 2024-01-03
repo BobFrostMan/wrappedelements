@@ -8,7 +8,6 @@ import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.driver.DummyWebDriver;
 import ua.foggger.elements.decorator.IElementDecorator;
-import ua.foggger.page.IPage;
 import ua.foggger.types.annotations.CustomEmptyElement;
 import ua.foggger.types.element.EmptyElement;
 import ua.foggger.types.page.CustomTypePage;
