@@ -2,6 +2,8 @@ package ua.foggger.config.manager;
 
 import org.openqa.selenium.WebDriver;
 import ua.foggger.config.WrappedElementsSettings;
+import ua.foggger.elements.IClickableElement;
+import ua.foggger.elements.decorator.IElementDecorator;
 import ua.foggger.elements.interactor.IElementInteractor;
 
 import java.util.function.Supplier;
@@ -33,5 +35,12 @@ public interface SettingsManager {
      * @param elementInteractor element interaction function
      */
     void setDefaultElementInteractor(IElementInteractor elementInteractor);
+
+    /**
+     * Adds clickable element custom decorator
+     * @param clazz class that will be handled
+     * @param elementDecorator decorator that will be used for clazz decoration
+     */
+    void addElementDecorator(Class<? extends IClickableElement> clazz, IElementDecorator elementDecorator);
 
 }

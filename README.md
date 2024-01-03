@@ -34,10 +34,15 @@ public void simpleUIInteractionTest() {
 ```
 ## Easy element's interaction setup
 In progress 
+
 ## Easy element's locator definition for different platforms
 In progress
+
 ## Dynamic locators support
 In progress 
 
-#Getting started
+## List elements support
+In progress
+
+# Getting started
 TODO

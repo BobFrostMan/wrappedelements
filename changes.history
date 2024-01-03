@@ -77,3 +77,11 @@ Default identification mechanism, try to categorize provided locator is it xpath
 - Added resolving named parameters. Named parameters marked with @Parameter annotation and it's value will be replaced using ${parameter} placeholder
 - According test added to LocatorsParsingTest class
 - Implemented pretty name generation based on class name and method name
+
+03.01.2024
+- Added opportunity to register custom element with custom decorators using self created annotations
+- New custom Elements now can be added using WrappedElements class
+- RegisterNewElementTest added
+- PageInvocationHandler reworked
+- Introduced ElementNameResolver
+- Introduced LocatorResolver

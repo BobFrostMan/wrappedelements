@@ -8,6 +8,9 @@ import ua.foggger.config.repo.SettingsRepository;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.driver.IWebDriverProvider;
 import ua.foggger.driver.ThreadSafeWebDriverManager;
+import ua.foggger.elements.ClickableElement;
+import ua.foggger.elements.IClickableElement;
+import ua.foggger.elements.decorator.ClickableElementDecorator;
 import ua.foggger.page.IPage;
 import ua.foggger.page.PageInvocationHandler;
 
@@ -29,7 +32,10 @@ public final class WrappedElements {
         wrappedElementsConfig = new WrappedElementsConfig(settingsManager);
         IWebDriverProvider driverProvider = new ThreadSafeWebDriverManager();
         DriverProvider.setDriverProvider(driverProvider);
+
         WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
+        wrappedElementsSettings.addDecorator(IClickableElement.class, new ClickableElementDecorator());
+        wrappedElementsSettings.addDecorator(ClickableElement.class, new ClickableElementDecorator());
         settingsRepository.save(wrappedElementsSettings);
     }
 

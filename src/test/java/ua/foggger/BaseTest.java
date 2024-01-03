@@ -1,4 +1,4 @@
-package ua.foggger.core;
+package ua.foggger;
 
 import org.testng.annotations.BeforeClass;
 import ua.foggger.config.WrappedElements;
