@@ -20,10 +20,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class ClickableElement implements IClickableElement {
 
-    private String name;
-    private By locator;
-    private IElementInteractor detection;
-    private int timeoutInSeconds;
+    protected String name;
+    protected By locator;
+    protected IElementInteractor detection;
+    protected int timeoutInSeconds;
     private WebElement innerElement;
 
     public ClickableElement() {

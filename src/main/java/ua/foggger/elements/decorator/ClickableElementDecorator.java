@@ -9,6 +9,7 @@ import ua.foggger.page.LocatorResolver;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+//TODO: get rid of reflection access usage
 public class ClickableElementDecorator implements IElementDecorator, IHaveReflectionAccess {
 
     private LocatorResolver locatorResolver;

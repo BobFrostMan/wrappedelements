@@ -11,6 +11,7 @@ import ua.foggger.driver.ThreadSafeWebDriverManager;
 import ua.foggger.elements.ClickableElement;
 import ua.foggger.elements.IClickableElement;
 import ua.foggger.elements.decorator.ClickableElementDecorator;
+import ua.foggger.elements.interactor.Interactors;
 import ua.foggger.page.IPage;
 import ua.foggger.page.PageInvocationHandler;
 
@@ -34,8 +35,10 @@ public final class WrappedElements {
         DriverProvider.setDriverProvider(driverProvider);
 
         WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
+        wrappedElementsSettings.setElementDetection(Interactors.getRegisteredDetection(Interactors.UNTIL_CLICKABLE));
         wrappedElementsSettings.addDecorator(IClickableElement.class, new ClickableElementDecorator());
         wrappedElementsSettings.addDecorator(ClickableElement.class, new ClickableElementDecorator());
+
         settingsRepository.save(wrappedElementsSettings);
     }
 
@@ -50,12 +53,12 @@ public final class WrappedElements {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static <T> T initPage(Class clazz) {
         if (settingsManager.get().getDriverSupplier() == null) {
-            //TODO: add documentation reference
             throw new IllegalArgumentException("You need to specify function that creates webdriver using WrappedElements.config().driverCreator() function!");
         }
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, IPage.class}, new PageInvocationHandler());
     }
 
+    //TODO: Add driver monitoring if it's quit - recreate it
     public static WebDriver getDriver() {
         return DriverProvider.get();
     }

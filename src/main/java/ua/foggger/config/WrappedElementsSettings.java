@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 public class WrappedElementsSettings {
 
     private long interactionTimeout;
+    //TODO: rename element interaction
     private IElementInteractor elementDetection;
     private Supplier<WebDriver> driverSupplier;
     private Map<Class, IElementDecorator> decoratorMap;

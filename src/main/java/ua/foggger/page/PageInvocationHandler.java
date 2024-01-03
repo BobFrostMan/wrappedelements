@@ -19,6 +19,8 @@ import java.util.List;
  */
 public class PageInvocationHandler implements InvocationHandler, IHaveReflectionAccess, SettingsProvider {
 
+    //TODO: support components
+    //TODO: support class fields
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         //TODO: Will we have different annotations for different element types? Like dropdowns or something?
@@ -33,11 +35,13 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
                     IClickableElement element = (IClickableElement) invokeDefaultMethodImpl(proxy, method, args);
                     return decorator.setValuesFromAnnotation(element, method, args);
                 } else {
+                    //TODO: Add opportunity to provide any element types not only that one that implements IClickableElement
                     //Create default exact implementation
                     IClickableElement element = ClickableElement.class.getConstructor().newInstance();
                     return decorator.setValuesFromAnnotation(element, method, args);
                 }
             } else {
+                //TODO: Add opportunity to provide any element types not only that one that implements IClickableElement
                 //Create exact implementation
                 IClickableElement element = (IClickableElement) clazz.getConstructor().newInstance();
                 return decorator.setValuesFromAnnotation(element, method, args);
