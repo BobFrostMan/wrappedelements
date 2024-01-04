@@ -1,10 +1,11 @@
-package ua.foggger.elements;
+package ua.foggger.element.clickable;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.driver.DriverProvider;
-import ua.foggger.elements.interactor.IElementInteractor;
+import ua.foggger.element.IWrappedElement;
+import ua.foggger.element.interactor.IElementInteractor;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * - Preforms protection from StaleElementReferenceException | NoSuchElementException | ElementClickInterceptedException that occurs before http requests sending to selenium server;
  * - Introduce getLocator() method that returns By object, for some specific interactions.
  */
-public class ClickableElement implements IClickableElement {
+public class ClickableElement implements IWrappedElement {
 
     protected String name;
     protected By locator;
@@ -28,6 +29,22 @@ public class ClickableElement implements IClickableElement {
 
     public ClickableElement() {
 
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+    void setLocator(By locator) {
+        this.locator = locator;
+    }
+
+    void setDetection(IElementInteractor detection) {
+        this.detection = detection;
+    }
+
+    void setTimeoutInSeconds(int timeoutInSeconds) {
+        this.timeoutInSeconds = timeoutInSeconds;
     }
 
     public ClickableElement(String name) {

@@ -1,7 +1,8 @@
-package ua.foggger.elements.decorator;
+package ua.foggger.element.clickable;
 
 import ua.foggger.annotation.WebElement;
-import ua.foggger.elements.interactor.Interactors;
+import ua.foggger.element.decorator.IElementDecorator;
+import ua.foggger.element.interactor.Interactors;
 import ua.foggger.helper.IHaveReflectionAccess;
 import ua.foggger.page.ElementNameResolver;
 import ua.foggger.page.LocatorResolver;
@@ -9,8 +10,7 @@ import ua.foggger.page.LocatorResolver;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-//TODO: get rid of reflection access usage
-public class ClickableElementDecorator implements IElementDecorator, IHaveReflectionAccess {
+public class ClickableElementDecorator implements IElementDecorator {
 
     private LocatorResolver locatorResolver;
     private ElementNameResolver elementNameResolver;
@@ -23,11 +23,12 @@ public class ClickableElementDecorator implements IElementDecorator, IHaveReflec
     @Override
     public <T> Object setValuesFromAnnotation(T element, Method method, Object[] args) {
         WebElement annotation = (WebElement) method.getAnnotation(getAnnotationClass());
+        ClickableElement clickableElement = (ClickableElement) element;
         String name = "".equals(annotation.name()) ? elementNameResolver.resolve(method) : annotation.name();
-        setFieldValue(element, "name", name);
-        setFieldValue(element, "detection", Interactors.getRegisteredDetection(annotation.waitUntil()));
-        setFieldValue(element, "locator", locatorResolver.resolveLocator(annotation.value(), method, args));
-        setFieldValue(element, "timeoutInSeconds", annotation.during());
+        clickableElement.setName(name);
+        clickableElement.setDetection(Interactors.getRegisteredDetection(annotation.waitUntil()));
+        clickableElement.setLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
+        clickableElement.setTimeoutInSeconds(annotation.during());
         return element;
     }
 

@@ -1,9 +1,9 @@
 package ua.foggger.page;
 
 import ua.foggger.config.SettingsProvider;
-import ua.foggger.elements.ClickableElement;
-import ua.foggger.elements.IClickableElement;
-import ua.foggger.elements.decorator.IElementDecorator;
+import ua.foggger.element.clickable.ClickableElement;
+import ua.foggger.element.IWrappedElement;
+import ua.foggger.element.decorator.IElementDecorator;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 import java.lang.invoke.MethodHandles;
@@ -23,7 +23,6 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
     //TODO: support class fields
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        //TODO: Will we have different annotations for different element types? Like dropdowns or something?
         //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects
 
         Class<?> clazz = method.getReturnType();
@@ -31,19 +30,18 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         if (decorator != null) {
             if (clazz.isInterface()) {
                 if (method.isDefault()) {
-                    //TODO: What to do with default implementations?
-                    IClickableElement element = (IClickableElement) invokeDefaultMethodImpl(proxy, method, args);
+                    IWrappedElement element = (IWrappedElement) invokeDefaultMethodImpl(proxy, method, args);
                     return decorator.setValuesFromAnnotation(element, method, args);
                 } else {
-                    //TODO: Add opportunity to provide any element types not only that one that implements IClickableElement
+                    //TODO: Add opportunity to provide any element types not only that one that implements IWrappedElement
                     //Create default exact implementation
-                    IClickableElement element = ClickableElement.class.getConstructor().newInstance();
+                    IWrappedElement element = ClickableElement.class.getConstructor().newInstance();
                     return decorator.setValuesFromAnnotation(element, method, args);
                 }
             } else {
-                //TODO: Add opportunity to provide any element types not only that one that implements IClickableElement
+                //TODO: Add opportunity to provide any element types not only that one that implements IWrappedElement
                 //Create exact implementation
-                IClickableElement element = (IClickableElement) clazz.getConstructor().newInstance();
+                IWrappedElement element = (IWrappedElement) clazz.getConstructor().newInstance();
                 return decorator.setValuesFromAnnotation(element, method, args);
             }
         }

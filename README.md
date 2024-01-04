@@ -5,7 +5,7 @@ A convenient framework wrapper for pages and selenium webelements, that reduces 
 ## Clear and simple Page object classes
 ```
 import ua.foggger.annotation.WebElement;
-import ua.foggger.elements.ClickableElement;
+import ua.foggger.element.clickable.ClickableElement;
 import ua.foggger.page.IPage;
 
 public interface LoginPage extends IPage {

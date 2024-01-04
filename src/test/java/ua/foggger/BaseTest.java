@@ -3,21 +3,21 @@ package ua.foggger;
 import org.testng.annotations.BeforeClass;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.driver.DummyWebDriver;
-import ua.foggger.elements.IClickableElement;
-import ua.foggger.elements.interactor.IElementInteractor;
+import ua.foggger.element.IWrappedElement;
+import ua.foggger.element.interactor.IElementInteractor;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 public abstract class BaseTest implements IHaveReflectionAccess {
 
-    protected Object getLocator(IClickableElement element) {
+    protected Object getLocator(IWrappedElement element) {
         return getFieldValue(element, "locator");
     }
 
-    protected IElementInteractor getDetection(IClickableElement element) {
+    protected IElementInteractor getDetection(IWrappedElement element) {
         return (IElementInteractor) getFieldValue(element, "detection");
     }
 
-    protected Object getTimeout(IClickableElement element) {
+    protected Object getTimeout(IWrappedElement element) {
         return getFieldValue(element, "timeoutInSeconds");
     }
 

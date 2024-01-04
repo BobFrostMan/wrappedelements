@@ -1,6 +1,6 @@
 package ua.foggger.page;
 
-import ua.foggger.elements.interactor.Interactors;
+import ua.foggger.element.interactor.Interactors;
 
 public interface IPage {
 

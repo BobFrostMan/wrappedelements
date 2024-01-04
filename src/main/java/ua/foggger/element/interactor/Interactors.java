@@ -1,4 +1,4 @@
-package ua.foggger.elements.interactor;
+package ua.foggger.element.interactor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,21 +12,25 @@ import java.util.Map;
  *
  * @see ua.foggger.annotation.WebElement
  */
-public class Interactors {
+public final class Interactors {
 
     public static final String UNTIL_VISIBLE = "untilVisible";
     public static final String UNTIL_CLICKABLE = "untilClickable";
     public static final String VERTICAL_SCROLL_UNTIL_VISIBLE = "verticalScrollUntilVisible";
     public static final String STANDARD = "standard";
 
-    private static final Map<String, IElementInteractor> detectionsMap = new HashMap<>();
+    private static final Map<String, IElementInteractor> interactorsMap = new HashMap<>();
+
+    private Interactors() {
+
+    }
 
     static {
         try {
-            registerDetection(untilVisible());
-            registerDetection(untilClickable());
-            registerDetection(verticalScrollUntilVisible());
-            registerDetection(standard());
+            registerInteractor(untilVisible());
+            registerInteractor(untilClickable());
+            registerInteractor(verticalScrollUntilVisible());
+            registerInteractor(standard());
         } catch (Throwable t) {
             throw new RuntimeException(t.getCause());
         }
@@ -35,14 +39,14 @@ public class Interactors {
     /**
      * Register additional behavior
      *
-     * @param elementDetection object that defines element interaction behavior
+     * @param elementInteractor object that defines element interaction behavior
      */
-    public static void registerDetection(IElementInteractor elementDetection) {
-        detectionsMap.put(elementDetection.name(), elementDetection);
+    public static void registerInteractor(IElementInteractor elementInteractor) {
+        interactorsMap.put(elementInteractor.name(), elementInteractor);
     }
 
-    public static IElementInteractor getRegisteredDetection(String detectionName) {
-        return detectionsMap.get(detectionName);
+    public static IElementInteractor getRegisteredDetection(String elementInteractorName) {
+        return interactorsMap.get(elementInteractorName);
     }
 
     private static IElementInteractor untilVisible() {

@@ -85,3 +85,8 @@ Default identification mechanism, try to categorize provided locator is it xpath
 - PageInvocationHandler reworked
 - Introduced ElementNameResolver
 - Introduced LocatorResolver
+
+04.01.2024
+- IClickableElement renamed to IWrappedElement
+- elements package renamed to element
+- ClickableElementDecorator now can set value to Clickable element without using reflection

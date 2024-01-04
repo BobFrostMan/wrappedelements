@@ -1,8 +1,8 @@
 package ua.foggger.config;
 
 import org.openqa.selenium.WebDriver;
-import ua.foggger.elements.decorator.IElementDecorator;
-import ua.foggger.elements.interactor.IElementInteractor;
+import ua.foggger.element.decorator.IElementDecorator;
+import ua.foggger.element.interactor.IElementInteractor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +11,7 @@ import java.util.function.Supplier;
 public class WrappedElementsSettings {
 
     private long interactionTimeout;
-    //TODO: rename element interaction
-    private IElementInteractor elementDetection;
+    private IElementInteractor elementInteractor;
     private Supplier<WebDriver> driverSupplier;
     private Map<Class, IElementDecorator> decoratorMap;
 
@@ -37,12 +36,12 @@ public class WrappedElementsSettings {
         this.driverSupplier = driverSupplier;
     }
 
-    public IElementInteractor getElementDetection() {
-        return elementDetection;
+    public IElementInteractor getElementInteractor() {
+        return elementInteractor;
     }
 
-    public void setElementDetection(IElementInteractor elementDetection) {
-        this.elementDetection = elementDetection;
+    public void setElementInteractor(IElementInteractor elementInteractor) {
+        this.elementInteractor = elementInteractor;
     }
 
     public Map<Class, IElementDecorator> getDecorators() {

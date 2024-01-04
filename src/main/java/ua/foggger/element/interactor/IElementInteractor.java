@@ -1,4 +1,4 @@
-package ua.foggger.elements.interactor;
+package ua.foggger.element.interactor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
