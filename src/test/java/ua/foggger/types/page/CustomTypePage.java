@@ -6,13 +6,13 @@ import ua.foggger.types.element.EmptyElement;
 
 public interface CustomTypePage extends IPage {
 
-    @CustomEmptyElement
+    @CustomEmptyElement(locator = "//div")
     EmptyElement emptyElement();
 
-    @CustomEmptyElement
+    @CustomEmptyElement(locator = "(//div|//span)[2]//label(text=\"%s\")")
     EmptyElement emptyElementWithParameter(String text);
 
-    @CustomEmptyElement
+    @CustomEmptyElement(locator = ".h1")
     default EmptyElement emptyElementWithDefaultImpl() {
         return new EmptyElement();
     }
