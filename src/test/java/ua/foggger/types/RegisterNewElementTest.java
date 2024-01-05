@@ -1,12 +1,10 @@
 package ua.foggger.types;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
-import ua.foggger.annotation.WebElement;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.driver.DummyWebDriver;
 import ua.foggger.element.decorator.IElementDecorator;

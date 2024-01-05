@@ -8,8 +8,8 @@ import ua.foggger.config.repo.SettingsRepository;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.driver.IWebDriverProvider;
 import ua.foggger.driver.ThreadSafeWebDriverManager;
-import ua.foggger.element.clickable.ClickableElement;
 import ua.foggger.element.IWrappedElement;
+import ua.foggger.element.clickable.ClickableElement;
 import ua.foggger.element.clickable.ClickableElementDecorator;
 import ua.foggger.element.interactor.Interactors;
 import ua.foggger.page.IPage;
@@ -58,7 +58,6 @@ public final class WrappedElements {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, IPage.class}, new PageInvocationHandler());
     }
 
-    //TODO: Add driver monitoring if it's quit - recreate it
     public static WebDriver getDriver() {
         return DriverProvider.get();
     }

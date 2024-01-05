@@ -3,7 +3,6 @@ package ua.foggger.element.clickable;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.element.decorator.IElementDecorator;
 import ua.foggger.element.interactor.Interactors;
-import ua.foggger.helper.IHaveReflectionAccess;
 import ua.foggger.page.ElementNameResolver;
 import ua.foggger.page.LocatorResolver;
 
@@ -20,6 +19,7 @@ public class ClickableElementDecorator implements IElementDecorator {
         elementNameResolver = new ElementNameResolver();
     }
 
+    //TODO: change interface for easier reading
     @Override
     public <T> Object setValuesFromAnnotation(T element, Method method, Object[] args) {
         WebElement annotation = (WebElement) method.getAnnotation(getAnnotationClass());

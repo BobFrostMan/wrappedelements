@@ -90,3 +90,6 @@ Default identification mechanism, try to categorize provided locator is it xpath
 - IClickableElement renamed to IWrappedElement
 - elements package renamed to element
 - ClickableElementDecorator now can set value to Clickable element without using reflection
+
+05.01.2024
+- DriverProvider now created new driver every time the driver session is missing

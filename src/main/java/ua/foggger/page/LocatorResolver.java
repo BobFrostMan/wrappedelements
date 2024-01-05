@@ -23,6 +23,16 @@ public class LocatorResolver {
      * </pre>
      * Output value will be object:
      * By.xpath("//div[text()='someText']|//span[contains(text(), 'someText')])
+     * <p>
+     * Locator type resolution is actually automatic, but you can explicitly specify locator type using text prefix in @WebElement annotation.
+     * Available prefixes:
+     * "id="
+     * "tag="
+     * "name="
+     * "class="
+     * "xpath="
+     * "css="
+     * "linkText="
      *
      * @param locatorString web element locator as string
      * @param method        method that is used to define web element

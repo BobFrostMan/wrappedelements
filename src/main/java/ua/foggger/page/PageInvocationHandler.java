@@ -1,8 +1,8 @@
 package ua.foggger.page;
 
 import ua.foggger.config.SettingsProvider;
-import ua.foggger.element.clickable.ClickableElement;
 import ua.foggger.element.IWrappedElement;
+import ua.foggger.element.clickable.ClickableElement;
 import ua.foggger.element.decorator.IElementDecorator;
 import ua.foggger.helper.IHaveReflectionAccess;
 
