@@ -54,6 +54,6 @@ public @interface WebElement {
      *
      * @return timeout in seconds
      */
-    int during() default 10;
+    int timeout() default 10;
 
 }

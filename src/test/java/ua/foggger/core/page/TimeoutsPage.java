@@ -7,13 +7,13 @@ import ua.foggger.page.IPage;
 
 public interface TimeoutsPage extends IPage {
 
-    @WebElement(value = "//p", during = 15)
+    @WebElement(value = "//p", timeout = 15)
     IWrappedElement customTimeout();
 
     @WebElement(value = "(//form//input)[2]")
     IWrappedElement defaultTimeout();
 
-    @WebElement(value = "//p[2]", during = 15)
+    @WebElement(value = "//p[2]", timeout = 15)
     default IWrappedElement defaultTimeoutDefaultImpl() {
         return new ClickableElement("Default impl element name");
     }

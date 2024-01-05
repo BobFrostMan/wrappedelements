@@ -28,7 +28,7 @@ public class ClickableElementDecorator implements IElementDecorator {
         clickableElement.setName(name);
         clickableElement.setDetection(Interactors.getRegisteredDetection(annotation.waitUntil()));
         clickableElement.setLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
-        clickableElement.setTimeoutInSeconds(annotation.during());
+        clickableElement.setTimeoutInSeconds(annotation.timeout());
         return element;
     }
 
