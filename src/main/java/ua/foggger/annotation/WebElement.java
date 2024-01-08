@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * Usage is next:
  * <pre>{@code
  *      public class SomePage implements IPage {
- *          @WebElement("/button", name = "My awesome button")
+ *          @WebElement(value = "//button", name = "My awesome button")
  *          IClickableElement awesomeButton();
  *      }
  * }</pre>
