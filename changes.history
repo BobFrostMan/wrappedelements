@@ -93,3 +93,6 @@ Default identification mechanism, try to categorize provided locator is it xpath
 
 05.01.2024
 - DriverProvider now created new driver every time the driver session is missing
+
+08.01.2024
+- Added documentation to README and usage examples
