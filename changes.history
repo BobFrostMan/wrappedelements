@@ -103,5 +103,7 @@ Default identification mechanism, try to categorize provided locator is it xpath
 - How to open source resource found https://opensource.guide/starting-a-project/
 
 10.01.2024
-- It may be required to have a multimoduled project at the end
+- It may be required to have a multi module project at the end
 - Added features list and documentation folder
+- PageInvocationHandler code simplified and documented
+- Added todos to PageInvocationHandler
