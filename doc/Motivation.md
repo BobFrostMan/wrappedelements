@@ -1,14 +1,15 @@
 # Motivation
 As a test automation engineer I hate to write synchronization and wait code, so I want to create quick and stable ui autotests.
-I need a robust semantically laconic ui framework that save me a lot of time during ui web test automation.
-I hate spend time in debug and adjust waiters. I want to write tests quick and easy.
+I need a robust semantically laconic ui framework that saves me a lot of time during ui web test automation.
+I hate to spend time in debug and adjust waiters. I want to write tests quickly and easily.
 
-# User portrait
-- Test automation engineer that want to write UI test once and doesn't want to support it anymore
+# For whom?
+For test automation engineer who:
+- Wants to write UI test once and doesn't want to support it anymore
 - Hates duplications 
 - Hates to write a lot of boilerplate code
 - Likes clean and simple looking code
-- Proactive, always looking for challenges not for routine fighting
+- Hates routine and tries to avoid it
 
 # Features list:
 - [X] Clear and simple Page object classes (juicy)
