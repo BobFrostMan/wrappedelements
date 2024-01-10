@@ -21,6 +21,7 @@ For test automation engineer who:
 - [X] Automatic web driver recreation if it's dead or quit (not necessary but nice for some cases)
 - [ ] Tests become reusable for different platforms (Web, iOS, Android) (juicy)
 - [ ] Built-in logging for element interactions (nice to have)
+- [ ] Built-in reporting for element interactions (nice to have)
 - [ ] Your own custom blocks will be highly reusable (juicy)
 - [ ] List elements support (must have)
 - [ ] Widespread web elements wrappers support (nice to have)
