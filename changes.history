@@ -96,3 +96,12 @@ Default identification mechanism, try to categorize provided locator is it xpath
 
 08.01.2024
 - Added documentation to README and usage examples
+
+09.01.2024
+- Refactored examples project to be multi module, need a real test object to check the implementation
+- Need to define a few existing alternative tools, and perform comparison with drawbacks and advantages
+- How to open source resource found https://opensource.guide/starting-a-project/
+
+10.01.2024
+- It may be required to have a multimoduled project at the end
+- Added features list and documentation folder
