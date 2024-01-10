@@ -20,35 +20,31 @@ import java.util.List;
 public class PageInvocationHandler implements InvocationHandler, IHaveReflectionAccess, SettingsProvider {
 
     //TODO: support components
-    //TODO: support class fields
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects
-
+        //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects or it's fine?
+        //TODO: each time reset the values from annotations is another drawback
         Class<?> clazz = method.getReturnType();
         IElementDecorator decorator = getSettings().getDecorators().get(clazz);
         if (decorator != null) {
+            //user wants to use abstract element
             if (clazz.isInterface()) {
-                if (method.isDefault()) {
-                    IWrappedElement element = (IWrappedElement) invokeDefaultMethodImpl(proxy, method, args);
-                    return decorator.setValuesFromAnnotation(element, method, args);
-                } else {
-                    //TODO: Add opportunity to provide any element types not only that one that implements IWrappedElement
-                    //Create default exact implementation
-                    IWrappedElement element = ClickableElement.class.getConstructor().newInstance();
-                    return decorator.setValuesFromAnnotation(element, method, args);
-                }
-            } else {
-                //TODO: Add opportunity to provide any element types not only that one that implements IWrappedElement
-                //Create exact implementation
-                IWrappedElement element = (IWrappedElement) clazz.getConstructor().newInstance();
+                IWrappedElement element = method.isDefault()
+                        ? (IWrappedElement) invokeDefaultMethodImpl(proxy, method, args)
+                        : ClickableElement.class.getConstructor().newInstance();
                 return decorator.setValuesFromAnnotation(element, method, args);
+            } else {
+                //Create exact implementation
+                return decorator.setValuesFromAnnotation(clazz.getConstructor().newInstance(), method, args);
             }
         }
-        if (List.class.isAssignableFrom(clazz)) {
-            //TODO: Add list wrapper
+        //no decorator - do nothing with method just invoke if it has default implementation
+        if (method.isDefault()) {
+            return invokeDefaultMethodImpl(proxy, method, args);
+        } else {
+            //Execution shouldn't get here
+            throw new UnsupportedOperationException("Seems like you didn't implemented IElementDecorator according to defined type!");
         }
-        return invokeDefaultMethodImpl(proxy, method, args);
     }
 
     /**
