@@ -6,6 +6,8 @@ import ua.foggger.element.IWrappedElement;
 import ua.foggger.element.clickable.ClickableElement;
 import ua.foggger.page.IPage;
 
+import java.util.List;
+
 public interface LocatorsPage extends IPage {
 
     @WebElement("id=someId")
@@ -46,4 +48,7 @@ public interface LocatorsPage extends IPage {
 
     @WebElement(value = "//li/a[contains(text(), '${first_name} ${ last_name }')]")
     IWrappedElement elementWithNamedParameter(@Parameter("last_name") String lastName, @Parameter("first_name") String firstName);
+
+    @WebElement(value = "//li/a[contains(text(), '${name}", waitUntil = UNTIL_CLICKABLE, timeout = 15)
+    List<IWrappedElement> listWithNamedParameter(@Parameter("name") String text);
 }

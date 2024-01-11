@@ -8,9 +8,7 @@ import ua.foggger.helper.IHaveReflectionAccess;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.List;
 
 
@@ -25,6 +23,12 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects or it's fine?
         //TODO: each time reset the values from annotations is another drawback
         Class<?> clazz = method.getReturnType();
+        if (clazz.isAssignableFrom(List.class)) {
+            Type actualType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+            //TODO: add list types handling
+
+        }
+        //TODO: handle collections here
         IElementDecorator decorator = getSettings().getDecorators().get(clazz);
         if (decorator != null) {
             //user wants to use abstract element
