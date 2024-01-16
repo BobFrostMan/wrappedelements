@@ -1,4 +1,4 @@
-package ua.foggger.page;
+package ua.foggger.wrapper.page;
 
 import org.openqa.selenium.By;
 

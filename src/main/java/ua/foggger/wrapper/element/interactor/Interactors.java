@@ -1,8 +1,9 @@
-package ua.foggger.element.interactor;
+package ua.foggger.wrapper.element.interactor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import ua.foggger.wrapper.element.IElementInteractor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +46,7 @@ public final class Interactors {
         interactorsMap.put(elementInteractor.name(), elementInteractor);
     }
 
-    public static IElementInteractor getRegisteredDetection(String elementInteractorName) {
+    public static IElementInteractor getRegisteredInteractor(String elementInteractorName) {
         return interactorsMap.get(elementInteractorName);
     }
 

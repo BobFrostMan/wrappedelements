@@ -3,8 +3,8 @@ package ua.foggger;
 import org.testng.annotations.BeforeClass;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.driver.DummyWebDriver;
-import ua.foggger.element.IWrappedElement;
-import ua.foggger.element.interactor.IElementInteractor;
+import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.IElementInteractor;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 public abstract class BaseTest implements IHaveReflectionAccess {
@@ -13,8 +13,8 @@ public abstract class BaseTest implements IHaveReflectionAccess {
         return getFieldValue(element, "locator");
     }
 
-    protected IElementInteractor getDetection(IWrappedElement element) {
-        return (IElementInteractor) getFieldValue(element, "detection");
+    protected IElementInteractor getInteraction(IWrappedElement element) {
+        return (IElementInteractor) getFieldValue(element, "interactor");
     }
 
     protected Object getTimeout(IWrappedElement element) {

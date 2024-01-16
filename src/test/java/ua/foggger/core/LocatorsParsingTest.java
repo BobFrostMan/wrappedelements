@@ -5,13 +5,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
-import ua.foggger.annotation.Parameter;
-import ua.foggger.annotation.WebElement;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.page.LocatorsPage;
-import ua.foggger.element.IWrappedElement;
-
-import java.util.List;
 
 /**
  * Check that element locator properly set for different usecases.
@@ -63,11 +58,6 @@ public class LocatorsParsingTest extends BaseTest {
         Assert.assertEquals(getLocator(page.elementSpecifiedByClass()), By.className("someClass"));
         Assert.assertEquals(getLocator(page.elementSpecifiedByCss()), By.cssSelector("p > p"));
         Assert.assertEquals(getLocator(page.elementSpecifiedByLinkText()), By.linkText("someLinkText"));
-    }
-
-    @Test
-    public void locatorIsSetForListOfElements() {
-        page.listWithNamedParameter("name");
     }
 
 }

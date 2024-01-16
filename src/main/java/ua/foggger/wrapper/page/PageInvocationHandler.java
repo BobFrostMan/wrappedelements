@@ -1,14 +1,16 @@
-package ua.foggger.page;
+package ua.foggger.wrapper.page;
 
 import ua.foggger.config.SettingsProvider;
-import ua.foggger.element.IWrappedElement;
-import ua.foggger.element.clickable.ClickableElement;
-import ua.foggger.element.decorator.IElementDecorator;
 import ua.foggger.helper.IHaveReflectionAccess;
+import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.clickable.ClickableElement;
+import ua.foggger.wrapper.element.clickable.ListElementProcessorWrapper;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,24 +27,28 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         Class<?> clazz = method.getReturnType();
         if (clazz.isAssignableFrom(List.class)) {
             Type actualType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
-            //TODO: add list types handling
-
+            IElementAnnotationProcessor decorator = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
+            Object listToWrap = new ArrayList<>();
+            if (method.isDefault()) {
+                listToWrap = invokeDefaultMethodImpl(proxy, method, args);
+            }
+            return new ListElementProcessorWrapper().wrap((List<ClickableElement>) listToWrap, decorator, method, args);
         }
-        //TODO: handle collections here
-        IElementDecorator decorator = getSettings().getDecorators().get(clazz);
-        if (decorator != null) {
+
+        IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(clazz);
+        if (annotationProcessor != null) {
             //user wants to use abstract element
             if (clazz.isInterface()) {
                 IWrappedElement element = method.isDefault()
                         ? (IWrappedElement) invokeDefaultMethodImpl(proxy, method, args)
                         : ClickableElement.class.getConstructor().newInstance();
-                return decorator.setValuesFromAnnotation(element, method, args);
+                return annotationProcessor.setValuesFromAnnotation(element, method, args);
             } else {
                 //Create exact implementation
-                return decorator.setValuesFromAnnotation(clazz.getConstructor().newInstance(), method, args);
+                return annotationProcessor.setValuesFromAnnotation(clazz.getConstructor().newInstance(), method, args);
             }
         }
-        //no decorator - do nothing with method just invoke if it has default implementation
+        //no annotationProcessor - do nothing with method just invoke if it has default implementation
         if (method.isDefault()) {
             return invokeDefaultMethodImpl(proxy, method, args);
         } else {

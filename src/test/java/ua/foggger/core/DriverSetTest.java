@@ -7,7 +7,7 @@ import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.driver.DummyWebDriver;
 import ua.foggger.driver.DriverProvider;
-import ua.foggger.page.IPage;
+import ua.foggger.wrapper.page.IPage;
 
 public class DriverSetTest extends BaseTest {
 

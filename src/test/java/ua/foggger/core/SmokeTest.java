@@ -5,17 +5,17 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.IBreakingBadPage;
-import ua.foggger.element.interactor.Interactors;
+import ua.foggger.core.page.BreakingBadPage;
+import ua.foggger.wrapper.element.interactor.Interactors;
 
 public class SmokeTest extends BaseTest {
 
-    private IBreakingBadPage page;
+    private BreakingBadPage page;
 
     @BeforeClass
     public void setUp() {
         super.setUp();
-        page = WrappedElements.initPage(IBreakingBadPage.class);
+        page = WrappedElements.initPage(BreakingBadPage.class);
     }
 
     @Test
@@ -34,10 +34,10 @@ public class SmokeTest extends BaseTest {
 
     @Test
     public void detectionIsSet() {
-        Assert.assertNotNull(getDetection(page.heisenberg()));
-        Assert.assertNotNull(getDetection(page.randomPerson("rand")));
-        Assert.assertNotNull(getDetection(page.jessy()));
-        Assert.assertEquals(getDetection(page.combo()).name(), Interactors.UNTIL_CLICKABLE);
+        Assert.assertNotNull(getInteraction(page.heisenberg()));
+        Assert.assertNotNull(getInteraction(page.randomPerson("rand")));
+        Assert.assertNotNull(getInteraction(page.jessy()));
+        Assert.assertEquals(getInteraction(page.combo()).name(), Interactors.UNTIL_CLICKABLE);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class SmokeTest extends BaseTest {
         Assert.assertNotNull(getTimeout(page.heisenberg()));
         Assert.assertNotNull(getTimeout(page.randomPerson("rand")));
         Assert.assertNotNull(getTimeout(page.jessy()));
-        Assert.assertNotNull(getDetection(page.combo()));
+        Assert.assertNotNull(getInteraction(page.combo()));
     }
 
 }

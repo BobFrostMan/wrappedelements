@@ -5,19 +5,19 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.IBreakingBadPage;
+import ua.foggger.core.page.BreakingBadPage;
 
 /**
  * Check that element name properly set for different usecases.
  */
 public class NameSetTest extends BaseTest {
 
-    private IBreakingBadPage page;
+    private BreakingBadPage page;
 
     @BeforeClass
     public void setUp() {
         super.setUp();
-        page = WrappedElements.initPage(IBreakingBadPage.class);
+        page = WrappedElements.initPage(BreakingBadPage.class);
     }
 
     @Test
@@ -38,6 +38,13 @@ public class NameSetTest extends BaseTest {
     @Test
     public void nameIsSetIfBasedOnAnnotationIfIfMethodIsDefault() {
         Assert.assertEquals(page.saulGoodman().getName(), "Saul Goodman");
+    }
+
+    @Test
+    public void nameIsSetForListItems() {
+        Assert.assertEquals(page.combos().size(), 2);
+        Assert.assertEquals(page.combos().get(0).getName(), "Combos on Breaking bad page (list item number [0])");
+        Assert.assertEquals(page.combos().get(1).getName(), "Combos on Breaking bad page (list item number [1])");
     }
 
 }

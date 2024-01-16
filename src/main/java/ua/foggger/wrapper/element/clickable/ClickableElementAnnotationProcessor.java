@@ -1,39 +1,38 @@
-package ua.foggger.element.clickable;
+package ua.foggger.wrapper.element.clickable;
 
 import ua.foggger.annotation.WebElement;
-import ua.foggger.element.decorator.IElementDecorator;
-import ua.foggger.element.interactor.Interactors;
-import ua.foggger.page.ElementNameResolver;
-import ua.foggger.page.LocatorResolver;
+import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.wrapper.element.interactor.Interactors;
+import ua.foggger.wrapper.page.ElementNameResolver;
+import ua.foggger.wrapper.page.LocatorResolver;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-public class ClickableElementDecorator implements IElementDecorator {
+public class ClickableElementAnnotationProcessor implements IElementAnnotationProcessor {
 
     private LocatorResolver locatorResolver;
     private ElementNameResolver elementNameResolver;
 
-    public ClickableElementDecorator() {
+    public ClickableElementAnnotationProcessor() {
         locatorResolver = new LocatorResolver();
         elementNameResolver = new ElementNameResolver();
     }
 
-    //TODO: change interface for easier reading
     @Override
     public <T> Object setValuesFromAnnotation(T element, Method method, Object[] args) {
-        WebElement annotation = (WebElement) method.getAnnotation(getAnnotationClass());
+        WebElement annotation = method.getAnnotation(WebElement.class);
         ClickableElement clickableElement = (ClickableElement) element;
         String name = "".equals(annotation.name()) ? elementNameResolver.resolve(method) : annotation.name();
         clickableElement.setName(name);
-        clickableElement.setDetection(Interactors.getRegisteredDetection(annotation.waitUntil()));
+        clickableElement.setInteractor(Interactors.getRegisteredInteractor(annotation.waitUntil()));
         clickableElement.setLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
         clickableElement.setTimeoutInSeconds(annotation.timeout());
         return element;
     }
 
     @Override
-    public Class<? extends Annotation> getAnnotationClass() {
-        return WebElement.class;
+    public boolean isSupportAnnotation(Class<? extends Annotation> annotationClass) {
+        return WebElement.class.equals(annotationClass);
     }
 }

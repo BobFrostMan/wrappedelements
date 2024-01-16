@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class DummyWebDriver implements WebDriver {
 
     @Override
     public List<WebElement> findElements(By by) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

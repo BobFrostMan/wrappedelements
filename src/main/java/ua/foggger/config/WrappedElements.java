@@ -8,12 +8,14 @@ import ua.foggger.config.repo.SettingsRepository;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.driver.IWebDriverProvider;
 import ua.foggger.driver.ThreadSafeWebDriverManager;
-import ua.foggger.element.IWrappedElement;
-import ua.foggger.element.clickable.ClickableElement;
-import ua.foggger.element.clickable.ClickableElementDecorator;
-import ua.foggger.element.interactor.Interactors;
-import ua.foggger.page.IPage;
-import ua.foggger.page.PageInvocationHandler;
+import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.clickable.ClickableElement;
+import ua.foggger.wrapper.element.clickable.ClickableElementAnnotationProcessor;
+import ua.foggger.wrapper.element.interactor.Interactors;
+import ua.foggger.wrapper.element.visible.VisibleElement;
+import ua.foggger.wrapper.element.visible.VisibleElementAnnotationProcessor;
+import ua.foggger.wrapper.page.IPage;
+import ua.foggger.wrapper.page.PageInvocationHandler;
 
 import java.lang.reflect.Proxy;
 
@@ -35,9 +37,10 @@ public final class WrappedElements {
         DriverProvider.setDriverProvider(driverProvider);
 
         WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
-        wrappedElementsSettings.setElementInteractor(Interactors.getRegisteredDetection(Interactors.UNTIL_CLICKABLE));
-        wrappedElementsSettings.addDecorator(IWrappedElement.class, new ClickableElementDecorator());
-        wrappedElementsSettings.addDecorator(ClickableElement.class, new ClickableElementDecorator());
+        wrappedElementsSettings.setElementInteractor(Interactors.getRegisteredInteractor(Interactors.STANDARD));
+        wrappedElementsSettings.addWrapperAnnotationProcessor(IWrappedElement.class, new ClickableElementAnnotationProcessor());
+        wrappedElementsSettings.addWrapperAnnotationProcessor(ClickableElement.class, new ClickableElementAnnotationProcessor());
+        wrappedElementsSettings.addWrapperAnnotationProcessor(VisibleElement.class, new VisibleElementAnnotationProcessor());
 
         settingsRepository.save(wrappedElementsSettings);
     }

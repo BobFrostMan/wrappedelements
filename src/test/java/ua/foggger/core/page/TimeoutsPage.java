@@ -1,9 +1,9 @@
 package ua.foggger.core.page;
 
 import ua.foggger.annotation.WebElement;
-import ua.foggger.element.IWrappedElement;
-import ua.foggger.element.clickable.ClickableElement;
-import ua.foggger.page.IPage;
+import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.clickable.ClickableElement;
+import ua.foggger.wrapper.page.IPage;
 
 public interface TimeoutsPage extends IPage {
 

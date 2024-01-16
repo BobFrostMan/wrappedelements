@@ -110,3 +110,12 @@ Default identification mechanism, try to categorize provided locator is it xpath
 
 11.01.2024
 - Added list handling section in PageInvocationHandler
+
+15.01.2024
+- Element detection, and element interaction are different staff and it shouldn't be mixed
+
+16.01.2024
+- Initial list elements implementation, shows that IElementDecorator doesn't have enough functionality
+- Implemented list elements wrap
+- IElementDecorator renamed to IElementAnnotationProcessor
+- IElementAnnotationProcessor changed

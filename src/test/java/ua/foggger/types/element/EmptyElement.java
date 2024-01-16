@@ -2,7 +2,7 @@ package ua.foggger.types.element;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
-import ua.foggger.element.IWrappedElement;
+import ua.foggger.wrapper.element.IWrappedElement;
 
 import java.util.List;
 

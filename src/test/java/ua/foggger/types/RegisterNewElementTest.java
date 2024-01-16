@@ -7,10 +7,10 @@ import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.driver.DummyWebDriver;
-import ua.foggger.element.decorator.IElementDecorator;
 import ua.foggger.types.annotations.CustomEmptyElement;
 import ua.foggger.types.element.EmptyElement;
 import ua.foggger.types.page.CustomTypePage;
+import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -22,7 +22,7 @@ public class RegisterNewElementTest extends BaseTest {
     @BeforeClass
     public void setUp() {
         super.setUp();
-        WrappedElements.config().registerDecorator(EmptyElement.class, new IElementDecorator() {
+        WrappedElements.config().registerDecorator(EmptyElement.class, new IElementAnnotationProcessor() {
             @Override
             public <T> Object setValuesFromAnnotation(T element, Method method, Object[] args) {
                 setFieldValue(element, "name", "Not Empty!");
@@ -30,8 +30,8 @@ public class RegisterNewElementTest extends BaseTest {
             }
 
             @Override
-            public Class<? extends Annotation> getAnnotationClass() {
-                return CustomEmptyElement.class;
+            public boolean isSupportAnnotation(Class<? extends Annotation> annotationClass) {
+                return CustomEmptyElement.class.equals(annotationClass);
             }
         });
         page = WrappedElements.initPage(CustomTypePage.class);

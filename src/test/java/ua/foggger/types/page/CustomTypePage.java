@@ -1,8 +1,12 @@
 package ua.foggger.types.page;
 
-import ua.foggger.page.IPage;
+import ua.foggger.annotation.WebElement;
+import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.page.IPage;
 import ua.foggger.types.annotations.CustomEmptyElement;
 import ua.foggger.types.element.EmptyElement;
+
+import java.util.List;
 
 public interface CustomTypePage extends IPage {
 
@@ -16,5 +20,8 @@ public interface CustomTypePage extends IPage {
     default EmptyElement emptyElementWithDefaultImpl() {
         return new EmptyElement();
     }
+
+    @WebElement("//li")
+    List<IWrappedElement> items();
 
 }

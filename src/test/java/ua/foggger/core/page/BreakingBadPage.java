@@ -1,11 +1,15 @@
 package ua.foggger.core.page;
 
 import ua.foggger.annotation.WebElement;
-import ua.foggger.element.IWrappedElement;
-import ua.foggger.element.clickable.ClickableElement;
-import ua.foggger.page.IPage;
+import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.clickable.ClickableElement;
+import ua.foggger.wrapper.page.IPage;
 
-public interface IBreakingBadPage extends IPage {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public interface BreakingBadPage extends IPage {
 
     @WebElement(value = "//p")
     IWrappedElement heisenberg();
@@ -26,5 +30,17 @@ public interface IBreakingBadPage extends IPage {
 
     @WebElement(value = "//combo", waitUntil = UNTIL_CLICKABLE, timeout = 15)
     IWrappedElement combo();
+
+    @WebElement(value = "//p", waitUntil = UNTIL_VISIBLE)
+    List<IWrappedElement> heisenbergs();
+
+    @WebElement(value = "//combo", waitUntil = UNTIL_VISIBLE)
+    default List<ClickableElement> combos() {
+        List<ClickableElement> someComboRelatedGuys = new ArrayList<>();
+        someComboRelatedGuys.add(new ClickableElement("Guy 1"));
+        someComboRelatedGuys.add(new ClickableElement("Guy 2"));
+        return someComboRelatedGuys;
+    }
+
 
 }

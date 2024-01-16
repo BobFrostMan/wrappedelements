@@ -1,4 +1,4 @@
-package ua.foggger.element;
+package ua.foggger.wrapper.element;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

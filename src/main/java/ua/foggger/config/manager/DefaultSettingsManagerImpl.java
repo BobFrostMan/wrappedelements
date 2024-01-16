@@ -3,9 +3,9 @@ package ua.foggger.config.manager;
 import org.openqa.selenium.WebDriver;
 import ua.foggger.config.WrappedElementsSettings;
 import ua.foggger.config.repo.SettingsRepository;
-import ua.foggger.element.IWrappedElement;
-import ua.foggger.element.decorator.IElementDecorator;
-import ua.foggger.element.interactor.IElementInteractor;
+import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.wrapper.element.IElementInteractor;
 
 import java.util.function.Supplier;
 
@@ -59,9 +59,9 @@ public class DefaultSettingsManagerImpl implements SettingsManager {
      * @param elementDecorator decorator that will be used for clazz decoration
      */
     @Override
-    public void addElementDecorator(Class<? extends IWrappedElement> clazz, IElementDecorator elementDecorator) {
+    public void addElementDecorator(Class<? extends IWrappedElement> clazz, IElementAnnotationProcessor elementDecorator) {
         WrappedElementsSettings settings = settingsRepository.get();
-        settings.addDecorator(clazz, elementDecorator);
+        settings.addWrapperAnnotationProcessor(clazz, elementDecorator);
         settingsRepository.save(settings);
     }
 }

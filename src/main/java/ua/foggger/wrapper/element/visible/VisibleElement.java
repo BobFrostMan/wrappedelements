@@ -1,33 +1,25 @@
-package ua.foggger.element.clickable;
+package ua.foggger.wrapper.element.visible;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.driver.DriverProvider;
-import ua.foggger.element.IWrappedElement;
-import ua.foggger.element.interactor.IElementInteractor;
+import ua.foggger.wrapper.element.IElementInteractor;
+import ua.foggger.wrapper.element.IWrappedElement;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-/**
- * WebElement wrapper that provides next additional functionality for webElement:
- * - Scroll element into view before click;
- * - Checks elements visibility before interaction;
- * - Element visibility criteria can be specified explicitly with setVisibilityCondition(Function<WebDriver, Boolean> visibilityCondition);
- * - Preforms protection from StaleElementReferenceException | NoSuchElementException | ElementClickInterceptedException that occurs before http requests sending to selenium server;
- * - Introduce getLocator() method that returns By object, for some specific interactions.
- */
-public class ClickableElement implements IWrappedElement {
+public class VisibleElement implements IWrappedElement {
 
     protected String name;
     protected By locator;
-    protected IElementInteractor detection;
+    protected IElementInteractor interactor;
     protected int timeoutInSeconds;
     private WebElement innerElement;
 
-    public ClickableElement() {
+    public VisibleElement() {
 
     }
 
@@ -39,16 +31,12 @@ public class ClickableElement implements IWrappedElement {
         this.locator = locator;
     }
 
-    void setDetection(IElementInteractor detection) {
-        this.detection = detection;
+    void setInteractor(IElementInteractor interactor) {
+        this.interactor = interactor;
     }
 
     void setTimeoutInSeconds(int timeoutInSeconds) {
         this.timeoutInSeconds = timeoutInSeconds;
-    }
-
-    public ClickableElement(String name) {
-        this.name = name;
     }
 
     public String getName() {
@@ -151,11 +139,12 @@ public class ClickableElement implements IWrappedElement {
     }
 
     protected WebElement detectElement(String methodName) {
-        boolean isReady = waitFor(() -> detection.isReadyForInteraction(methodName, locator, DriverProvider.get()), timeoutInSeconds);
+        boolean isReady = waitFor(() -> interactor.isReadyForInteraction(methodName, locator, DriverProvider.get()), timeoutInSeconds);
         if (isReady) {
-            return driver().findElement(locator);
+            innerElement = driver().findElement(locator);
+            return innerElement;
         } else {
-            throw new RuntimeException("Element " + this + " not found in DOM!");
+            throw new RuntimeException("Element '" + name + "' not found in DOM by locator: '" + locator + "'!");
         }
     }
 

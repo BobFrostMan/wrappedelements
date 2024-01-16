@@ -1,15 +1,11 @@
-package ua.foggger.page;
+package ua.foggger.wrapper.page;
 
 import java.lang.reflect.Method;
 
 public class ElementNameResolver {
 
     public String resolve(Method method) {
-        String className = method.getDeclaringClass().getSimpleName();
-        if (className.startsWith("I")) {
-            className = className.substring(1);
-        }
-        String page = prettify(className);
+        String page = prettify(method.getDeclaringClass().getSimpleName());
         String elementName = prettify(method.getName());
         return elementName + " on " + page;
     }

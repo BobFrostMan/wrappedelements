@@ -1,8 +1,8 @@
 package ua.foggger.config;
 
 import org.openqa.selenium.WebDriver;
-import ua.foggger.element.decorator.IElementDecorator;
-import ua.foggger.element.interactor.IElementInteractor;
+import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.wrapper.element.IElementInteractor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,11 +13,11 @@ public class WrappedElementsSettings {
     private long interactionTimeout;
     private IElementInteractor elementInteractor;
     private Supplier<WebDriver> driverSupplier;
-    private Map<Class, IElementDecorator> decoratorMap;
+    private Map<Class, IElementAnnotationProcessor> annotationProcessorMap;
 
     //default constructor for hiding access from other modules
     WrappedElementsSettings() {
-        decoratorMap = new HashMap<>();
+        annotationProcessorMap = new HashMap<>();
     }
 
     public void setInteractionTimeout(long interactionTimeout) {
@@ -44,11 +44,11 @@ public class WrappedElementsSettings {
         this.elementInteractor = elementInteractor;
     }
 
-    public Map<Class, IElementDecorator> getDecorators() {
-        return decoratorMap;
+    public Map<Class, IElementAnnotationProcessor> getAnnotationProcessors() {
+        return annotationProcessorMap;
     }
 
-    public void addDecorator(Class clazz, IElementDecorator decorator) {
-        decoratorMap.put(clazz, decorator);
+    public void addWrapperAnnotationProcessor(Class clazz, IElementAnnotationProcessor decorator) {
+        annotationProcessorMap.put(clazz, decorator);
     }
 }
