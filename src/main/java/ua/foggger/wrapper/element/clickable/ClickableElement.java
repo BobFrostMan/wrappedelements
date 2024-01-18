@@ -5,7 +5,7 @@ import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.wrapper.element.IElementInteractor;
-import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.WrappedElement;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -20,7 +20,7 @@ import java.util.function.Function;
  * - Preforms protection from StaleElementReferenceException | NoSuchElementException | ElementClickInterceptedException that occurs before http requests sending to selenium server;
  * - Introduce getLocator() method that returns By object, for some specific interactions.
  */
-public class ClickableElement implements IWrappedElement {
+public class ClickableElement implements WrappedElement {
 
     protected String name;
     protected By locator;

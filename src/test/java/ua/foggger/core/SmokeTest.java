@@ -48,4 +48,10 @@ public class SmokeTest extends BaseTest {
         Assert.assertNotNull(getInteraction(page.combo()));
     }
 
+    @Test
+    public void notAnnotatedMethods() {
+        Assert.assertNull(page.hobbits());
+        Assert.assertNull(page.frodo());
+    }
+
 }

@@ -16,6 +16,9 @@ public class ListElementProcessorWrapper implements IHaveReflectionAccess {
 
     public Object wrap(List<ClickableElement> list, IElementAnnotationProcessor decorator, Method method, Object[] args) {
         WebElement annotation = method.getAnnotation(WebElement.class);
+        if (annotation == null) {
+            return null;
+        }
         By listLocator = new LocatorResolver().resolveLocator(annotation.value(), method, args);
         if (list == null) {
             return null;

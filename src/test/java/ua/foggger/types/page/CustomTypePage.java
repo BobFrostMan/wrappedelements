@@ -1,7 +1,9 @@
 package ua.foggger.types.page;
 
+import ua.foggger.annotation.WebComponent;
 import ua.foggger.annotation.WebElement;
-import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.types.component.EmptyComponent;
+import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.page.IPage;
 import ua.foggger.types.annotations.CustomEmptyElement;
 import ua.foggger.types.element.EmptyElement;
@@ -18,10 +20,12 @@ public interface CustomTypePage extends IPage {
 
     @CustomEmptyElement(locator = ".h1")
     default EmptyElement emptyElementWithDefaultImpl() {
-        return new EmptyElement();
+        return null;
     }
 
     @WebElement("//li")
-    List<IWrappedElement> items();
+    List<WrappedElement> items();
 
+    @WebComponent("//div")
+    EmptyComponent element();
 }

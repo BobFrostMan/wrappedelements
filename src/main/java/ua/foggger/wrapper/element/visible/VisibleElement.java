@@ -5,13 +5,13 @@ import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.wrapper.element.IElementInteractor;
-import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.WrappedElement;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-public class VisibleElement implements IWrappedElement {
+public class VisibleElement implements WrappedElement {
 
     protected String name;
     protected By locator;

@@ -2,11 +2,11 @@ package ua.foggger.types.element;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
-import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.WrappedElement;
 
 import java.util.List;
 
-public class EmptyElement implements IWrappedElement {
+public class EmptyElement implements WrappedElement {
 
     private String name;
 

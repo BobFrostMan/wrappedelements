@@ -1,5 +1,6 @@
 package ua.foggger.wrapper.element;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WrapsElement;
@@ -8,7 +9,7 @@ import ua.foggger.driver.DriverProvider;
 
 import java.util.concurrent.TimeUnit;
 
-public interface IWrappedElement extends WebElement, Locatable, WrapsElement {
+public interface WrappedElement extends WebElement, Locatable, WrapsElement {
 
     String getName();
 

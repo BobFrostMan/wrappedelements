@@ -1,38 +1,43 @@
 package ua.foggger.core.page;
 
 import ua.foggger.annotation.WebElement;
-import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.clickable.ClickableElement;
 import ua.foggger.wrapper.page.IPage;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public interface BreakingBadPage extends IPage {
 
     @WebElement(value = "//p")
-    IWrappedElement heisenberg();
+    WrappedElement heisenberg();
 
     @WebElement(value = "//p[contains(text(), '%s')]", name = "My name is Vova!")
-    IWrappedElement randomPerson(String text);
+    WrappedElement randomPerson(String text);
 
     @WebElement(value = "//p[2]")
-    default IWrappedElement jessy() {
+    default WrappedElement jessy() {
         ClickableElement clickableElement = new ClickableElement("What's up bi......h!");
         return clickableElement;
     }
 
     @WebElement(value = "//p[3]", name = "Saul Goodman")
-    default IWrappedElement saulGoodman() {
+    default WrappedElement saulGoodman() {
         return new ClickableElement("I'm a lawyer");
     }
 
     @WebElement(value = "//combo", waitUntil = UNTIL_CLICKABLE, timeout = 15)
-    IWrappedElement combo();
+    WrappedElement combo();
 
     @WebElement(value = "//p", waitUntil = UNTIL_VISIBLE)
-    List<IWrappedElement> heisenbergs();
+    List<WrappedElement> heisenbergs();
+
+    //Since hobbits not from breaking bad, they won't be annotated
+    List<ClickableElement> hobbits();
+
+    ClickableElement frodo();
+
 
     @WebElement(value = "//combo", waitUntil = UNTIL_VISIBLE)
     default List<ClickableElement> combos() {

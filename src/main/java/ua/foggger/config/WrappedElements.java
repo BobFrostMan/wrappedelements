@@ -8,7 +8,9 @@ import ua.foggger.config.repo.SettingsRepository;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.driver.IWebDriverProvider;
 import ua.foggger.driver.ThreadSafeWebDriverManager;
-import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.block.WrappedBlockAnnotationProcessor;
+import ua.foggger.wrapper.block.WrappedComponent;
+import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.clickable.ClickableElement;
 import ua.foggger.wrapper.element.clickable.ClickableElementAnnotationProcessor;
 import ua.foggger.wrapper.element.interactor.Interactors;
@@ -38,9 +40,10 @@ public final class WrappedElements {
 
         WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
         wrappedElementsSettings.setElementInteractor(Interactors.getRegisteredInteractor(Interactors.STANDARD));
-        wrappedElementsSettings.addWrapperAnnotationProcessor(IWrappedElement.class, new ClickableElementAnnotationProcessor());
+        wrappedElementsSettings.addWrapperAnnotationProcessor(WrappedElement.class, new ClickableElementAnnotationProcessor());
         wrappedElementsSettings.addWrapperAnnotationProcessor(ClickableElement.class, new ClickableElementAnnotationProcessor());
         wrappedElementsSettings.addWrapperAnnotationProcessor(VisibleElement.class, new VisibleElementAnnotationProcessor());
+        wrappedElementsSettings.addWrapperAnnotationProcessor(WrappedComponent.class, new WrappedBlockAnnotationProcessor());
 
         settingsRepository.save(wrappedElementsSettings);
     }

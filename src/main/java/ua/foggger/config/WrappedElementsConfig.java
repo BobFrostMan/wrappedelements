@@ -2,9 +2,9 @@ package ua.foggger.config;
 
 import org.openqa.selenium.WebDriver;
 import ua.foggger.config.manager.SettingsManager;
-import ua.foggger.wrapper.element.IWrappedElement;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 import ua.foggger.wrapper.element.IElementInteractor;
+import ua.foggger.wrapper.element.WrappedElement;
 
 import java.util.function.Supplier;
 
@@ -50,7 +50,7 @@ public class WrappedElementsConfig {
      * @param clazz     class that will be handled
      * @param decorator decorator that will be used for clazz decoration
      */
-    public WrappedElementsConfig registerDecorator(Class<? extends IWrappedElement> clazz, IElementAnnotationProcessor decorator) {
+    public WrappedElementsConfig registerDecorator(Class<? extends WrappedElement> clazz, IElementAnnotationProcessor decorator) {
         settingsManager.addElementDecorator(clazz, decorator);
         return this;
     }

@@ -2,8 +2,10 @@ package ua.foggger.wrapper.page;
 
 import ua.foggger.config.SettingsProvider;
 import ua.foggger.helper.IHaveReflectionAccess;
+import ua.foggger.wrapper.block.WrappedBlock;
+import ua.foggger.wrapper.block.WrappedComponent;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
-import ua.foggger.wrapper.element.IWrappedElement;
+import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.clickable.ClickableElement;
 import ua.foggger.wrapper.element.clickable.ListElementProcessorWrapper;
 
@@ -20,12 +22,24 @@ import java.util.List;
 public class PageInvocationHandler implements InvocationHandler, IHaveReflectionAccess, SettingsProvider {
 
     //TODO: support components
+    //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects or it's fine?
+    //TODO: each time reset the values from annotations is another drawback
+    @SuppressWarnings({"unchecked"})
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects or it's fine?
-        //TODO: each time reset the values from annotations is another drawback
         Class<?> clazz = method.getReturnType();
-        if (clazz.isAssignableFrom(List.class)) {
+        if (WrappedComponent.class.isAssignableFrom(clazz)) {
+            IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(clazz);
+            if (annotationProcessor == null) {
+                annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
+            }
+            //TODO: Should block be a class or an interface?
+            Object obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, WrappedComponent.class}, new PageInvocationHandler());
+            annotationProcessor.setValuesFromAnnotation(obj, method, args);
+            return obj;
+        }
+
+        if (List.class.isAssignableFrom(clazz)) {
             Type actualType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
             IElementAnnotationProcessor decorator = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             Object listToWrap = new ArrayList<>();
@@ -39,8 +53,8 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         if (annotationProcessor != null) {
             //user wants to use abstract element
             if (clazz.isInterface()) {
-                IWrappedElement element = method.isDefault()
-                        ? (IWrappedElement) invokeDefaultMethodImpl(proxy, method, args)
+                WrappedElement element = method.isDefault()
+                        ? (WrappedElement) invokeDefaultMethodImpl(proxy, method, args)
                         : ClickableElement.class.getConstructor().newInstance();
                 return annotationProcessor.setValuesFromAnnotation(element, method, args);
             } else {
@@ -48,6 +62,8 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
                 return annotationProcessor.setValuesFromAnnotation(clazz.getConstructor().newInstance(), method, args);
             }
         }
+
+        //TODO: some annotation value to just invoke default impl without attempts to set annotations
         //no annotationProcessor - do nothing with method just invoke if it has default implementation
         if (method.isDefault()) {
             return invokeDefaultMethodImpl(proxy, method, args);

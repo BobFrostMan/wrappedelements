@@ -13,7 +13,7 @@ import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 
 import java.lang.reflect.Method;
 
-public class RegisterNewElementTest extends BaseTest {
+public class RegisterNewComponentTest extends BaseTest {
 
     private CustomTypePage page;
 
@@ -31,21 +31,9 @@ public class RegisterNewElementTest extends BaseTest {
     }
 
     @Test
-    public void registerNewEmptyElementTest() {
-        Assert.assertEquals(page.emptyElement().getName(), "Not Empty!");
-        Assert.assertEquals(page.emptyElement().getClass(), EmptyElement.class);
-    }
-
-    @Test
-    public void registerNewEmptyElementWithDefaultImplTest() {
-        Assert.assertEquals(page.emptyElementWithDefaultImpl().getClass(), EmptyElement.class);
-        Assert.assertEquals(page.emptyElementWithDefaultImpl().getName(), "Not Empty!");
-    }
-
-    @Test
-    public void registerNewEmptyElementWithParameterInLocatorTest() {
-        Assert.assertEquals(page.emptyElementWithParameter("Some parameter").getName(), "Not Empty!");
-        Assert.assertEquals(page.emptyElementWithParameter("Some parameter").getClass(), EmptyElement.class);
+    public void registerNewComponentWithParameterInLocatorTest() {
+        Assert.assertEquals(page.element().solo(), "solo");
+        Assert.assertEquals(page.element().elementWithNamedParameter("last", "name"), "solo");
     }
 
     @AfterClass
