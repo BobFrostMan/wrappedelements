@@ -1,14 +1,13 @@
 package ua.foggger.wrapper.element.clickable;
 
+import org.openqa.selenium.support.pagefactory.ByChained;
 import ua.foggger.annotation.WebElement;
-import ua.foggger.wrapper.block.WrappedBlock;
-import ua.foggger.wrapper.block.WrappedComponent;
+import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 import ua.foggger.wrapper.element.interactor.Interactors;
 import ua.foggger.wrapper.page.ElementNameResolver;
 import ua.foggger.wrapper.page.LocatorResolver;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 public class ClickableElementAnnotationProcessor implements IElementAnnotationProcessor {
@@ -30,11 +29,13 @@ public class ClickableElementAnnotationProcessor implements IElementAnnotationPr
         ClickableElement clickableElement = (ClickableElement) element;
         String name = "".equals(annotation.name()) ? elementNameResolver.resolve(method) : annotation.name();
         clickableElement.setName(name);
-        if (method.getDeclaringClass().isAssignableFrom(WrappedComponent.class)) {
-            //TODO: Add searchContext implementation here
+        WrappedBlockMeta blockMeta = getContextMeta(method.toString());
+        if (blockMeta != null) {
+            clickableElement.setLocator(new ByChained(blockMeta.getLocator(), locatorResolver.resolveLocator(annotation.value(), method, args)));
+        } else {
+            clickableElement.setLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
         }
         clickableElement.setInteractor(Interactors.getRegisteredInteractor(annotation.waitUntil()));
-        clickableElement.setLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
         clickableElement.setTimeoutInSeconds(annotation.timeout());
         return element;
     }

@@ -19,6 +19,7 @@ public class ListElementProcessorWrapper implements IHaveReflectionAccess {
         if (annotation == null) {
             return null;
         }
+        //TODO: Add parent locator resolution
         By listLocator = new LocatorResolver().resolveLocator(annotation.value(), method, args);
         if (list == null) {
             return null;

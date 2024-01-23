@@ -33,7 +33,7 @@ public class RegisterNewComponentTest extends BaseTest {
     @Test
     public void registerNewComponentWithParameterInLocatorTest() {
         Assert.assertEquals(page.element().solo(), "solo");
-        Assert.assertEquals(page.element().elementWithNamedParameter("last", "name"), "solo");
+        Assert.assertEquals(getLocator(page.element().elementWithNamedParameter("last", "name")), "");
     }
 
     @AfterClass

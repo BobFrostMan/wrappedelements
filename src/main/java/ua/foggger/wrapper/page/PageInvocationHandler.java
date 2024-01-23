@@ -2,7 +2,7 @@ package ua.foggger.wrapper.page;
 
 import ua.foggger.config.SettingsProvider;
 import ua.foggger.helper.IHaveReflectionAccess;
-import ua.foggger.wrapper.block.WrappedBlock;
+import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.block.WrappedComponent;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 import ua.foggger.wrapper.element.WrappedElement;
@@ -13,6 +13,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -33,7 +34,21 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
             if (annotationProcessor == null) {
                 annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
             }
-            //TODO: Should block be a class or an interface?
+            if (method.getName().equals("setRootLocator")||method.getName().equals("getRootLocator")) {
+                invokeDefaultMethodImpl(proxy,method, args);
+            }
+            /*
+            WrappedBlockMeta blockMeta = getContextMeta(method.getReturnType() + "_" + method.getName() + "_" + Arrays.toString(method.getParameterTypes()));
+            if (blockMeta == null) {
+                clazz.getDeclaredMethods()
+                blockMeta = new WrappedBlockMeta();
+                blockMeta.setBlockIdentifier(method.getReturnType() + "_" + method.getName() + "_" + Arrays.toString(method.getParameterTypes()));
+                blockMeta.setLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
+                blockMeta.setName(name);
+                setContextMeta(blockMeta);
+            }
+             */
+
             Object obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, WrappedComponent.class}, new PageInvocationHandler());
             annotationProcessor.setValuesFromAnnotation(obj, method, args);
             return obj;
