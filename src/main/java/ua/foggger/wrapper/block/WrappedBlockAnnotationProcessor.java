@@ -1,5 +1,6 @@
 package ua.foggger.wrapper.block;
 
+import org.openqa.selenium.support.pagefactory.ByChained;
 import ua.foggger.annotation.WebComponent;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 import ua.foggger.wrapper.page.ElementNameResolver;
@@ -19,33 +20,43 @@ public class WrappedBlockAnnotationProcessor implements IElementAnnotationProces
     }
 
     /**
-     * Sets values from annotation to web component wrapper.
+     * Sets values from annotation to web element wrapper to child elements.
      *
-     * @param element web element wrapper
-     * @param method  annotated method that will produce web element
-     * @param args    annotated method arguments
+     * @param parentBlockMeta parent block meta information object (can be null)
+     * @param element         web element wrapper
+     * @param method          annotated method that will produce web element
+     * @param args            annotated method arguments
+     * @param <T>             any web element wrapper
      * @return web element wrapper
      */
     @Override
-    public <T> Object setValuesFromAnnotation(T element, Method method, Object[] args) {
+    public <T> Object setValuesFromAnnotation(WrappedBlockMeta parentBlockMeta, T element, Method method, Object[] args) {
         WebComponent annotation = method.getAnnotation(WebComponent.class);
         if (annotation == null) {
             return null;
         }
-        String name = "".equals(annotation.name()) ? elementNameResolver.resolve(method) : annotation.name();
-        //FIXME: block doesn't work currently
-        WrappedBlockMeta blockMeta = getContextMeta(method.getReturnType() + "_" + method.getName() + "_" + Arrays.toString(method.getParameterTypes()));
-        if (blockMeta == null) {
-            blockMeta = new WrappedBlockMeta();
-            blockMeta.setBlockIdentifier(method.getReturnType() + "_" + method.getName() + "_" + Arrays.toString(method.getParameterTypes()));
-            blockMeta.setLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
-            blockMeta.setName(name);
-            setContextMeta(blockMeta);
+        if (parentBlockMeta != null) {
+            String name = "".equals(annotation.name()) ? elementNameResolver.resolve(method) : annotation.name();
+            parentBlockMeta.setName(name);
+            parentBlockMeta.setBlockIdentifier(method.getReturnType() + "_" + method.getName() + "_" + Arrays.toString(method.getParameterTypes()));
+            parentBlockMeta.setLocator(new ByChained(parentBlockMeta.getLocator(), locatorResolver.resolveLocator(annotation.value(), method, args)));
         }
-        WrappedComponent wrappedComponent = (WrappedComponent) element;
-        //TODO: cannot set values to proxy object itself, however child elements is possible to handle
-        //wrappedComponent.setRootElementLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
-        //wrappedComponent.setName(name);
         return element;
     }
+
+    @Override
+    public <T> WrappedBlockMeta parseWrappedBlockMeta(T element, Method method, Object[] args) {
+        WebComponent annotation = method.getAnnotation(WebComponent.class);
+        if (annotation == null) {
+            return null;
+        }
+        WrappedBlockMeta parentBlockMeta = new WrappedBlockMeta();
+        String name = "".equals(annotation.name()) ? elementNameResolver.resolve(method) : annotation.name();
+        parentBlockMeta.setName(name);
+        parentBlockMeta.setBlockIdentifier(method.getReturnType() + "_" + method.getName() + "_" + Arrays.toString(method.getParameterTypes()));
+        parentBlockMeta.setLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
+        return parentBlockMeta;
+    }
+
+
 }

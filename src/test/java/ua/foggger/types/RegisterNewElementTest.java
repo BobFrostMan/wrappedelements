@@ -9,6 +9,7 @@ import ua.foggger.config.WrappedElements;
 import ua.foggger.core.driver.DummyWebDriver;
 import ua.foggger.types.element.EmptyElement;
 import ua.foggger.types.page.CustomTypePage;
+import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 
 import java.lang.reflect.Method;
@@ -22,7 +23,7 @@ public class RegisterNewElementTest extends BaseTest {
         super.setUp();
         WrappedElements.config().registerDecorator(EmptyElement.class, new IElementAnnotationProcessor() {
             @Override
-            public <T> Object setValuesFromAnnotation(T element, Method method, Object[] args) {
+            public <T> Object setValuesFromAnnotation(WrappedBlockMeta parentBlockMeta, T element, Method method, Object[] args) {
                 setFieldValue(element, "name", "Not Empty!");
                 return element;
             }

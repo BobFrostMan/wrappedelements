@@ -20,8 +20,18 @@ public class ClickableElementAnnotationProcessor implements IElementAnnotationPr
         elementNameResolver = new ElementNameResolver();
     }
 
+    /**
+     * Sets values from annotation to web element wrapper to child elements.
+     *
+     * @param parentBlockMeta parent block meta information object (can be null)
+     * @param element         web element wrapper
+     * @param method          annotated method that will produce web element
+     * @param args            annotated method arguments
+     * @param <T>             any web element wrapper
+     * @return web element wrapper
+     */
     @Override
-    public <T> Object setValuesFromAnnotation(T element, Method method, Object[] args) {
+    public <T> Object setValuesFromAnnotation(WrappedBlockMeta parentBlockMeta, T element, Method method, Object[] args) {
         WebElement annotation = method.getAnnotation(WebElement.class);
         if (annotation == null) {
             return null;
@@ -29,9 +39,8 @@ public class ClickableElementAnnotationProcessor implements IElementAnnotationPr
         ClickableElement clickableElement = (ClickableElement) element;
         String name = "".equals(annotation.name()) ? elementNameResolver.resolve(method) : annotation.name();
         clickableElement.setName(name);
-        WrappedBlockMeta blockMeta = getContextMeta(method.toString());
-        if (blockMeta != null) {
-            clickableElement.setLocator(new ByChained(blockMeta.getLocator(), locatorResolver.resolveLocator(annotation.value(), method, args)));
+        if (parentBlockMeta != null) {
+            clickableElement.setLocator(new ByChained(parentBlockMeta.getLocator(), locatorResolver.resolveLocator(annotation.value(), method, args)));
         } else {
             clickableElement.setLocator(locatorResolver.resolveLocator(annotation.value(), method, args));
         }

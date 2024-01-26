@@ -19,9 +19,15 @@ import java.util.List;
 /**
  * InvocationHandler for interfaces that extends IPage
  */
-public class PageInvocationHandler implements InvocationHandler, IHaveReflectionAccess, SettingsProvider {
+public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveReflectionAccess, SettingsProvider {
 
-    //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects or it's fine?
+    private WrappedBlockMeta meta;
+
+    public WrappedBlockInvocationHandler(WrappedBlockMeta meta) {
+        this.meta = meta;
+    }
+
+   //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects or it's fine?
     //TODO: each time reset the values from annotations is another drawback
     @SuppressWarnings({"unchecked"})
     @Override
@@ -32,12 +38,8 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
             if (annotationProcessor == null) {
                 annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
             }
-            if (method.getName().equals("setRootLocator")||method.getName().equals("getRootLocator")) {
-                invokeDefaultMethodImpl(proxy,method, args);
-            }
-            WrappedBlockMeta wrappedBlockMeta = annotationProcessor.parseWrappedBlockMeta(proxy, method, args);
-            Object obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, WrappedComponent.class}, new WrappedBlockInvocationHandler(wrappedBlockMeta));
-            annotationProcessor.setValuesFromAnnotation(null, obj, method, args);
+            Object obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, WrappedComponent.class}, new WrappedBlockInvocationHandler(meta));
+            annotationProcessor.setValuesFromAnnotation(meta, obj, method, args);
             return obj;
         }
 
@@ -48,7 +50,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
             if (method.isDefault()) {
                 listToWrap = invokeDefaultMethodImpl(proxy, method, args);
             }
-            return new ListElementProcessorWrapper().wrap((List<ClickableElement>) listToWrap, decorator, method, args);
+            return new ListElementProcessorWrapper(meta).wrap((List<ClickableElement>) listToWrap, decorator, method, args);
         }
 
         IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(clazz);
@@ -58,10 +60,10 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
                 WrappedElement element = method.isDefault()
                         ? (WrappedElement) invokeDefaultMethodImpl(proxy, method, args)
                         : ClickableElement.class.getConstructor().newInstance();
-                return annotationProcessor.setValuesFromAnnotation(null, element, method, args);
+                return annotationProcessor.setValuesFromAnnotation(meta, element, method, args);
             } else {
                 //Create exact implementation
-                return annotationProcessor.setValuesFromAnnotation(null, clazz.getConstructor().newInstance(), method, args);
+                return annotationProcessor.setValuesFromAnnotation(meta, clazz.getConstructor().newInstance(), method, args);
             }
         }
 

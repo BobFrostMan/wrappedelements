@@ -125,3 +125,11 @@ Default identification mechanism, try to categorize provided locator is it xpath
 - PageInvocationHandler significantly changed
 - RegisterNewComponent test implemented
 - Added non wrapped fields check to SmokeTest
+
+26.01.2024
+- WrappedComponent implementation ready
+- WrappedBlockInvocationHandler added and handles Wrapped custom blocks now
+- Nested components locator resolution implemented
+- RegisterNewComponent enriched with test for nested components
+- IElementAnnotationProcessor contract changed
+- Added additional method to IElementAnnotationProcessor

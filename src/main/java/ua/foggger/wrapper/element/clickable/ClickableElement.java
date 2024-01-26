@@ -24,7 +24,6 @@ public class ClickableElement implements WrappedElement {
 
     protected String name;
     protected By locator;
-    protected By parentLocator;
     protected IElementInteractor interactor;
     protected int timeoutInSeconds;
     private WebElement innerElement;
@@ -41,14 +40,6 @@ public class ClickableElement implements WrappedElement {
                 throw new RuntimeException("Element '" + name + "' not found in DOM by locator: '" + locator + "'!");
             }
         };
-    }
-
-    void setParentLocator(By locator) {
-        this.parentLocator = locator;
-    }
-
-    By getParentLocator() {
-       return this.parentLocator;
     }
 
     void setDetectionFunction(Function<String, WebElement> detectionFunction) {
