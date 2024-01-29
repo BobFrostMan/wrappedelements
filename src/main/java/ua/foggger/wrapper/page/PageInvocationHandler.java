@@ -32,9 +32,6 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
             if (annotationProcessor == null) {
                 annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
             }
-            if (method.getName().equals("setRootLocator")||method.getName().equals("getRootLocator")) {
-                invokeDefaultMethodImpl(proxy,method, args);
-            }
             WrappedBlockMeta wrappedBlockMeta = annotationProcessor.parseWrappedBlockMeta(proxy, method, args);
             Object obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, WrappedComponent.class}, new WrappedBlockInvocationHandler(wrappedBlockMeta));
             annotationProcessor.setValuesFromAnnotation(null, obj, method, args);
@@ -44,6 +41,9 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
         if (List.class.isAssignableFrom(clazz)) {
             Type actualType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
             IElementAnnotationProcessor decorator = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
+            if (WrappedComponent.class.isAssignableFrom(Class.forName(actualType.getTypeName()))) {
+                throw new UnsupportedOperationException("List of componets is not supported yet!");
+            }
             Object listToWrap = new ArrayList<>();
             if (method.isDefault()) {
                 listToWrap = invokeDefaultMethodImpl(proxy, method, args);

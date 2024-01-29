@@ -45,6 +45,9 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
 
         if (List.class.isAssignableFrom(clazz)) {
             Type actualType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+            if (WrappedComponent.class.isAssignableFrom(Class.forName(actualType.getTypeName()))) {
+                throw new UnsupportedOperationException("List of componets is not supported yet!");
+            }
             IElementAnnotationProcessor decorator = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             Object listToWrap = new ArrayList<>();
             if (method.isDefault()) {
