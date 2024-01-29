@@ -4,7 +4,7 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
-import ua.foggger.wrapper.element.interactor.Interactors;
+import ua.foggger.wrapper.interactor.Interactors;
 import ua.foggger.wrapper.page.ElementNameResolver;
 import ua.foggger.wrapper.page.LocatorResolver;
 

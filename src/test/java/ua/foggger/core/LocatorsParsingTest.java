@@ -46,7 +46,7 @@ public class LocatorsParsingTest extends BaseTest {
     @Test
     public void locatorIsAutoDefined() {
         String locator = "id";
-        String expectedLocatorValue = String.format("//%s|//*[@id='%s']|//*[@name='%s']|//*[@class='%s'])", locator, locator, locator, locator);
+        String expectedLocatorValue = String.format("(//%s|//*[@id='%s']|//*[@name='%s']|//*[@class='%s'])", locator, locator, locator, locator);
         Assert.assertEquals(getLocator(page.elementWithIdAutoDetect()), By.xpath(expectedLocatorValue));
     }
 

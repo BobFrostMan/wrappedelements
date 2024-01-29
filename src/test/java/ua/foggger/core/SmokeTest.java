@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.page.BreakingBadPage;
-import ua.foggger.wrapper.element.interactor.Interactors;
+import ua.foggger.wrapper.interactor.Interactors;
 
 public class SmokeTest extends BaseTest {
 

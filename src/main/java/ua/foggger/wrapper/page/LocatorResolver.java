@@ -75,7 +75,7 @@ public class LocatorResolver {
         if (isCSSSelector(locator)) {
             return new By.ByCssSelector(locator);
         }
-        return new By.ByXPath(String.format("//%s|//*[@id='%s']|//*[@name='%s']|//*[@class='%s'])", locator, locator, locator, locator));
+        return new By.ByXPath(String.format("(//%s|//*[@id='%s']|//*[@name='%s']|//*[@class='%s'])", locator, locator, locator, locator));
     }
 
     private boolean isXPath(String locator) {

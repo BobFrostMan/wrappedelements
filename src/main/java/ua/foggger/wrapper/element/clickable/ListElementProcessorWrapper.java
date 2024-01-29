@@ -42,7 +42,7 @@ public class ListElementProcessorWrapper implements IHaveReflectionAccess {
                 for (int i = 0; i < listElements.size(); i++) {
                     org.openqa.selenium.WebElement webElement = listElements.get(i);
                     ClickableElement clickableElement = new ClickableElement();
-                    setFieldValue(webElement, "innerElement", webElement);
+                    setFieldValue(clickableElement, "innerElement", webElement);
                     clickableElement.setDetectionFunction((name) -> clickableElement.getWrappedElement());
                     decorator.setValuesFromAnnotation(wrappedBlockMeta, clickableElement, method, args);
                     clickableElement.setName(clickableElement.getName() + " (list item number [" + i + "])");

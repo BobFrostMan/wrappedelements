@@ -1,8 +1,9 @@
-package ua.foggger.wrapper.element.interactor;
+package ua.foggger.wrapper.interactor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import ua.foggger.wrapper.element.IElementInteractor;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public final class Interactors {
     public static final String UNTIL_CLICKABLE = "untilClickable";
     public static final String VERTICAL_SCROLL_UNTIL_VISIBLE = "verticalScrollUntilVisible";
     public static final String STANDARD = "standard";
+    public static final String IMMEDIATELY = "immediately";
 
     private static final Map<String, IElementInteractor> interactorsMap = new HashMap<>();
 
@@ -32,6 +34,7 @@ public final class Interactors {
             registerInteractor(untilClickable());
             registerInteractor(verticalScrollUntilVisible());
             registerInteractor(standard());
+            registerInteractor(immediately());
         } catch (Throwable t) {
             throw new RuntimeException(t.getCause());
         }
@@ -87,7 +90,23 @@ public final class Interactors {
 
             @Override
             public boolean isReadyForInteraction(By by, WebDriver webDriver) {
-                return true;
+                try {
+                    ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView({block: \"center\", behavior: \"smooth\"})", webDriver.findElement(by));
+                    return (Boolean) ((JavascriptExecutor) webDriver).executeScript(
+                            "var elem = arguments[0],                 " +
+                                    "  box = elem.getBoundingClientRect(),    " +
+                                    "  cx = box.left + box.width / 2,         " +
+                                    "  cy = box.top + box.height / 2,         " +
+                                    "  e = document.elementFromPoint(cx, cy); " +
+                                    "for (; e; e = e.parentElement) {         " +
+                                    "  if (e === elem)                        " +
+                                    "    return true;                         " +
+                                    "}                                        " +
+                                    "return false;                            "
+                            , webDriver.findElement(by));
+                } catch (WebDriverException ex) {
+                    return false;
+                }
             }
         };
     }
@@ -139,6 +158,20 @@ public final class Interactors {
 //                    case "getScreenshotAs":
                         return true;
                 }
+            }
+        };
+    }
+
+    private static IElementInteractor immediately() {
+        return new IElementInteractor() {
+            @Override
+            public String name() {
+                return IMMEDIATELY;
+            }
+
+            @Override
+            public boolean isReadyForInteraction(By by, WebDriver webDriver) {
+                return true;
             }
         };
     }

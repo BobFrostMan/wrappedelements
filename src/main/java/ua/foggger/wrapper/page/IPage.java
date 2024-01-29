@@ -1,11 +1,8 @@
 package ua.foggger.wrapper.page;
 
-import ua.foggger.wrapper.element.interactor.Interactors;
+import ua.foggger.wrapper.interactor.KnowsInteractors;
 
-public interface IPage {
+public interface IPage extends KnowsInteractors {
 
-    String UNTIL_VISIBLE = Interactors.UNTIL_VISIBLE;
-    String UNTIL_CLICKABLE = Interactors.UNTIL_CLICKABLE;
-    String VERTICAL_SCROLL_UNTIL_VISIBLE = Interactors.VERTICAL_SCROLL_UNTIL_VISIBLE;
-    String STANDARD = Interactors.STANDARD;
+
 }

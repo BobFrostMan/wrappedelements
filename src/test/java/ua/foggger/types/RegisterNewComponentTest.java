@@ -36,12 +36,14 @@ public class RegisterNewComponentTest extends BaseTest {
     @Test
     public void registerNewComponentWithParameterInLocatorTest() {
         Assert.assertEquals(page.element().solo(), "solo");
-        Assert.assertEquals(getLocator(page.element().elementWithNamedParameter("last", "name")), new ByChained(By.xpath("//div"), By.xpath("//li/a[contains(text(), 'name last')]")));
+        Assert.assertEquals(getLocator(page.element().elementWithNamedParameter("last", "name")),
+                new ByChained(By.xpath("//div"), By.xpath("//li/a[contains(text(), 'name last')]")));
     }
 
     @Test
     public void registerNewComponentInsideComponentWithParameterInLocatorTest() {
-        Assert.assertEquals(getLocator(page.holderComponent().innerComponent().elementWithNamedParameter("last", "name")), new ByChained(new ByChained(By.xpath("//div"), By.xpath("//li")), By.xpath("//li/a[contains(text(), 'name last')]")));
+        Assert.assertEquals(getLocator(page.holderComponent().innerComponent().elementWithNamedParameter("last", "name")),
+                new ByChained(new ByChained(By.xpath("//div"), By.xpath("//li")), By.xpath("//li/a[contains(text(), 'name last')]")));
     }
 
     @AfterClass

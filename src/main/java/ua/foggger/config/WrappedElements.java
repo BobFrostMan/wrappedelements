@@ -13,7 +13,7 @@ import ua.foggger.wrapper.block.WrappedComponent;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.clickable.ClickableElement;
 import ua.foggger.wrapper.element.clickable.ClickableElementAnnotationProcessor;
-import ua.foggger.wrapper.element.interactor.Interactors;
+import ua.foggger.wrapper.interactor.Interactors;
 import ua.foggger.wrapper.element.visible.VisibleElement;
 import ua.foggger.wrapper.element.visible.VisibleElementAnnotationProcessor;
 import ua.foggger.wrapper.page.IPage;
