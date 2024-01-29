@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeClass;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.driver.DummyWebDriver;
 import ua.foggger.wrapper.element.WrappedElement;
-import ua.foggger.wrapper.element.IElementInteractor;
+import ua.foggger.wrapper.interactor.IElementInteractor;
 import ua.foggger.helper.IHaveReflectionAccess;
 
 public abstract class BaseTest implements IHaveReflectionAccess {

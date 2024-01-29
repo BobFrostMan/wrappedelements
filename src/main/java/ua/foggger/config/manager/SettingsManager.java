@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import ua.foggger.config.WrappedElementsSettings;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
-import ua.foggger.wrapper.element.IElementInteractor;
+import ua.foggger.wrapper.interactor.IElementInteractor;
 
 import java.util.function.Supplier;
 

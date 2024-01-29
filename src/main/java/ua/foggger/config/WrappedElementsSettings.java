@@ -2,7 +2,7 @@ package ua.foggger.config;
 
 import org.openqa.selenium.WebDriver;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
-import ua.foggger.wrapper.element.IElementInteractor;
+import ua.foggger.wrapper.interactor.IElementInteractor;
 
 import java.util.HashMap;
 import java.util.Map;

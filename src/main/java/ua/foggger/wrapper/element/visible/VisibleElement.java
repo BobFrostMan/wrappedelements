@@ -4,7 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.driver.DriverProvider;
-import ua.foggger.wrapper.element.IElementInteractor;
+import ua.foggger.wrapper.interactor.IElementInteractor;
 import ua.foggger.wrapper.element.WrappedElement;
 
 import java.util.List;
