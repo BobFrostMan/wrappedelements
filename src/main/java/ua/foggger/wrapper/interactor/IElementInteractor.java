@@ -2,11 +2,12 @@ package ua.foggger.wrapper.interactor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import ua.foggger.helper.ICanWait;
 
 /**
  * Provides functionality to set condition for element to be ready for interactions
  */
-public interface IElementInteractor {
+public interface IElementInteractor extends ICanWait {
 
     /**
      * Returns name of this element detection implementation

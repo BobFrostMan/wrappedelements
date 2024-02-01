@@ -1,7 +1,5 @@
 package ua.foggger.annotation;
 
-import ua.foggger.wrapper.interactor.Interactors;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -45,7 +43,7 @@ public @interface WebElement {
      *
      * @return String condition name;
      */
-    String waitUntil() default Interactors.STANDARD;
+    String waitUntil() default "until_clickable";
 
     //TODO: Have to think about interval override
 

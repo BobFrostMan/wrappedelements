@@ -13,9 +13,7 @@ import ua.foggger.wrapper.block.WrappedComponent;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.clickable.ClickableElement;
 import ua.foggger.wrapper.element.clickable.ClickableElementAnnotationProcessor;
-import ua.foggger.wrapper.interactor.Interactors;
-import ua.foggger.wrapper.element.visible.VisibleElement;
-import ua.foggger.wrapper.element.visible.VisibleElementAnnotationProcessor;
+import ua.foggger.wrapper.interactor.*;
 import ua.foggger.wrapper.page.IPage;
 import ua.foggger.wrapper.page.PageInvocationHandler;
 
@@ -37,12 +35,15 @@ public final class WrappedElements {
         wrappedElementsConfig = new WrappedElementsConfig(settingsManager);
         IWebDriverProvider driverProvider = new ThreadSafeWebDriverManager();
         DriverProvider.setDriverProvider(driverProvider);
+        Interactors.registerInteractor(new NoActionInteractor());
+        Interactors.registerInteractor(new UntilVisibleInteractor());
+        Interactors.registerInteractor(new UntilClickableInteractor());
+        Interactors.registerInteractor(new VerticalScrollUntilVisibleInteractor());
 
         WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
-        wrappedElementsSettings.setElementInteractor(Interactors.getRegisteredInteractor(Interactors.STANDARD));
+        wrappedElementsSettings.setElementInteractor(Interactors.getRegisteredInteractor(IKnowInteractors.UNTIL_CLICKABLE));
         wrappedElementsSettings.addWrapperAnnotationProcessor(WrappedElement.class, new ClickableElementAnnotationProcessor());
         wrappedElementsSettings.addWrapperAnnotationProcessor(ClickableElement.class, new ClickableElementAnnotationProcessor());
-        wrappedElementsSettings.addWrapperAnnotationProcessor(VisibleElement.class, new VisibleElementAnnotationProcessor());
         wrappedElementsSettings.addWrapperAnnotationProcessor(WrappedComponent.class, new WrappedBlockAnnotationProcessor());
 
         settingsRepository.save(wrappedElementsSettings);

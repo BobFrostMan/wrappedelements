@@ -138,3 +138,6 @@ Default identification mechanism, try to categorize provided locator is it xpath
 - Interactors class moved from element package
 - Fixed default element search
 - Fixed ListElementProcessorWrapped hidden exception
+
+1.02.2024
+- Extracted interactors as a separated classes, interactors registration also moved from interactors class

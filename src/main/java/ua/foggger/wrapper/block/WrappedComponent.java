@@ -2,9 +2,9 @@ package ua.foggger.wrapper.block;
 
 import org.openqa.selenium.WebDriver;
 import ua.foggger.driver.DriverProvider;
-import ua.foggger.wrapper.interactor.KnowsInteractors;
+import ua.foggger.wrapper.interactor.IKnowInteractors;
 
-public interface WrappedComponent extends KnowsInteractors {
+public interface WrappedComponent extends IKnowInteractors {
 
     default WebDriver driver() {
         return DriverProvider.get();

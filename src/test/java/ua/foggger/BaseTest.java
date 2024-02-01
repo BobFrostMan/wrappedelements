@@ -6,8 +6,9 @@ import ua.foggger.core.driver.DummyWebDriver;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.interactor.IElementInteractor;
 import ua.foggger.helper.IHaveReflectionAccess;
+import ua.foggger.wrapper.interactor.IKnowInteractors;
 
-public abstract class BaseTest implements IHaveReflectionAccess {
+public abstract class BaseTest implements IHaveReflectionAccess, IKnowInteractors {
 
     protected Object getLocator(WrappedElement element) {
         return getFieldValue(element, "locator");

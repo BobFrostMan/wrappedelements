@@ -23,11 +23,11 @@ public class InteractionParsingTest extends BaseTest {
 
     @Test
     public void shouldPickUpDefaultInteractor() {
-        Assert.assertEquals(getInteraction(page.heisenberg()).name(), Interactors.STANDARD);
+        Assert.assertEquals(getInteraction(page.heisenberg()).name(), UNTIL_CLICKABLE);
     }
 
     @Test
     public void shouldPickUpCustomInteractor() {
-        Assert.assertEquals(getInteraction(page.combo()).name(), Interactors.UNTIL_CLICKABLE);
+        Assert.assertEquals(getInteraction(page.combo()).name(), VERTICAL_SCROLL_UNTIL_VISIBLE);
     }
 }

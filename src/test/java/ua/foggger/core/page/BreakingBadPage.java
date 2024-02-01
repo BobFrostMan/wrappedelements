@@ -27,7 +27,7 @@ public interface BreakingBadPage extends IPage {
         return new ClickableElement("I'm a lawyer");
     }
 
-    @WebElement(value = "//combo", waitUntil = UNTIL_CLICKABLE, timeout = 15)
+    @WebElement(value = "//combo", waitUntil = VERTICAL_SCROLL_UNTIL_VISIBLE, timeout = 15)
     WrappedElement combo();
 
     @WebElement(value = "//p", waitUntil = UNTIL_VISIBLE)

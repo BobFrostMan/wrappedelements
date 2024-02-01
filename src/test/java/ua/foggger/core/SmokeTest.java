@@ -37,7 +37,7 @@ public class SmokeTest extends BaseTest {
         Assert.assertNotNull(getInteraction(page.heisenberg()));
         Assert.assertNotNull(getInteraction(page.randomPerson("rand")));
         Assert.assertNotNull(getInteraction(page.jessy()));
-        Assert.assertEquals(getInteraction(page.combo()).name(), Interactors.UNTIL_CLICKABLE);
+        Assert.assertEquals(getInteraction(page.combo()).name(), VERTICAL_SCROLL_UNTIL_VISIBLE);
     }
 
     @Test

@@ -6,10 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WrapsElement;
 import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.driver.DriverProvider;
+import ua.foggger.helper.ICanWait;
 
 import java.util.concurrent.TimeUnit;
 
-public interface WrappedElement extends WebElement, Locatable, WrapsElement {
+public interface WrappedElement extends WebElement, Locatable, WrapsElement, ICanWait {
 
     String getName();
 
