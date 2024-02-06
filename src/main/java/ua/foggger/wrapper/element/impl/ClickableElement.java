@@ -1,4 +1,4 @@
-package ua.foggger.wrapper.element.clickable;
+package ua.foggger.wrapper.element.impl;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
@@ -8,8 +8,6 @@ import ua.foggger.wrapper.interactor.IElementInteractor;
 import ua.foggger.wrapper.element.WrappedElement;
 
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**

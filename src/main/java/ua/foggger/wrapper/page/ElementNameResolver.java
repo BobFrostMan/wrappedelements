@@ -10,7 +10,7 @@ public class ElementNameResolver {
         return elementName + " on " + page;
     }
 
-    private String prettify(String s) {
+    public String prettify(String s) {
         String str = s.replaceAll(
                 String.format("%s|%s|%s",
                         "(?<=[A-Z])(?=[A-Z][a-z])",

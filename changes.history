@@ -141,3 +141,14 @@ Default identification mechanism, try to categorize provided locator is it xpath
 
 1.02.2024
 - Extracted interactors as a separated classes, interactors registration also moved from interactors class
+
+03.02.2024
+- Attempt to build multiplatform support is partially successful, sample in 'multi-platform' branch. However the implementation has certain drawbacks:
+   Annotation processors become senseless since annotation information can be received as an object, that makes custom annotations creations more difficult than it was
+   At the same time interface becomes easier for extension by end user, but quite complicated to support. multi-platform attempts left in separate branch.
+
+06.02.2024
+- Implemented AnnotatedMethodMeta class that gathers all information about annotations
+- Implemented AbstractElementProcessor as a part of extension
+- Refactored invocations handler
+- Added multiplatform-related annotation

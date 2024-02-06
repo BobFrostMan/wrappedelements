@@ -6,8 +6,8 @@ import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.block.WrappedComponent;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 import ua.foggger.wrapper.element.WrappedElement;
-import ua.foggger.wrapper.element.clickable.ClickableElement;
-import ua.foggger.wrapper.element.clickable.ListElementProcessorWrapper;
+import ua.foggger.wrapper.element.impl.ClickableElement;
+import ua.foggger.wrapper.element.impl.ListElementProcessorWrapper;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
@@ -40,15 +40,17 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
 
         if (List.class.isAssignableFrom(clazz)) {
             Type actualType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
-            IElementAnnotationProcessor decorator = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
+            IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             if (WrappedComponent.class.isAssignableFrom(Class.forName(actualType.getTypeName()))) {
-                throw new UnsupportedOperationException("List of componets is not supported yet!");
+                throw new UnsupportedOperationException("List of components is not supported yet!");
             }
             Object listToWrap = new ArrayList<>();
             if (method.isDefault()) {
                 listToWrap = invokeDefaultMethodImpl(proxy, method, args);
             }
-            return new ListElementProcessorWrapper().wrap((List<ClickableElement>) listToWrap, decorator, method, args);
+            ListElementProcessorWrapper listElementProcessorWrapper = new ListElementProcessorWrapper(null, annotationProcessor, (List<Object>)listToWrap);
+            listElementProcessorWrapper.setValuesFromAnnotation(null, listToWrap, method, args);
+            return listToWrap;
         }
 
         IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(clazz);

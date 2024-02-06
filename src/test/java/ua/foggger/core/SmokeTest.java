@@ -8,6 +8,8 @@ import ua.foggger.config.WrappedElements;
 import ua.foggger.core.page.BreakingBadPage;
 import ua.foggger.wrapper.interactor.Interactors;
 
+import java.util.ArrayList;
+
 public class SmokeTest extends BaseTest {
 
     private BreakingBadPage page;
@@ -50,7 +52,7 @@ public class SmokeTest extends BaseTest {
 
     @Test
     public void notAnnotatedMethods() {
-        Assert.assertNull(page.hobbits());
+        Assert.assertEquals(page.hobbits(), new ArrayList<>());
         Assert.assertNull(page.frodo());
     }
 

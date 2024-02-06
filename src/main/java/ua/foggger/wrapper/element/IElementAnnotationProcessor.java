@@ -27,6 +27,4 @@ public interface IElementAnnotationProcessor extends IHaveReflectionAccess {
         return null;
     }
 
-
-
 }

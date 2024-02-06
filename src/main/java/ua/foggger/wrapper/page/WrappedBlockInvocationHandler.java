@@ -6,8 +6,8 @@ import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.block.WrappedComponent;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 import ua.foggger.wrapper.element.WrappedElement;
-import ua.foggger.wrapper.element.clickable.ClickableElement;
-import ua.foggger.wrapper.element.clickable.ListElementProcessorWrapper;
+import ua.foggger.wrapper.element.impl.ClickableElement;
+import ua.foggger.wrapper.element.impl.ListElementProcessorWrapper;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
@@ -48,12 +48,14 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
             if (WrappedComponent.class.isAssignableFrom(Class.forName(actualType.getTypeName()))) {
                 throw new UnsupportedOperationException("List of componets is not supported yet!");
             }
-            IElementAnnotationProcessor decorator = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
+            IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             Object listToWrap = new ArrayList<>();
             if (method.isDefault()) {
                 listToWrap = invokeDefaultMethodImpl(proxy, method, args);
             }
-            return new ListElementProcessorWrapper(meta).wrap((List<ClickableElement>) listToWrap, decorator, method, args);
+            ListElementProcessorWrapper listElementProcessorWrapper = new ListElementProcessorWrapper(meta, annotationProcessor, (List<Object>)listToWrap);
+            listElementProcessorWrapper.setValuesFromAnnotation(meta, listToWrap, method, args);
+            return listToWrap;
         }
 
         IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(clazz);

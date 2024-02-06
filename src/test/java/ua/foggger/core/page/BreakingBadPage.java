@@ -2,7 +2,7 @@ package ua.foggger.core.page;
 
 import ua.foggger.annotation.WebElement;
 import ua.foggger.wrapper.element.WrappedElement;
-import ua.foggger.wrapper.element.clickable.ClickableElement;
+import ua.foggger.wrapper.element.impl.ClickableElement;
 import ua.foggger.wrapper.page.IPage;
 
 import java.util.ArrayList;
