@@ -152,3 +152,7 @@ Default identification mechanism, try to categorize provided locator is it xpath
 - Implemented AbstractElementProcessor as a part of extension
 - Refactored invocations handler
 - Added multiplatform-related annotation
+
+07.02.2024
+- Fixed default methods invocations with parameters
+- Added tests for multiplatform-related annotations

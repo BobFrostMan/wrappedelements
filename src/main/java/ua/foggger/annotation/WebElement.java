@@ -11,13 +11,11 @@ import java.lang.annotation.Target;
  * <pre>{@code
  *      public class SomePage implements IPage {
  *          @WebElement(value = "//button", name = "My awesome button")
- *          IClickableElement awesomeButton();
+ *          ClickableElement awesomeButton();
  *      }
  * }</pre>
  * As result awesomeButton() will return found selenium web element.
  */
-//TODO: should this support class target?
-//TODO: should this support field target?
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface WebElement {

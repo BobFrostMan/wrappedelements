@@ -44,4 +44,10 @@ public interface SettingsManager {
      */
     void addElementDecorator(Class<? extends WrappedElement> clazz, IElementAnnotationProcessor elementDecorator);
 
+    /**
+     * Sets platform name to use
+     * @param platformName platform name as String
+     */
+    void setPlatform(String platformName);
+
 }

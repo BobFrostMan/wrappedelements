@@ -1,6 +1,6 @@
 package ua.foggger.wrapper.page;
 
-import ua.foggger.wrapper.interactor.IKnowInteractors;
+import ua.foggger.common.IKnowInteractors;
 
 public interface IPage extends IKnowInteractors {
 

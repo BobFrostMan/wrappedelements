@@ -1,4 +1,4 @@
-package ua.foggger.wrapper.interactor;
+package ua.foggger.common;
 
 /**
  * Internal interface to hold default Interactors values for convenience

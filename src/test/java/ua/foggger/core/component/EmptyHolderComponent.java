@@ -1,4 +1,4 @@
-package ua.foggger.types.component;
+package ua.foggger.core.component;
 
 import ua.foggger.annotation.WebComponent;
 import ua.foggger.wrapper.block.WrappedComponent;

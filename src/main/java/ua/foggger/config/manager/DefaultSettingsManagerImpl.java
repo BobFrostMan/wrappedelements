@@ -64,4 +64,16 @@ public class DefaultSettingsManagerImpl implements SettingsManager {
         settings.addWrapperAnnotationProcessor(clazz, elementDecorator);
         settingsRepository.save(settings);
     }
+
+    /**
+     * Sets platform name to use
+     *
+     * @param platformName platform name as String
+     */
+    @Override
+    public void setPlatform(String platformName) {
+        WrappedElementsSettings settings = settingsRepository.get();
+        settings.setPlatform(platformName);
+        settingsRepository.save(settings);
+    }
 }

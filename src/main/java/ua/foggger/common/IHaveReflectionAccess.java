@@ -1,4 +1,4 @@
-package ua.foggger.helper;
+package ua.foggger.common;
 
 import java.lang.reflect.Field;
 

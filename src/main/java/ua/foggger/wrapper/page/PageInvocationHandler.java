@@ -1,7 +1,7 @@
 package ua.foggger.wrapper.page;
 
+import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.config.SettingsProvider;
-import ua.foggger.helper.IHaveReflectionAccess;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.block.WrappedComponent;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
@@ -48,7 +48,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
             if (method.isDefault()) {
                 listToWrap = invokeDefaultMethodImpl(proxy, method, args);
             }
-            ListElementProcessorWrapper listElementProcessorWrapper = new ListElementProcessorWrapper(null, annotationProcessor, (List<Object>)listToWrap);
+            ListElementProcessorWrapper listElementProcessorWrapper = new ListElementProcessorWrapper(null, annotationProcessor, (List<Object>) listToWrap);
             listElementProcessorWrapper.setValuesFromAnnotation(null, listToWrap, method, args);
             return listToWrap;
         }
@@ -94,7 +94,9 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
             final Class<?> clazz2 = method.getDeclaringClass();
             return constructor.newInstance(clazz2).in(clazz2).unreflectSpecial(method, clazz2).bindTo(proxy).invokeWithArguments(args);
         } else {
-            return MethodHandles.lookup().findSpecial(method.getDeclaringClass(), method.getName(), MethodType.methodType(method.getReturnType(), new Class[0]), method.getDeclaringClass()).bindTo(proxy).invokeWithArguments(args);
+            return MethodHandles.lookup()
+                    .findSpecial(method.getDeclaringClass(), method.getName(), MethodType.methodType(method.getReturnType(), method.getParameterTypes()), method.getDeclaringClass())
+                    .bindTo(proxy).invokeWithArguments(args);
         }
     }
 }

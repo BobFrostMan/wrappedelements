@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 
 public class WrappedElementsSettings {
 
+    private String platform;
     private long interactionTimeout;
     private IElementInteractor elementInteractor;
     private Supplier<WebDriver> driverSupplier;
@@ -18,6 +19,14 @@ public class WrappedElementsSettings {
     //default constructor for hiding access from other modules
     WrappedElementsSettings() {
         annotationProcessorMap = new HashMap<>();
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getPlatform() {
+        return platform;
     }
 
     public void setInteractionTimeout(long interactionTimeout) {

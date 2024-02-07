@@ -2,18 +2,21 @@ package ua.foggger.wrapper.element.impl;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
+import ua.foggger.annotation.AndroidElement;
 import ua.foggger.annotation.AnnotatedMethodMeta;
+import ua.foggger.annotation.IOSElement;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.config.SettingsProvider;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.common.IKnowPlatforms;
 import ua.foggger.wrapper.interactor.Interactors;
 import ua.foggger.wrapper.page.ElementNameResolver;
 import ua.foggger.wrapper.page.LocatorResolver;
 
 import java.lang.reflect.Method;
 
-public abstract class AbstractElementProcessor implements IElementAnnotationProcessor, SettingsProvider {
+public abstract class AbstractElementProcessor implements IElementAnnotationProcessor, IKnowPlatforms, SettingsProvider {
 
     protected final LocatorResolver locatorResolver;
     protected final ElementNameResolver elementNameResolver;
@@ -67,19 +70,18 @@ public abstract class AbstractElementProcessor implements IElementAnnotationProc
      * @return AnnotatedMethodMeta information object
      */
     public AnnotatedMethodMeta parseAnnotatedMeta(Method method, Object[] args) {
-        WebElement annotation = method.getAnnotation(WebElement.class);
-        if (annotation == null) {
-            return null;
+        String platform = getSettings().getPlatform();
+        //TODO: Convert to map with platform related converters for increased flexibility
+        switch (platform) {
+            case WEB:
+                return parseWebAnnotatedMeta(method, args);
+            case ANDROID:
+                return parseAndroidAnnotatedMeta(method, args);
+            case IOS:
+                return parseIOSWebAnnotatedMeta(method, args);
+            default:
+                throw new IllegalArgumentException("Platform '" + platform + "' is not supported yet!");
         }
-
-        AnnotatedMethodMeta meta = new AnnotatedMethodMeta();
-        meta.setName(annotation.name());
-        meta.setValue(annotation.value());
-        meta.setMethod(method);
-        meta.setArgs(args);
-        meta.setWaitUntil(annotation.waitUntil());
-        meta.setTimeout(annotation.timeout());
-        return meta;
     }
 
     public By resolveLocator(final WrappedBlockMeta parentBlockMeta, String locatorValue, Method method, Object[] args) {
@@ -99,6 +101,54 @@ public abstract class AbstractElementProcessor implements IElementAnnotationProc
             name += " on " + page;
         }
         return name;
+    }
+
+    private AnnotatedMethodMeta parseWebAnnotatedMeta(Method method, Object[] args) {
+        WebElement annotation = method.getAnnotation(WebElement.class);
+        if (annotation == null) {
+            return null;
+        }
+
+        AnnotatedMethodMeta meta = new AnnotatedMethodMeta();
+        meta.setName(annotation.name());
+        meta.setValue(annotation.value());
+        meta.setMethod(method);
+        meta.setArgs(args);
+        meta.setWaitUntil(annotation.waitUntil());
+        meta.setTimeout(annotation.timeout());
+        return meta;
+    }
+
+    private AnnotatedMethodMeta parseAndroidAnnotatedMeta(Method method, Object[] args) {
+        AndroidElement annotation = method.getAnnotation(AndroidElement.class);
+        if (annotation == null) {
+            return null;
+        }
+
+        AnnotatedMethodMeta meta = new AnnotatedMethodMeta();
+        meta.setName(annotation.name());
+        meta.setValue(annotation.value());
+        meta.setMethod(method);
+        meta.setArgs(args);
+        meta.setWaitUntil(annotation.waitUntil());
+        meta.setTimeout(annotation.timeout());
+        return meta;
+    }
+
+    private AnnotatedMethodMeta parseIOSWebAnnotatedMeta(Method method, Object[] args) {
+        IOSElement annotation = method.getAnnotation(IOSElement.class);
+        if (annotation == null) {
+            return null;
+        }
+
+        AnnotatedMethodMeta meta = new AnnotatedMethodMeta();
+        meta.setName(annotation.name());
+        meta.setValue(annotation.value());
+        meta.setMethod(method);
+        meta.setArgs(args);
+        meta.setWaitUntil(annotation.waitUntil());
+        meta.setTimeout(annotation.timeout());
+        return meta;
     }
 
 }

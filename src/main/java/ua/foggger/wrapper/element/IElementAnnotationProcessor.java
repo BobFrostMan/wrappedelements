@@ -1,6 +1,6 @@
 package ua.foggger.wrapper.element;
 
-import ua.foggger.helper.IHaveReflectionAccess;
+import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
 
 import java.lang.reflect.Method;

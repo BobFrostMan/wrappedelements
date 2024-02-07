@@ -10,14 +10,12 @@ import java.lang.annotation.Target;
  * Usage is next:
  * <pre>{@code
  *      public class SomePage implements IPage {
- *          @WebElement(value = "//button", name = "My awesome button")
- *          IClickableElement awesomeButton();
+ *          @AndroidElement(value = "//button", name = "My awesome button")
+ *          ClickableElement awesomeButton();
  *      }
  * }</pre>
  * As result awesomeButton() will return found selenium web element.
  */
-//TODO: should this support class target?
-//TODO: should this support field target?
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface AndroidElement {
@@ -44,8 +42,6 @@ public @interface AndroidElement {
      * @return String condition name;
      */
     String waitUntil() default "until_clickable";
-
-    //TODO: Have to think about interval override
 
     /**
      * Timeout for waitUntil detection function.

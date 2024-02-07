@@ -1,7 +1,7 @@
 package ua.foggger.wrapper.page;
 
 import ua.foggger.config.SettingsProvider;
-import ua.foggger.helper.IHaveReflectionAccess;
+import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.block.WrappedComponent;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
@@ -27,8 +27,6 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
         this.meta = meta;
     }
 
-   //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects or it's fine?
-    //TODO: each time reset the values from annotations is another drawback
     @SuppressWarnings({"unchecked"})
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -99,7 +97,9 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
             final Class<?> clazz2 = method.getDeclaringClass();
             return constructor.newInstance(clazz2).in(clazz2).unreflectSpecial(method, clazz2).bindTo(proxy).invokeWithArguments(args);
         } else {
-            return MethodHandles.lookup().findSpecial(method.getDeclaringClass(), method.getName(), MethodType.methodType(method.getReturnType(), new Class[0]), method.getDeclaringClass()).bindTo(proxy).invokeWithArguments(args);
+            return MethodHandles.lookup()
+                    .findSpecial(method.getDeclaringClass(), method.getName(), MethodType.methodType(method.getReturnType(), method.getParameterTypes()), method.getDeclaringClass())
+                    .bindTo(proxy).invokeWithArguments(args);
         }
     }
 }

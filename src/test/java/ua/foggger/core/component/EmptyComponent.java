@@ -1,4 +1,4 @@
-package ua.foggger.types.component;
+package ua.foggger.core.component;
 
 import ua.foggger.annotation.Parameter;
 import ua.foggger.annotation.WebElement;
@@ -9,7 +9,7 @@ public interface EmptyComponent extends WrappedComponent {
 
     String solo = "solo";
 
-    default public String solo(){
+    default String solo(){
         return solo;
     }
 

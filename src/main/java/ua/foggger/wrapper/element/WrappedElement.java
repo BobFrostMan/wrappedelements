@@ -1,12 +1,11 @@
 package ua.foggger.wrapper.element;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WrapsElement;
 import org.openqa.selenium.interactions.Locatable;
 import ua.foggger.driver.DriverProvider;
-import ua.foggger.helper.ICanWait;
+import ua.foggger.common.ICanWait;
 
 import java.util.concurrent.TimeUnit;
 

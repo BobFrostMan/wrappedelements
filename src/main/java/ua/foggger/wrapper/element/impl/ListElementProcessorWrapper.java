@@ -2,7 +2,7 @@ package ua.foggger.wrapper.element.impl;
 
 import ua.foggger.annotation.AnnotatedMethodMeta;
 import ua.foggger.driver.DriverProvider;
-import ua.foggger.helper.IHaveReflectionAccess;
+import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 

@@ -1,6 +1,8 @@
 package ua.foggger.config;
 
 import org.openqa.selenium.WebDriver;
+import ua.foggger.common.IKnowInteractors;
+import ua.foggger.common.IKnowPlatforms;
 import ua.foggger.config.manager.DefaultSettingsManagerImpl;
 import ua.foggger.config.manager.SettingsManager;
 import ua.foggger.config.repo.InMemorySettingsRepository;
@@ -41,6 +43,7 @@ public final class WrappedElements {
         Interactors.registerInteractor(new VerticalScrollUntilVisibleInteractor());
 
         WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
+        wrappedElementsSettings.setPlatform(IKnowPlatforms.WEB);
         wrappedElementsSettings.setElementInteractor(Interactors.getRegisteredInteractor(IKnowInteractors.UNTIL_CLICKABLE));
         wrappedElementsSettings.addWrapperAnnotationProcessor(WrappedElement.class, new ClickableElementAnnotationProcessor());
         wrappedElementsSettings.addWrapperAnnotationProcessor(ClickableElement.class, new ClickableElementAnnotationProcessor());

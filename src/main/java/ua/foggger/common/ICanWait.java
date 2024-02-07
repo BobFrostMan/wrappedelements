@@ -1,4 +1,4 @@
-package ua.foggger.helper;
+package ua.foggger.common;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;

@@ -49,9 +49,37 @@ public class WrappedElementsConfig {
      *
      * @param clazz     class that will be handled
      * @param decorator decorator that will be used for clazz decoration
+     * @return this
      */
     public WrappedElementsConfig registerDecorator(Class<? extends WrappedElement> clazz, IElementAnnotationProcessor decorator) {
         settingsManager.addElementDecorator(clazz, decorator);
+        return this;
+    }
+
+    /**
+     * Sets platform to use. Element annotations will be selected according to specified platform.
+     * Example:
+     *  <pre>{@code
+     *      //initialization code:
+     *      WrappedElements.config().setPlatform("ios")
+     *
+     *      //Page file
+     *      public interface SomePage extends IPage {
+     *          @WebElement("//locator-web")
+     *          @AndroidElement("//locator-android")
+     *          @IOSElement("//locator-ios")
+     *          ClickableElement someElement();
+     *      }
+     *
+     *      //Usage in test code:
+     *      someElement().click();
+     * }</pre>
+     *  Such usage will cause webdriver to search for element with locator "//locator-ios", that is very useful for mirror like mobile applications for different platforms.
+     * @param platformName platform name as String
+     * @return this
+     */
+    public WrappedElementsConfig setPlatform(String platformName) {
+        settingsManager.setPlatform(platformName);
         return this;
     }
 }

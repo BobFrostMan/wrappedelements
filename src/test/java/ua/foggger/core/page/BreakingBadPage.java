@@ -1,5 +1,7 @@
 package ua.foggger.core.page;
 
+import ua.foggger.annotation.AndroidElement;
+import ua.foggger.annotation.IOSElement;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.impl.ClickableElement;
