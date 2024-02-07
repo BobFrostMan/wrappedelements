@@ -1,12 +1,12 @@
 package ua.foggger;
 
 import org.testng.annotations.BeforeClass;
+import ua.foggger.common.IHaveReflectionAccess;
+import ua.foggger.common.IKnowInteractors;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.driver.DummyWebDriver;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.interactor.IElementInteractor;
-import ua.foggger.common.IHaveReflectionAccess;
-import ua.foggger.common.IKnowInteractors;
 
 public abstract class BaseTest implements IHaveReflectionAccess, IKnowInteractors {
 

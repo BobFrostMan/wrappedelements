@@ -23,7 +23,7 @@ public interface IElementAnnotationProcessor extends IHaveReflectionAccess {
     <T> Object setValuesFromAnnotation(WrappedBlockMeta parentBlockMeta, T element, Method method, Object[] args);
 
 
-    default <T> WrappedBlockMeta parseWrappedBlockMeta( T element, Method method, Object[] args) {
+    default <T> WrappedBlockMeta parseWrappedBlockMeta(T element, Method method, Object[] args) {
         return null;
     }
 

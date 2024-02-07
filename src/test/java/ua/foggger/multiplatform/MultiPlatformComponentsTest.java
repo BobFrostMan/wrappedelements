@@ -7,14 +7,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
-import ua.foggger.common.IKnowInteractors;
 import ua.foggger.common.IKnowPlatforms;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.page.MultiPlatformPage;
-import ua.foggger.wrapper.element.impl.ClickableElement;
-import ua.foggger.wrapper.interactor.Interactors;
-
-import java.util.List;
 
 public class MultiPlatformComponentsTest extends BaseTest {
 
@@ -30,7 +25,7 @@ public class MultiPlatformComponentsTest extends BaseTest {
     public void WebComponentLocatorsShouldBePickedUp() {
         WrappedElements.config().setPlatform(IKnowPlatforms.WEB);
         Assert.assertEquals(getLocator(page.holder().innerComponent().elementWithNamedParameter("web", "31")),
-                new ByChained(new ByChained(By.xpath("//webcomponent"), By.xpath("//li")),By.xpath("//li/a[contains(text(), '31 web')]")));
+                new ByChained(new ByChained(By.xpath("//webcomponent"), By.xpath("//li")), By.xpath("//li/a[contains(text(), '31 web')]")));
     }
 
     @Test

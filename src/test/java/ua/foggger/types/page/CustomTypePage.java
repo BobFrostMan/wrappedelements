@@ -4,10 +4,10 @@ import ua.foggger.annotation.WebComponent;
 import ua.foggger.annotation.WebElement;
 import ua.foggger.core.component.EmptyComponent;
 import ua.foggger.core.component.EmptyHolderComponent;
-import ua.foggger.wrapper.element.WrappedElement;
-import ua.foggger.wrapper.page.IPage;
 import ua.foggger.types.annotations.CustomEmptyElement;
 import ua.foggger.types.element.EmptyElement;
+import ua.foggger.wrapper.element.WrappedElement;
+import ua.foggger.wrapper.page.IPage;
 
 import java.util.List;
 

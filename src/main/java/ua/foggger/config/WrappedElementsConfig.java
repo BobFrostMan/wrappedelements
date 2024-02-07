@@ -3,8 +3,8 @@ package ua.foggger.config;
 import org.openqa.selenium.WebDriver;
 import ua.foggger.config.manager.SettingsManager;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
-import ua.foggger.wrapper.interactor.IElementInteractor;
 import ua.foggger.wrapper.element.WrappedElement;
+import ua.foggger.wrapper.interactor.IElementInteractor;
 
 import java.util.function.Supplier;
 
@@ -59,7 +59,7 @@ public class WrappedElementsConfig {
     /**
      * Sets platform to use. Element annotations will be selected according to specified platform.
      * Example:
-     *  <pre>{@code
+     * <pre>{@code
      *      //initialization code:
      *      WrappedElements.config().setPlatform("ios")
      *
@@ -74,7 +74,8 @@ public class WrappedElementsConfig {
      *      //Usage in test code:
      *      someElement().click();
      * }</pre>
-     *  Such usage will cause webdriver to search for element with locator "//locator-ios", that is very useful for mirror like mobile applications for different platforms.
+     * Such usage will cause webdriver to search for element with locator "//locator-ios", that is very useful for mirror like mobile applications for different platforms.
+     *
      * @param platformName platform name as String
      * @return this
      */

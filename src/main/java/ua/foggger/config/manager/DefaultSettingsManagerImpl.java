@@ -3,8 +3,8 @@ package ua.foggger.config.manager;
 import org.openqa.selenium.WebDriver;
 import ua.foggger.config.WrappedElementsSettings;
 import ua.foggger.config.repo.SettingsRepository;
-import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.interactor.IElementInteractor;
 
 import java.util.function.Supplier;

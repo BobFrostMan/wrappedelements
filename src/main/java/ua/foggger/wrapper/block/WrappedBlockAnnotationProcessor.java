@@ -2,16 +2,17 @@ package ua.foggger.wrapper.block;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
-import ua.foggger.annotation.*;
+import ua.foggger.annotation.AndroidComponent;
+import ua.foggger.annotation.AnnotatedMethodMeta;
+import ua.foggger.annotation.IOSComponent;
+import ua.foggger.annotation.WebComponent;
 import ua.foggger.common.IKnowPlatforms;
 import ua.foggger.config.SettingsProvider;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
-import ua.foggger.wrapper.interactor.Interactors;
 import ua.foggger.wrapper.page.ElementNameResolver;
 import ua.foggger.wrapper.page.LocatorResolver;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 public class WrappedBlockAnnotationProcessor implements IElementAnnotationProcessor, SettingsProvider, IKnowPlatforms {
 

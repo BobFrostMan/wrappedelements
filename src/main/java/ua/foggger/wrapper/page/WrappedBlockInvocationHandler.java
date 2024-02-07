@@ -1,7 +1,7 @@
 package ua.foggger.wrapper.page;
 
-import ua.foggger.config.SettingsProvider;
 import ua.foggger.common.IHaveReflectionAccess;
+import ua.foggger.config.SettingsProvider;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.block.WrappedComponent;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
@@ -51,7 +51,7 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
             if (method.isDefault()) {
                 listToWrap = invokeDefaultMethodImpl(proxy, method, args);
             }
-            ListElementProcessorWrapper listElementProcessorWrapper = new ListElementProcessorWrapper(meta, annotationProcessor, (List<Object>)listToWrap);
+            ListElementProcessorWrapper listElementProcessorWrapper = new ListElementProcessorWrapper(meta, annotationProcessor, (List<Object>) listToWrap);
             listElementProcessorWrapper.setValuesFromAnnotation(meta, listToWrap, method, args);
             return listToWrap;
         }

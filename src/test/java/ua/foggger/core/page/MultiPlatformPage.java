@@ -1,9 +1,7 @@
 package ua.foggger.core.page;
 
 import ua.foggger.annotation.*;
-import ua.foggger.core.component.EmptyComponent;
 import ua.foggger.core.component.EmptyHolderComponent;
-import ua.foggger.types.element.EmptyElement;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.impl.ClickableElement;
 import ua.foggger.wrapper.page.IPage;
@@ -18,9 +16,9 @@ public interface MultiPlatformPage extends IPage {
     @IOSElement(value = "id=just_id", name = "IOS element")
     ClickableElement multiplatformElement();
 
-    @WebElement(value ="//div[text() = '%s']|//span[contains(text(), '%s')]", name = "Web element")
-    @AndroidElement(value ="//android.TextView[text() = '%s']|//android.Button[contains(text(), '%s')]", name = "Android element")
-    @IOSElement(value ="//ios[text() = '%s']|//ios2[contains(text(), '%s')]", name = "IOS element")
+    @WebElement(value = "//div[text() = '%s']|//span[contains(text(), '%s')]", name = "Web element")
+    @AndroidElement(value = "//android.TextView[text() = '%s']|//android.Button[contains(text(), '%s')]", name = "Android element")
+    @IOSElement(value = "//ios[text() = '%s']|//ios2[contains(text(), '%s')]", name = "IOS element")
     WrappedElement elementWithFewPlaceHoldersAndOneParameter(String text);
 
     @WebElement(value = "//div[text() = '%d']|//span[contains(text(), '%d')]", name = "Web element")
@@ -53,15 +51,15 @@ public interface MultiPlatformPage extends IPage {
         return list;
     }
 
-    default String androidName(){
+    default String androidName() {
         return "Android element";
     }
 
-    default String iosName(){
+    default String iosName() {
         return "IOS element";
     }
 
-    default String webName(){
+    default String webName() {
         return "Web element";
     }
 

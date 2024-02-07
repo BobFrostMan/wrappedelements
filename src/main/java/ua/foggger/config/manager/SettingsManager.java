@@ -2,8 +2,8 @@ package ua.foggger.config.manager;
 
 import org.openqa.selenium.WebDriver;
 import ua.foggger.config.WrappedElementsSettings;
-import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.interactor.IElementInteractor;
 
 import java.util.function.Supplier;
@@ -46,6 +46,7 @@ public interface SettingsManager {
 
     /**
      * Sets platform name to use
+     *
      * @param platformName platform name as String
      */
     void setPlatform(String platformName);

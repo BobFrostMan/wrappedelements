@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.core.page.BreakingBadPage;
-import ua.foggger.wrapper.interactor.Interactors;
 
 import java.util.ArrayList;
 

@@ -9,7 +9,7 @@ public interface EmptyComponent extends WrappedComponent {
 
     String solo = "solo";
 
-    default String solo(){
+    default String solo() {
         return solo;
     }
 

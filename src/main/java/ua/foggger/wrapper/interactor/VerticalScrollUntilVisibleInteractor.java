@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+
 /**
  * Before any active interaction webdriver will try to bring element into a view port and make sure that element is visible.
  */
@@ -15,7 +16,7 @@ public class VerticalScrollUntilVisibleInteractor implements IElementInteractor 
      */
     @Override
     public String name() {
-        return  "vertical_scroll";
+        return "vertical_scroll";
     }
 
     /**
@@ -53,16 +54,16 @@ public class VerticalScrollUntilVisibleInteractor implements IElementInteractor 
             case "findElement":
                 return isReadyForInteraction(by, webDriver);
             default:
-            //case "isEnabled":
-            //case "getText":
-            //case "isDisplayed":
-            //case "getAttribute":
-            //case "getTagName":
-            //case "getLocation":
-            //case "getSize":
-            //case "getRect":
-            //case "getCssValue":
-            //case "getScreenshotAs":
+                //case "isEnabled":
+                //case "getText":
+                //case "isDisplayed":
+                //case "getAttribute":
+                //case "getTagName":
+                //case "getLocation":
+                //case "getSize":
+                //case "getRect":
+                //case "getCssValue":
+                //case "getScreenshotAs":
                 return true;
         }
     }
