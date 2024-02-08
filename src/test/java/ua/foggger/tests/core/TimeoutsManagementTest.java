@@ -1,11 +1,11 @@
-package ua.foggger.core;
+package ua.foggger.tests.core;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.TimeoutsPage;
+import ua.foggger.ui.page.TimeoutsPage;
 
 /**
  * Check that element locator properly set for different usecases.

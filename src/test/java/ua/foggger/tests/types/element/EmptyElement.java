@@ -1,4 +1,4 @@
-package ua.foggger.types.element;
+package ua.foggger.tests.types.element;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;

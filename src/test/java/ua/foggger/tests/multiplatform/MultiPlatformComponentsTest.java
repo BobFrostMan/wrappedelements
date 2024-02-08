@@ -1,4 +1,4 @@
-package ua.foggger.multiplatform;
+package ua.foggger.tests.multiplatform;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.common.IKnowPlatforms;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.MultiPlatformPage;
+import ua.foggger.ui.page.MultiPlatformPage;
 
 public class MultiPlatformComponentsTest extends BaseTest {
 

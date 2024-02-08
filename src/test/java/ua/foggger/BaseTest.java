@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeClass;
 import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.common.IKnowInteractors;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.driver.DummyWebDriver;
+import ua.foggger.ui.driver.DummyWebDriver;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.interactor.IElementInteractor;
 

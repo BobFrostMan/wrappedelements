@@ -1,4 +1,4 @@
-package ua.foggger.core.page;
+package ua.foggger.ui.page;
 
 import ua.foggger.annotation.Parameter;
 import ua.foggger.annotation.WebElement;

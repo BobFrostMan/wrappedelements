@@ -45,13 +45,14 @@ public class WrappedElementsConfig {
     }
 
     /**
-     * Registers clickable element custom decorator
+     * Registers custom element annotation processor
      *
      * @param clazz     class that will be handled
-     * @param decorator decorator that will be used for clazz decoration
+     * @param decorator annotation processor that will be used for specified element clazz
      * @return this
      */
-    public WrappedElementsConfig registerDecorator(Class<? extends WrappedElement> clazz, IElementAnnotationProcessor decorator) {
+    //TODO: rename method, since annotation processor also renamed
+    public WrappedElementsConfig registerAnnotationProcessor(Class<? extends WrappedElement> clazz, IElementAnnotationProcessor decorator) {
         settingsManager.addElementDecorator(clazz, decorator);
         return this;
     }

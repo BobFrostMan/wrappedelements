@@ -1,4 +1,4 @@
-package ua.foggger.core.driver;
+package ua.foggger.ui.driver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

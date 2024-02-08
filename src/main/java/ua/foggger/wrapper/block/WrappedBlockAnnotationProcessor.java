@@ -47,6 +47,14 @@ public class WrappedBlockAnnotationProcessor implements IElementAnnotationProces
         return element;
     }
 
+    /**
+     * Returns parent wrapped block metadata (a component that is parent for current element)
+     * @param element         web element wrapper
+     * @param method          annotated method that will produce web element
+     * @param args            annotated method arguments
+     * @param <T>             any web element wrapper
+     * @return web element wrapper
+     */
     @Override
     public <T> WrappedBlockMeta parseWrappedBlockMeta(T element, Method method, Object[] args) {
         AnnotatedMethodMeta meta = parseAnnotatedMeta(method, args);

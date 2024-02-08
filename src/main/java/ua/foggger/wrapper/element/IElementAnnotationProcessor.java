@@ -23,6 +23,14 @@ public interface IElementAnnotationProcessor extends IHaveReflectionAccess {
     <T> Object setValuesFromAnnotation(WrappedBlockMeta parentBlockMeta, T element, Method method, Object[] args);
 
 
+    /**
+     * Returns parent wrapped block metadata (a component that is parent for current element)
+     * @param element         web element wrapper
+     * @param method          annotated method that will produce web element
+     * @param args            annotated method arguments
+     * @param <T>             any web element wrapper
+     * @return web element wrapper
+     */
     default <T> WrappedBlockMeta parseWrappedBlockMeta(T element, Method method, Object[] args) {
         return null;
     }

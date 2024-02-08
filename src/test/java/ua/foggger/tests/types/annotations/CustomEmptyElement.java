@@ -1,4 +1,4 @@
-package ua.foggger.types.annotations;
+package ua.foggger.tests.types.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

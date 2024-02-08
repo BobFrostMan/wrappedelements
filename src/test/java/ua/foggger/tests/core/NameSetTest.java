@@ -1,11 +1,11 @@
-package ua.foggger.core;
+package ua.foggger.tests.core;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.BreakingBadPage;
+import ua.foggger.ui.page.BreakingBadPage;
 
 /**
  * Check that element name properly set for different usecases.

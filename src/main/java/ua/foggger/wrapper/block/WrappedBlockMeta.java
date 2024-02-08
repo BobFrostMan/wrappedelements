@@ -6,20 +6,11 @@ import java.util.Objects;
 
 public class WrappedBlockMeta {
 
-    private String blockIdentifier;
     private String name;
     private By locator;
 
     public WrappedBlockMeta() {
 
-    }
-
-    public String getBlockIdentifier() {
-        return blockIdentifier;
-    }
-
-    public void setBlockIdentifier(String blockIdentifier) {
-        this.blockIdentifier = blockIdentifier;
     }
 
     public String getName() {
@@ -43,19 +34,18 @@ public class WrappedBlockMeta {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WrappedBlockMeta that = (WrappedBlockMeta) o;
-        return Objects.equals(blockIdentifier, that.blockIdentifier) && Objects.equals(name, that.name) && Objects.equals(locator, that.locator);
+        return Objects.equals(name, that.name) && Objects.equals(locator, that.locator);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(blockIdentifier, name, locator);
+        return Objects.hash(name, locator);
     }
 
     @Override
     public String toString() {
         return "WrappedBlockMeta{" +
-                "blockIdentifier='" + blockIdentifier + '\'' +
-                ", name='" + name + '\'' +
+                " name='" + name + '\'' +
                 ", locator='" + locator + '\'' +
                 '}';
     }

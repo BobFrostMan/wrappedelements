@@ -1,4 +1,4 @@
-package ua.foggger.core;
+package ua.foggger.tests.core;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.LocatorsPage;
+import ua.foggger.ui.page.LocatorsPage;
 
 /**
  * Check that element locator properly set for different usecases.

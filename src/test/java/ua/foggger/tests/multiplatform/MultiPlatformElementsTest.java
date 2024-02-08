@@ -1,4 +1,4 @@
-package ua.foggger.multiplatform;
+package ua.foggger.tests.multiplatform;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -9,7 +9,7 @@ import ua.foggger.BaseTest;
 import ua.foggger.common.IKnowInteractors;
 import ua.foggger.common.IKnowPlatforms;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.page.MultiPlatformPage;
+import ua.foggger.ui.page.MultiPlatformPage;
 import ua.foggger.wrapper.element.impl.ClickableElement;
 import ua.foggger.wrapper.interactor.Interactors;
 

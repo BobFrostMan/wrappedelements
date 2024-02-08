@@ -1,7 +1,7 @@
-package ua.foggger.core.page;
+package ua.foggger.ui.page;
 
 import ua.foggger.annotation.*;
-import ua.foggger.core.component.EmptyHolderComponent;
+import ua.foggger.ui.component.EmptyHolderComponent;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.impl.ClickableElement;
 import ua.foggger.wrapper.page.IPage;

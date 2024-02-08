@@ -1,11 +1,11 @@
-package ua.foggger.core;
+package ua.foggger.tests.core;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.core.driver.DummyWebDriver;
+import ua.foggger.ui.driver.DummyWebDriver;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.wrapper.page.IPage;
 
