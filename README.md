@@ -1,7 +1,41 @@
 # wrappedelements
-A convenient framework wrapper for pages and selenium webelements, that reduces usual waiter, and initialization routine. Just get rid of boilerplate code in UI test automation frameworks.
+Inspired by [Burning wave](https://www.burningwave.org/getstarted/). Special thanks to [Tyrrz](https://github.com/Tyrrrz) for Terms of use.
 
-# Features
+[![Status](https://img.shields.io/badge/status-active-47c219.svg)](https://github.com/Tyrrrz/.github/blob/master/docs/project-status.md)
+[![Made in Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://tyrrrz.me/ukraine)
+[![Fuck Russia](https://img.shields.io/badge/fuck-russia-e4181c.svg?labelColor=000000)](https://twitter.com/tyrrrz/status/1495972128977571848)
+
+A convenient framework wrapper for pages and selenium webelements, that reduces usual waiter, and initialization routine. It will help you to get rid of boilerplate code in UI test automation frameworks.
+
+## Terms of use
+By using this project or its source code, for any purpose and in any shape or form, you grant your **implicit agreement** to all the following statements:
+
+- You **condemn Russia and its military aggression against Ukraine**
+- You **recognize that Russia is an occupant that unlawfully invaded a sovereign state**
+- You **support Ukraine's territorial integrity, including its claims over temporarily occupied territories of Crimea and Donbas**
+- You **reject false narratives perpetuated by Russian state propaganda**
+Glory to Ukraine!
+
+## Features
+- Clear and simple Page object classes
+- Easy element interaction condition definition on Page object level 
+- Increased element reusability for different platforms (Web, iOS, Android) 
+- Easy element waiters and timeouts configuration on Page object level
+- Dynamic locators support 
+- No element synchronization code on test level as result clear code on test level
+- Extendable custom element configuration and customization system 
+- Automatic web driver recreation if it's dead or quit
+- Your own custom blocks will be highly reusable
+
+## Getting started
+TODO
+
+## Quick overview
+TODO
+
+## Features overview with examples:
+TODO
+
 ## Clear and simple Page object classes
 Imagine page object class as an interface! That makes page object classes clear and avoids additional code.
 WrappedElements framework will generate the exact implementation for you.
@@ -173,5 +207,7 @@ elementWithText(someOtherDynamicalText).click();
 ## List elements support
 In progress
 
-# Getting started
+## More documentation
+TODO
+## Videos guides
 TODO
