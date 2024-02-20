@@ -26,7 +26,7 @@ public class MultiPlatformElementsTest extends BaseTest {
     }
 
     @Test
-    public void WebLocatorsShouldBePickedUp() {
+    public void webLocatorsShouldBePickedUp() {
         WrappedElements.config().setPlatform(IKnowPlatforms.WEB);
         Assert.assertEquals(getLocator(page.multiplatformElement()), By.linkText("someLinkText"));
         Assert.assertEquals(getName(page.multiplatformElement()), page.webName());
@@ -57,7 +57,7 @@ public class MultiPlatformElementsTest extends BaseTest {
     }
 
     @Test
-    public void IOSLocatorsShouldBePickedUp() {
+    public void iOSLocatorsShouldBePickedUp() {
         WrappedElements.config().setPlatform(IKnowPlatforms.IOS);
         Assert.assertEquals(getLocator(page.multiplatformElement()), By.id("just_id"));
         Assert.assertEquals(getName(page.multiplatformElement()), page.iosName());
@@ -88,7 +88,7 @@ public class MultiPlatformElementsTest extends BaseTest {
     }
 
     @Test
-    public void AndroidLocatorsShouldBePickedUp() {
+    public void androidLocatorsShouldBePickedUp() {
         WrappedElements.config().setPlatform(IKnowPlatforms.ANDROID);
         Assert.assertEquals(getLocator(page.multiplatformElement()), By.xpath("//span/a"));
         Assert.assertEquals(getName(page.multiplatformElement()), page.androidName());

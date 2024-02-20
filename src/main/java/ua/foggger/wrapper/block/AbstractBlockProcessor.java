@@ -1,27 +1,25 @@
-package ua.foggger.wrapper.element.impl;
+package ua.foggger.wrapper.block;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
-import ua.foggger.annotation.AndroidElement;
+import ua.foggger.annotation.AndroidComponent;
 import ua.foggger.annotation.AnnotatedMethodMeta;
-import ua.foggger.annotation.IOSElement;
-import ua.foggger.annotation.WebElement;
+import ua.foggger.annotation.IOSComponent;
+import ua.foggger.annotation.WebComponent;
 import ua.foggger.common.IKnowPlatforms;
 import ua.foggger.config.SettingsProvider;
-import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.IAnnotationProcessor;
-import ua.foggger.wrapper.interactor.Interactors;
 import ua.foggger.wrapper.page.ElementNameResolver;
 import ua.foggger.wrapper.page.LocatorResolver;
 
 import java.lang.reflect.Method;
 
-public abstract class AbstractElementProcessor implements IAnnotationProcessor, IKnowPlatforms, SettingsProvider {
+public abstract class AbstractBlockProcessor implements IAnnotationProcessor, SettingsProvider, IKnowPlatforms {
 
     protected final LocatorResolver locatorResolver;
     protected final ElementNameResolver elementNameResolver;
 
-    public AbstractElementProcessor() {
+    public AbstractBlockProcessor() {
         locatorResolver = new LocatorResolver();
         elementNameResolver = new ElementNameResolver();
     }
@@ -42,25 +40,33 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
         if (meta == null) {
             return null;
         }
-        By resolvedLocator = resolveLocator(parentBlockMeta, meta.getValue(), method, args);
-        String resolvedName = resolveName(parentBlockMeta, meta.getName(), method, args);
-        meta.setResolvedName(resolvedName);
-        meta.setResolvedLocator(resolvedLocator);
-        meta.setResolvedInteractor(Interactors.getRegisteredInteractor(meta.getWaitUntil()));
-
-        return resolveElement(parentBlockMeta, meta, element);
+        if (parentBlockMeta != null) {
+            parentBlockMeta.setName(resolveName(parentBlockMeta, meta.getName(), method, args));
+            parentBlockMeta.setLocator(resolveLocator(parentBlockMeta, meta.getValue(), method, args));
+        }
+        return element;
     }
 
     /**
-     * Fulfills element wrapper object with data from WrappedBlockMeta and AnnotatedMethodMeta objects.
+     * Returns parent wrapped block metadata (a component that is parent for current element)
      *
-     * @param parentBlockMeta         parent block meta info object (can be null)
-     * @param annotatedMethodMetaInfo wrapped element method meta information
-     * @param element                 element wrapper object
-     * @param <T>                     any type that extends ClickableElement
-     * @return wrapped element with fulfilled fields
+     * @param element web element wrapper
+     * @param method  annotated method that will produce web element
+     * @param args    annotated method arguments
+     * @param <T>     any web element wrapper
+     * @return web element wrapper
      */
-    public abstract <T> T resolveElement(final WrappedBlockMeta parentBlockMeta, final AnnotatedMethodMeta annotatedMethodMetaInfo, T element);
+    @Override
+    public <T> WrappedBlockMeta parseWrappedBlockMeta(T element, Method method, Object[] args) {
+        AnnotatedMethodMeta meta = parseAnnotatedMeta(method, args);
+        if (meta == null) {
+            return null;
+        }
+        WrappedBlockMeta parentBlockMeta = new WrappedBlockMeta();
+        parentBlockMeta.setName(resolveName(null, meta.getName(), method, args));
+        parentBlockMeta.setLocator(resolveLocator(null, meta.getValue(), method, args));
+        return parentBlockMeta;
+    }
 
     /**
      * Gathers all required information from method to AnnotatedMethodMeta object
@@ -104,7 +110,7 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
     }
 
     private AnnotatedMethodMeta parseWebAnnotatedMeta(Method method, Object[] args) {
-        WebElement annotation = method.getAnnotation(WebElement.class);
+        WebComponent annotation = method.getAnnotation(WebComponent.class);
         if (annotation == null) {
             return null;
         }
@@ -114,13 +120,11 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
         meta.setValue(annotation.value());
         meta.setMethod(method);
         meta.setArgs(args);
-        meta.setWaitUntil(annotation.waitUntil());
-        meta.setTimeout(annotation.timeout());
         return meta;
     }
 
     private AnnotatedMethodMeta parseAndroidAnnotatedMeta(Method method, Object[] args) {
-        AndroidElement annotation = method.getAnnotation(AndroidElement.class);
+        AndroidComponent annotation = method.getAnnotation(AndroidComponent.class);
         if (annotation == null) {
             return null;
         }
@@ -130,13 +134,11 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
         meta.setValue(annotation.value());
         meta.setMethod(method);
         meta.setArgs(args);
-        meta.setWaitUntil(annotation.waitUntil());
-        meta.setTimeout(annotation.timeout());
         return meta;
     }
 
     private AnnotatedMethodMeta parseIOSWebAnnotatedMeta(Method method, Object[] args) {
-        IOSElement annotation = method.getAnnotation(IOSElement.class);
+        IOSComponent annotation = method.getAnnotation(IOSComponent.class);
         if (annotation == null) {
             return null;
         }
@@ -146,8 +148,6 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
         meta.setValue(annotation.value());
         meta.setMethod(method);
         meta.setArgs(args);
-        meta.setWaitUntil(annotation.waitUntil());
-        meta.setTimeout(annotation.timeout());
         return meta;
     }
 

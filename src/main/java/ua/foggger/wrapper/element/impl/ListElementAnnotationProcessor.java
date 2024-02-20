@@ -4,7 +4,7 @@ import ua.foggger.annotation.AnnotatedMethodMeta;
 import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
-import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.wrapper.IAnnotationProcessor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,16 +13,16 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListElementProcessorWrapper extends AbstractElementProcessor implements IHaveReflectionAccess {
+public class ListElementAnnotationProcessor extends AbstractElementProcessor implements IHaveReflectionAccess {
 
     private WrappedBlockMeta wrappedBlockMeta;
-    private IElementAnnotationProcessor listElementsProcessor;
+    private IAnnotationProcessor listElementsProcessor;
     private List<Object> elementsList;
 
-    public ListElementProcessorWrapper(WrappedBlockMeta wrappedBlockMeta, IElementAnnotationProcessor listElementsProcessor, List<Object> elementsList) {
+    public ListElementAnnotationProcessor(WrappedBlockMeta wrappedBlockMeta, IAnnotationProcessor listElementsProcessor, List<Object> elementsList) {
         this.wrappedBlockMeta = wrappedBlockMeta;
-        this.elementsList = elementsList;
         this.listElementsProcessor = listElementsProcessor;
+        this.elementsList = elementsList;
     }
 
     /**

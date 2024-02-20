@@ -1,4 +1,4 @@
-package ua.foggger.wrapper.element;
+package ua.foggger.wrapper;
 
 import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 /**
  * Element annotation processor used for passing parameters from annotation to element wrapper object.
  */
-public interface IElementAnnotationProcessor extends IHaveReflectionAccess {
+public interface IAnnotationProcessor extends IHaveReflectionAccess {
 
     /**
      * Sets values from annotation to web element wrapper to child elements.

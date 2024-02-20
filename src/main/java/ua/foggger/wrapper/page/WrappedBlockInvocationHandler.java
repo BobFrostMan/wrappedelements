@@ -2,12 +2,13 @@ package ua.foggger.wrapper.page;
 
 import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.config.SettingsProvider;
+import ua.foggger.wrapper.IAnnotationProcessor;
+import ua.foggger.wrapper.block.ListWrappedBlockAnnotationProcessor;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.block.WrappedComponent;
-import ua.foggger.wrapper.element.IElementAnnotationProcessor;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.element.impl.ClickableElement;
-import ua.foggger.wrapper.element.impl.ListElementProcessorWrapper;
+import ua.foggger.wrapper.element.impl.ListElementAnnotationProcessor;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
@@ -32,7 +33,7 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Class<?> clazz = method.getReturnType();
         if (WrappedComponent.class.isAssignableFrom(clazz)) {
-            IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(clazz);
+            IAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(clazz);
             if (annotationProcessor == null) {
                 annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
             }
@@ -43,20 +44,33 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
 
         if (List.class.isAssignableFrom(clazz)) {
             Type actualType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+            IAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             if (WrappedComponent.class.isAssignableFrom(Class.forName(actualType.getTypeName()))) {
-                throw new UnsupportedOperationException("List of componets is not supported yet!");
+                //TODO:
+                throw new UnsupportedOperationException("List of components is not supported yet!");
+                /*
+                    Object listToWrap = new ArrayList<>();
+                    if (method.isDefault()) {
+                        listToWrap = invokeDefaultMethodImpl(proxy, method, args);
+                    }
+                    if (annotationProcessor == null) {
+                        annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
+                    }
+                    ListWrappedBlockAnnotationProcessor listBlockAnnotationProcessor = new ListWrappedBlockAnnotationProcessor(meta, annotationProcessor, (List<Object>) listToWrap);
+                    listBlockAnnotationProcessor.setValuesFromAnnotation(meta, listToWrap, method, args);
+                    return listToWrap;
+                 */
             }
-            IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             Object listToWrap = new ArrayList<>();
             if (method.isDefault()) {
                 listToWrap = invokeDefaultMethodImpl(proxy, method, args);
             }
-            ListElementProcessorWrapper listElementProcessorWrapper = new ListElementProcessorWrapper(meta, annotationProcessor, (List<Object>) listToWrap);
+            ListElementAnnotationProcessor listElementProcessorWrapper = new ListElementAnnotationProcessor(meta, annotationProcessor, (List<Object>) listToWrap);
             listElementProcessorWrapper.setValuesFromAnnotation(meta, listToWrap, method, args);
             return listToWrap;
         }
 
-        IElementAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(clazz);
+        IAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(clazz);
         if (annotationProcessor != null) {
             //user wants to use abstract element
             if (clazz.isInterface()) {

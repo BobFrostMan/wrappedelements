@@ -156,3 +156,6 @@ Default identification mechanism, try to categorize provided locator is it xpath
 07.02.2024
 - Fixed default methods invocations with parameters
 - Added tests for multiplatform-related annotations
+
+12.02.2024
+- Changed readme

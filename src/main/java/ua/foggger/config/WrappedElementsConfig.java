@@ -2,7 +2,7 @@ package ua.foggger.config;
 
 import org.openqa.selenium.WebDriver;
 import ua.foggger.config.manager.SettingsManager;
-import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.wrapper.IAnnotationProcessor;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.interactor.IElementInteractor;
 
@@ -52,7 +52,7 @@ public class WrappedElementsConfig {
      * @return this
      */
     //TODO: rename method, since annotation processor also renamed
-    public WrappedElementsConfig registerAnnotationProcessor(Class<? extends WrappedElement> clazz, IElementAnnotationProcessor decorator) {
+    public WrappedElementsConfig registerAnnotationProcessor(Class<? extends WrappedElement> clazz, IAnnotationProcessor decorator) {
         settingsManager.addElementDecorator(clazz, decorator);
         return this;
     }

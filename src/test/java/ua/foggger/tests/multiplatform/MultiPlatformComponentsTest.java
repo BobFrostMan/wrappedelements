@@ -22,20 +22,20 @@ public class MultiPlatformComponentsTest extends BaseTest {
     }
 
     @Test
-    public void WebComponentLocatorsShouldBePickedUp() {
+    public void webComponentLocatorsShouldBePickedUp() {
         WrappedElements.config().setPlatform(IKnowPlatforms.WEB);
         Assert.assertEquals(getLocator(page.holder().innerComponent().elementWithNamedParameter("web", "31")),
                 new ByChained(new ByChained(By.xpath("//webcomponent"), By.xpath("//li")), By.xpath("//li/a[contains(text(), '31 web')]")));
     }
 
     @Test
-    public void IOSElementsInComponentShouldBeNullIfNoPlatformAnnotation() {
+    public void iOSElementsInComponentShouldBeNullIfNoPlatformAnnotation() {
         WrappedElements.config().setPlatform(IKnowPlatforms.IOS);
         Assert.assertNull(page.holder().innerComponent().elementWithNamedParameter("IOS", "31"));
     }
 
     @Test
-    public void AndroidElementsInComponentShouldBeNullIfNoPlatformAnnotation() {
+    public void androidElementsInComponentShouldBeNullIfNoPlatformAnnotation() {
         WrappedElements.config().setPlatform(IKnowPlatforms.ANDROID);
         Assert.assertNull(page.holder().innerComponent().elementWithNamedParameter("Android", "31"));
     }
