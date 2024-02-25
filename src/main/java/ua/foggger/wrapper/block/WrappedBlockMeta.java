@@ -1,8 +1,10 @@
 package ua.foggger.wrapper.block;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class WrappedBlockMeta {
 

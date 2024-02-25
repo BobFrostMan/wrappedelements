@@ -10,7 +10,7 @@ import ua.foggger.tests.types.page.CustomTypePage;
 import ua.foggger.ui.driver.DummyWebDriver;
 import ua.foggger.tests.types.element.EmptyElement;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
-import ua.foggger.wrapper.element.IElementAnnotationProcessor;
+import ua.foggger.wrapper.IAnnotationProcessor;
 
 import java.lang.reflect.Method;
 
@@ -21,7 +21,7 @@ public class RegisterNewElementTest extends BaseTest {
     @BeforeClass
     public void setUp() {
         super.setUp();
-        WrappedElements.config().registerAnnotationProcessor(EmptyElement.class, new IElementAnnotationProcessor() {
+        WrappedElements.config().registerAnnotationProcessor(EmptyElement.class, new IAnnotationProcessor() {
             @Override
             public <T> Object setValuesFromAnnotation(WrappedBlockMeta parentBlockMeta, T element, Method method, Object[] args) {
                 setFieldValue(element, "name", "Not Empty!");
