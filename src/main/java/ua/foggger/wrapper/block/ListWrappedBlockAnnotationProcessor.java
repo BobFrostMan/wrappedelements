@@ -13,7 +13,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor implements IAnnotationProcessor, IHaveReflectionAccess {
@@ -58,7 +57,7 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
     }
 
     /**
-     * Returns parent wrapped block metadata (a component that is parent for current element)
+     * Returns wrapped block metadata or null if element is not a WrappedComponent
      *
      * @param element web element wrapper
      * @param method  annotated method that will produce web element
@@ -77,7 +76,6 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
         wrappedBlockMeta.setLocator(resolveLocator(parentBlockMeta, meta.getValue(), method, args));
         return wrappedBlockMeta;
     }
-
 
     /**
      * Fulfills element wrapper object with data from WrappedBlockMeta and AnnotatedMethodMeta objects.
@@ -98,29 +96,16 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
                 listElements = DriverProvider.get().findElements(parentBlockMeta.getLocator());
             }
             if (listElements.size() > 0) {
-                for (WebElement webElement : listElements) {
-                    WrappedComponent component = (WrappedComponent) Proxy.newProxyInstance(elClazz.getClassLoader(), new Class[]{elClazz, WrappedComponent.class}, new WrappedBlockInvocationHandler(this.parentBlockMeta));
-                    component.setRootElement(webElement);
+                for (int i = 0; i < listElements.size(); i++) {
+                    WebElement webElement = listElements.get(i);
+                    WrappedComponent component = wrapComponent(parentBlockMeta, i, elClazz, annotatedMethodMetaInfo);
                     listElementsProcessor.setValuesFromAnnotation(parentBlockMeta, component, annotatedMethodMetaInfo.getMethod(), annotatedMethodMetaInfo.getArgs());
                     elementsList.add(component);
                 }
             }
             return (T) elementsList;
         } else {
-            List<Object> result = new ArrayList<>();
-            for (Object o : elementsList) {
-                WebElement webElement = ((WrappedComponent) o).rootElement();
-
-                WrappedComponent component = new WrappedComponent() {
-                    @Override
-                    public WebElement rootElement() {
-                        return webElement;
-                    }
-                };
-                listElementsProcessor.setValuesFromAnnotation(this.parentBlockMeta, component, annotatedMethodMetaInfo.getMethod(), annotatedMethodMetaInfo.getArgs());
-                result.add(component);
-            }
-            return (T) result;
+            throw new UnsupportedOperationException("Default list element implementation s not supported");
         }
     }
 
@@ -131,5 +116,27 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private WrappedComponent wrapComponent(WrappedBlockMeta parentBlockMeta, int elementIndex, Class clazz, AnnotatedMethodMeta annotatedMethodMetaInfo) {
+        WrappedBlockMeta blockMeta = new WrappedBlockMeta();
+        if (parentBlockMeta == null) {
+            blockMeta.setName(annotatedMethodMetaInfo.getResolvedName() + " (" + elementIndex + " component in list)");
+            By xpath = getXpathLocatorForListItem(annotatedMethodMetaInfo.getResolvedLocator(), elementIndex + 1);
+            blockMeta.setLocator(xpath);
+        } else {
+            blockMeta.setName(parentBlockMeta.getName() + " (" + elementIndex + " component in list)");
+            //FIXME: Handle list of items in list of items or parent locator
+            By xpath = getXpathLocatorForListItem(blockMeta.getLocator(), elementIndex + 1);
+            blockMeta.setLocator(xpath);
+        }
+        return (WrappedComponent) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, WrappedComponent.class},
+                new WrappedBlockInvocationHandler(blockMeta));
+    }
+
+    //TODO: refactor resolve locator with index
+    private By getXpathLocatorForListItem(By locator, int elementIndex) {
+        String xpath = locator.toString().replace("By.xpath: ", "");
+        return By.xpath("(" + xpath + ")[" + elementIndex + "]");
     }
 }

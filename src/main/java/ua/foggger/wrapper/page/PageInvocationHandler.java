@@ -44,8 +44,8 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
             IAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             if (WrappedComponent.class.isAssignableFrom(Class.forName(actualType.getTypeName()))) {
                 //TODO:
-                throw new UnsupportedOperationException("List of components is not supported yet!");
-                /*
+                //throw new UnsupportedOperationException("List of components is not supported yet!");
+
                     Object listToWrap = new ArrayList<>();
                     if (method.isDefault()) {
                         listToWrap = invokeDefaultMethodImpl(proxy, method, args);
@@ -56,7 +56,7 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
                     ListWrappedBlockAnnotationProcessor listBlockAnnotationProcessor = new ListWrappedBlockAnnotationProcessor(null, annotationProcessor, (List<Object>) listToWrap);
                     listBlockAnnotationProcessor.setValuesFromAnnotation(null, listToWrap, method, args);
                     return listToWrap;
-                 */
+
             }
             Object listToWrap = new ArrayList<>();
             if (method.isDefault()) {

@@ -9,18 +9,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public interface WrappedComponent extends IKnowInteractors {
 
-    AtomicReference<WebElement> rootWebElement = new AtomicReference<>();
-
     default WebDriver driver() {
         return DriverProvider.get();
-    }
-
-    default WebElement rootElement() {
-        return rootWebElement.get();
-    }
-
-    default void setRootElement(WebElement webElement) {
-        rootWebElement.set(webElement);
     }
 
 }

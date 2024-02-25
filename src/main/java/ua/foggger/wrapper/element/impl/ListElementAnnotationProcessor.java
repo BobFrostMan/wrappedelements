@@ -28,14 +28,13 @@ public class ListElementAnnotationProcessor extends AbstractElementProcessor imp
     /**
      * Fulfills element wrapper object with data from WrappedBlockMeta and AnnotatedMethodMeta objects.
      *
-     * @param parentBlockMeta         parent block meta info object (can be null)
      * @param annotatedMethodMetaInfo wrapped element method meta information
      * @param element                 element wrapper object
      * @return wrapped element with fulfilled fields
      */
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T resolveElement(WrappedBlockMeta parentBlockMeta, AnnotatedMethodMeta annotatedMethodMetaInfo, T element) {
+    public <T> T resolveElement(AnnotatedMethodMeta annotatedMethodMetaInfo, T element) {
         if (elementsList.size() == 0) {
             Class clazz = getListElementClass(annotatedMethodMetaInfo.getMethod());
             List<org.openqa.selenium.WebElement> listElements = DriverProvider.get().findElements(annotatedMethodMetaInfo.getResolvedLocator());

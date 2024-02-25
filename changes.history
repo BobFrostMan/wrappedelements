@@ -159,3 +159,11 @@ Default identification mechanism, try to categorize provided locator is it xpath
 
 12.02.2024
 - Changed readme
+
+25.02.2024
+- Finally implemented list of components handling
+Restrictions:
+  - xpath supported only
+  - nested list of components in list of components is not supported yet
+- Drawback: you have to use different annotations for blocks and elements it's kinda source of potential copy-paste errors
+Seems like it's better to have one single annotations for both components/blocks and elements

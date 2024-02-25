@@ -24,11 +24,12 @@ public interface IAnnotationProcessor extends IHaveReflectionAccess {
 
 
     /**
-     * Returns parent wrapped block metadata (a component that is parent for current element)
-     * @param element         web element wrapper
-     * @param method          annotated method that will produce web element
-     * @param args            annotated method arguments
-     * @param <T>             any web element wrapper
+     * Returns wrapped block metadata or null if element is not a WrappedComponent
+     *
+     * @param element web element wrapper
+     * @param method  annotated method that will produce web element
+     * @param args    annotated method arguments
+     * @param <T>     any web element wrapper
      * @return web element wrapper
      */
     default <T> WrappedBlockMeta parseWrappedBlockMeta(T element, Method method, Object[] args) {

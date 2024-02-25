@@ -22,10 +22,10 @@ import java.util.List;
  */
 public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveReflectionAccess, SettingsProvider {
 
-    private WrappedBlockMeta meta;
+    private WrappedBlockMeta parentBlockMeta;
 
     public WrappedBlockInvocationHandler(WrappedBlockMeta meta) {
-        this.meta = meta;
+        this.parentBlockMeta = meta;
     }
 
     @SuppressWarnings({"unchecked"})
@@ -37,8 +37,8 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
             if (annotationProcessor == null) {
                 annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
             }
-            Object obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, WrappedComponent.class}, new WrappedBlockInvocationHandler(meta));
-            annotationProcessor.setValuesFromAnnotation(meta, obj, method, args);
+            Object obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, WrappedComponent.class}, new WrappedBlockInvocationHandler(parentBlockMeta));
+            annotationProcessor.setValuesFromAnnotation(parentBlockMeta, obj, method, args);
             return obj;
         }
 
@@ -47,8 +47,8 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
             IAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             if (WrappedComponent.class.isAssignableFrom(Class.forName(actualType.getTypeName()))) {
                 //TODO:
-                throw new UnsupportedOperationException("List of components is not supported yet!");
-                /*
+                //throw new UnsupportedOperationException("List of components is not supported yet!");
+
                     Object listToWrap = new ArrayList<>();
                     if (method.isDefault()) {
                         listToWrap = invokeDefaultMethodImpl(proxy, method, args);
@@ -56,17 +56,17 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
                     if (annotationProcessor == null) {
                         annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
                     }
-                    ListWrappedBlockAnnotationProcessor listBlockAnnotationProcessor = new ListWrappedBlockAnnotationProcessor(meta, annotationProcessor, (List<Object>) listToWrap);
-                    listBlockAnnotationProcessor.setValuesFromAnnotation(meta, listToWrap, method, args);
+                    ListWrappedBlockAnnotationProcessor listBlockAnnotationProcessor = new ListWrappedBlockAnnotationProcessor(parentBlockMeta, annotationProcessor, (List<Object>) listToWrap);
+                    listBlockAnnotationProcessor.setValuesFromAnnotation(parentBlockMeta, listToWrap, method, args);
                     return listToWrap;
-                 */
+
             }
             Object listToWrap = new ArrayList<>();
             if (method.isDefault()) {
                 listToWrap = invokeDefaultMethodImpl(proxy, method, args);
             }
-            ListElementAnnotationProcessor listElementProcessorWrapper = new ListElementAnnotationProcessor(meta, annotationProcessor, (List<Object>) listToWrap);
-            listElementProcessorWrapper.setValuesFromAnnotation(meta, listToWrap, method, args);
+            ListElementAnnotationProcessor listElementProcessorWrapper = new ListElementAnnotationProcessor(parentBlockMeta, annotationProcessor, (List<Object>) listToWrap);
+            listElementProcessorWrapper.setValuesFromAnnotation(parentBlockMeta, listToWrap, method, args);
             return listToWrap;
         }
 
@@ -77,10 +77,10 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
                 WrappedElement element = method.isDefault()
                         ? (WrappedElement) invokeDefaultMethodImpl(proxy, method, args)
                         : ClickableElement.class.getConstructor().newInstance();
-                return annotationProcessor.setValuesFromAnnotation(meta, element, method, args);
+                return annotationProcessor.setValuesFromAnnotation(parentBlockMeta, element, method, args);
             } else {
                 //Create exact implementation
-                return annotationProcessor.setValuesFromAnnotation(meta, clazz.getConstructor().newInstance(), method, args);
+                return annotationProcessor.setValuesFromAnnotation(parentBlockMeta, clazz.getConstructor().newInstance(), method, args);
             }
         }
 

@@ -48,19 +48,18 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
         meta.setResolvedLocator(resolvedLocator);
         meta.setResolvedInteractor(Interactors.getRegisteredInteractor(meta.getWaitUntil()));
 
-        return resolveElement(parentBlockMeta, meta, element);
+        return resolveElement(meta, element);
     }
 
     /**
      * Fulfills element wrapper object with data from WrappedBlockMeta and AnnotatedMethodMeta objects.
      *
-     * @param parentBlockMeta         parent block meta info object (can be null)
      * @param annotatedMethodMetaInfo wrapped element method meta information
      * @param element                 element wrapper object
      * @param <T>                     any type that extends ClickableElement
      * @return wrapped element with fulfilled fields
      */
-    public abstract <T> T resolveElement(final WrappedBlockMeta parentBlockMeta, final AnnotatedMethodMeta annotatedMethodMetaInfo, T element);
+    public abstract <T> T resolveElement(final AnnotatedMethodMeta annotatedMethodMetaInfo, T element);
 
     /**
      * Gathers all required information from method to AnnotatedMethodMeta object

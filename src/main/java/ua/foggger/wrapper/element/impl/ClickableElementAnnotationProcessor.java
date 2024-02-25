@@ -10,7 +10,7 @@ public class ClickableElementAnnotationProcessor extends AbstractElementProcesso
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T resolveElement(final WrappedBlockMeta parentBlockMeta, final AnnotatedMethodMeta annotatedMethodInfo, T element) {
+    public <T> T resolveElement(final AnnotatedMethodMeta annotatedMethodInfo, T element) {
         ClickableElement clickableElement = (ClickableElement) element;
         clickableElement.setName(annotatedMethodInfo.getResolvedName());
         clickableElement.setLocator(annotatedMethodInfo.getResolvedLocator());
