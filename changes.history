@@ -167,3 +167,10 @@ Restrictions:
   - nested list of components in list of components is not supported yet
 - Drawback: you have to use different annotations for blocks and elements it's kinda source of potential copy-paste errors
 Seems like it's better to have one single annotations for both components/blocks and elements
+
+04.03.2024
+- Adapted xpath to css converter library from https://github.com/sam-rosenthal (thanks to him) to project needs
+
+05.03.2024
+- Fixed redundant xpath wraps for clickable elements in list
+- Added xpath conversion for list of blocks for proper interaction with elements
