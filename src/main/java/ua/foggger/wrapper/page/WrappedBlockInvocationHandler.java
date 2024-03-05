@@ -49,16 +49,16 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
                 //TODO:
                 //throw new UnsupportedOperationException("List of components is not supported yet!");
 
-                    Object listToWrap = new ArrayList<>();
-                    if (method.isDefault()) {
-                        listToWrap = invokeDefaultMethodImpl(proxy, method, args);
-                    }
-                    if (annotationProcessor == null) {
-                        annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
-                    }
-                    ListWrappedBlockAnnotationProcessor listBlockAnnotationProcessor = new ListWrappedBlockAnnotationProcessor(parentBlockMeta, annotationProcessor, (List<Object>) listToWrap);
-                    listBlockAnnotationProcessor.setValuesFromAnnotation(parentBlockMeta, listToWrap, method, args);
-                    return listToWrap;
+                Object listToWrap = new ArrayList<>();
+                if (method.isDefault()) {
+                    listToWrap = invokeDefaultMethodImpl(proxy, method, args);
+                }
+                if (annotationProcessor == null) {
+                    annotationProcessor = getSettings().getAnnotationProcessors().get(WrappedComponent.class);
+                }
+                ListWrappedBlockAnnotationProcessor listBlockAnnotationProcessor = new ListWrappedBlockAnnotationProcessor(parentBlockMeta, annotationProcessor, (List<Object>) listToWrap);
+                listBlockAnnotationProcessor.setValuesFromAnnotation(parentBlockMeta, listToWrap, method, args);
+                return listToWrap;
 
             }
             Object listToWrap = new ArrayList<>();
