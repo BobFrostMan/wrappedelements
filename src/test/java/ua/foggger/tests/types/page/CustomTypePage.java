@@ -2,10 +2,10 @@ package ua.foggger.tests.types.page;
 
 import ua.foggger.annotation.WebComponent;
 import ua.foggger.annotation.WebElement;
-import ua.foggger.ui.component.EmptyComponent;
-import ua.foggger.ui.component.EmptyHolderComponent;
 import ua.foggger.tests.types.annotations.CustomEmptyElement;
 import ua.foggger.tests.types.element.EmptyElement;
+import ua.foggger.ui.component.EmptyComponent;
+import ua.foggger.ui.component.EmptyHolderComponent;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.page.IPage;
 

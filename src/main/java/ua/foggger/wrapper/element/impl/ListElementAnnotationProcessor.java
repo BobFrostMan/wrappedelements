@@ -3,8 +3,8 @@ package ua.foggger.wrapper.element.impl;
 import ua.foggger.annotation.AnnotatedMethodMeta;
 import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.driver.DriverProvider;
-import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.IAnnotationProcessor;
+import ua.foggger.wrapper.block.WrappedBlockMeta;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

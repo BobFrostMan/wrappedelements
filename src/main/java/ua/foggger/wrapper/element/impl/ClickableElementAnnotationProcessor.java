@@ -1,7 +1,6 @@
 package ua.foggger.wrapper.element.impl;
 
 import ua.foggger.annotation.AnnotatedMethodMeta;
-import ua.foggger.wrapper.block.WrappedBlockMeta;
 
 public class ClickableElementAnnotationProcessor extends AbstractElementProcessor {
 

@@ -1,6 +1,7 @@
 package ua.foggger.wrapper.page;
 
 import org.openqa.selenium.By;
+import ua.foggger.wrapper.locator.converter.XPathConverter;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -42,6 +43,11 @@ public class LocatorResolver {
     public By resolveLocator(String locatorString, Method method, Object[] args) {
         String resolvedStringLocator = resolvePlaceholders(locatorString, method, args);
         return defineLocator(resolvedStringLocator);
+    }
+
+    public By resolveLocatorAsXpath(String locatorString, Method method, Object[] args) {
+        String resolvedStringLocator = resolvePlaceholders(locatorString, method, args);
+        return By.xpath(new XPathConverter().convert(defineLocator(resolvedStringLocator)));
     }
 
     private String resolvePlaceholders(String target, Method method, Object[] args) {

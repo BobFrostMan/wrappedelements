@@ -127,7 +127,7 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
         } else {
             blockMeta.setName(parentBlockMeta.getName() + " (" + elementIndex + " component in list)");
             //FIXME: Handle list of items in list of items or parent locator
-            By xpath = getXpathLocatorForListItem(blockMeta.getLocator(), elementIndex + 1);
+            By xpath = getXpathLocatorForListItem(parentBlockMeta.getLocator(), elementIndex + 1);
             blockMeta.setLocator(xpath);
         }
         return (WrappedComponent) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz, WrappedComponent.class},

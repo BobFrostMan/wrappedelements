@@ -9,6 +9,7 @@ import ua.foggger.annotation.WebComponent;
 import ua.foggger.common.IKnowPlatforms;
 import ua.foggger.config.SettingsProvider;
 import ua.foggger.wrapper.IAnnotationProcessor;
+import ua.foggger.wrapper.locator.converter.XPathConverter;
 import ua.foggger.wrapper.page.ElementNameResolver;
 import ua.foggger.wrapper.page.LocatorResolver;
 
@@ -93,6 +94,19 @@ public abstract class AbstractBlockProcessor implements IAnnotationProcessor, Se
     public By resolveLocator(final WrappedBlockMeta parentBlockMeta, String locatorValue, Method method, Object[] args) {
         By locator = locatorResolver.resolveLocator(locatorValue, method, args);
         return parentBlockMeta != null ? new ByChained(parentBlockMeta.getLocator(), locator) : locator;
+    }
+
+    private By resolveLocatorAsXpath(final WrappedBlockMeta parentBlockMeta, String locatorValue, Method method, Object[] args) {
+        XPathConverter xpathConverter = new XPathConverter();
+        By locator = locatorResolver.resolveLocator(locatorValue, method, args);
+        if (parentBlockMeta != null) {
+            String child = xpathConverter.convert(locator);
+            child = child.startsWith(".") ? child.substring(1) : child;
+            child = child.startsWith("/") ? child : "//" + child;
+            return By.xpath(xpathConverter.convert(parentBlockMeta.getLocator()) + child);
+        } else {
+            return By.xpath(xpathConverter.convert(locator));
+        }
     }
 
     public String resolveName(final WrappedBlockMeta parentBlockMeta, String elementName, Method method, Object[] args) {

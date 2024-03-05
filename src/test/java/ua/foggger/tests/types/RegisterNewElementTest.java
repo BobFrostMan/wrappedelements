@@ -6,11 +6,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
+import ua.foggger.tests.types.element.EmptyElement;
 import ua.foggger.tests.types.page.CustomTypePage;
 import ua.foggger.ui.driver.DummyWebDriver;
-import ua.foggger.tests.types.element.EmptyElement;
-import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.IAnnotationProcessor;
+import ua.foggger.wrapper.block.WrappedBlockMeta;
 
 import java.lang.reflect.Method;
 

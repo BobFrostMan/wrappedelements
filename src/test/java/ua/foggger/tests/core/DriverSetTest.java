@@ -5,8 +5,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
-import ua.foggger.ui.driver.DummyWebDriver;
 import ua.foggger.driver.DriverProvider;
+import ua.foggger.ui.driver.DummyWebDriver;
 import ua.foggger.wrapper.page.IPage;
 
 public class DriverSetTest extends BaseTest {
