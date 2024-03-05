@@ -38,16 +38,11 @@ public class LocatorResolver {
      * @param locatorString web element locator as string
      * @param method        method that is used to define web element
      * @param args          arguments that of the method invocation
-     * @return
+     * @return resolved locatorString as By object
      */
     public By resolveLocator(String locatorString, Method method, Object[] args) {
         String resolvedStringLocator = resolvePlaceholders(locatorString, method, args);
         return defineLocator(resolvedStringLocator);
-    }
-
-    public By resolveLocatorAsXpath(String locatorString, Method method, Object[] args) {
-        String resolvedStringLocator = resolvePlaceholders(locatorString, method, args);
-        return By.xpath(new XPathConverter().convert(defineLocator(resolvedStringLocator)));
     }
 
     private String resolvePlaceholders(String target, Method method, Object[] args) {

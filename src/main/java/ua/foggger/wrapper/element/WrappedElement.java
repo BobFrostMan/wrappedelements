@@ -28,7 +28,7 @@ public interface WrappedElement extends WebElement, Locatable, WrapsElement, ICa
         for (int i = 0; i <= string.length(); i++) {
             sendKeys(charSequence.subSequence(i, i + 1));
             try {
-                TimeUnit.MILLISECONDS.sleep(100);
+                TimeUnit.MILLISECONDS.sleep(delayMillis);
             } catch (InterruptedException ignored) {
                 //do nothing
             }
