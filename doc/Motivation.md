@@ -24,7 +24,7 @@ For test automation engineer who:
 - [ ] Built-in logging for element interactions (nice to have)
 - [ ] Built-in reporting for element interactions (nice to have)
 - [X] List elements support (must have)
-- [ ] List custom components support (must have)
+- [X] List custom components support (must have)
 - [ ] Widespread web elements wrappers support (nice to have)
 - [ ] Dropdown support (nice to have)
 - [ ] Multiselect support (nice to have)

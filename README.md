@@ -1,5 +1,7 @@
 # wrappedelements
-Inspired by [Burning wave](https://www.burningwave.org/getstarted/). Special thanks to [Tyrrz](https://github.com/Tyrrrz) for Terms of use.
+Inspired by [Burning wave](https://www.burningwave.org/getstarted/).
+
+Special thanks to [Tyrrz](https://github.com/Tyrrrz) for Terms of use, and [Sam Rosental](https://github.com/sam-rosenthal) for opensource [css to xpath converter](https://github.com/sam-rosenthal/java-cssSelector-to-xpath).
 
 [![Status](https://img.shields.io/badge/status-active-47c219.svg)](https://github.com/Tyrrrz/.github/blob/master/docs/project-status.md)
 [![Made in Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://tyrrrz.me/ukraine)

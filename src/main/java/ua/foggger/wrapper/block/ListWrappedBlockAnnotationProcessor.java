@@ -148,6 +148,13 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
                 new WrappedBlockInvocationHandler(blockMeta));
     }
 
+    /**
+     * Returns exact By.xpath locator for list items, based on provided locator and element index
+     *
+     * @param locator      by locator object
+     * @param elementIndex list item index
+     * @return By.xpath for specified element and index
+     */
     //TODO: refactor resolve locator with index
     private By getXpathLocatorForListItem(By locator, int elementIndex) {
         List<By> locators = new ArrayList<>();
@@ -161,6 +168,13 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
         return By.xpath("(" + xpath + ")[" + elementIndex + "]");
     }
 
+    /**
+     * Fills result list with By locators extracted from provided locator.
+     * Mainly extracts ByChained locator to list of By objects
+     *
+     * @param locator locator to extract
+     * @param result  list to fill with locators
+     */
     private void putAsSeparateLocators(By locator, final List<By> result) {
         if (locator instanceof ByChained) {
             By[] bys = (By[]) getFieldValue(locator, "bys");
