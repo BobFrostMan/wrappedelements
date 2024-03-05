@@ -2,17 +2,20 @@ package ua.foggger.wrapper.block;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.pagefactory.ByChained;
 import ua.foggger.annotation.AnnotatedMethodMeta;
 import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.wrapper.IAnnotationProcessor;
 import ua.foggger.wrapper.interactor.Interactors;
+import ua.foggger.wrapper.locator.converter.XPathConverter;
 import ua.foggger.wrapper.page.WrappedBlockInvocationHandler;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor implements IAnnotationProcessor, IHaveReflectionAccess {
@@ -97,9 +100,20 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
             }
             if (listElements.size() > 0) {
                 for (int i = 0; i < listElements.size(); i++) {
+                    /**
+                     * Invoke listElementsProcessor.setValuesFromAnnotation on child elements will modify parentBlockMeta object.
+                     * As result with for each element in this list, parentBlockMeta locator will get another wrap of new ByChained, and locator won't be valid.
+                     * To avoid such wrap, and save proper xpath need to pass a copy of this object if it's not null
+                     */
+                    WrappedBlockMeta parentForElementMeta = null;
+                    if (parentBlockMeta != null) {
+                        parentForElementMeta = new WrappedBlockMeta();
+                        parentForElementMeta.setName(parentBlockMeta.getName());
+                        parentForElementMeta.setLocator(parentBlockMeta.getLocator());
+                    }
                     WebElement webElement = listElements.get(i);
-                    WrappedComponent component = wrapComponent(parentBlockMeta, i, elClazz, annotatedMethodMetaInfo);
-                    listElementsProcessor.setValuesFromAnnotation(parentBlockMeta, component, annotatedMethodMetaInfo.getMethod(), annotatedMethodMetaInfo.getArgs());
+                    WrappedComponent component = wrapComponent(parentForElementMeta, i, elClazz, annotatedMethodMetaInfo);
+                    listElementsProcessor.setValuesFromAnnotation(parentForElementMeta, component, annotatedMethodMetaInfo.getMethod(), annotatedMethodMetaInfo.getArgs());
                     elementsList.add(component);
                 }
             }
@@ -136,7 +150,25 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
 
     //TODO: refactor resolve locator with index
     private By getXpathLocatorForListItem(By locator, int elementIndex) {
-        String xpath = locator.toString().replace("By.xpath: ", "");
+        List<By> locators = new ArrayList<>();
+        putAsSeparateLocators(locator, locators);
+        XPathConverter converter = new XPathConverter();
+        StringBuilder builder = new StringBuilder();
+        for (By by : locators) {
+            builder.append(converter.convert(by));
+        }
+        String xpath = builder.toString();
         return By.xpath("(" + xpath + ")[" + elementIndex + "]");
+    }
+
+    private void putAsSeparateLocators(By locator, final List<By> result) {
+        if (locator instanceof ByChained) {
+            By[] bys = (By[]) getFieldValue(locator, "bys");
+            for (By by : bys) {
+                putAsSeparateLocators(by, result);
+            }
+        } else {
+            result.add(locator);
+        }
     }
 }

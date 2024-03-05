@@ -164,6 +164,7 @@ public class ClickableElement implements WrappedElement {
     }
 
     protected WebElement detectElement(String methodName) {
+        System.out.println("Performing "+ methodName + " for " + name);
         return detectionFunction.apply(methodName);
     }
 }
