@@ -30,18 +30,101 @@ Glory to Ukraine!
 - Your own custom blocks will be highly reusable
 
 ## Getting started
-TODO
+### Maven
+1. Add wrappedelements and selenium java dependency to your pom file:
+```maven
+<dependency>
+    <groupId>ua.foggger</groupId>
+    <artifactId>wrappedelements</artifactId>
+    <version>${wrappedelements.version}</version>
+</dependency>
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>${selenium.version}</version>
+</dependency>
+```
+2. Create your own pageobject entities as interfaces (extend the IPage interface)
+```java
+public interface LoginPage extends IPage {
+
+    @WebElement(value = "//form//input", name = "Login input on login page")
+    ClickableElement loginInput();
+
+    @WebElement(value = "(//form//input)[2]", name = "Password input on login page")
+    ClickableElement passwordInput();
+
+    @WebElement(value = "//input[@type='submit']", name = "Login button")
+    ClickableElement loginButton();
+
+} 
+```
+3. Register selenium webdriver instance to be used by wrappedelements framework.
+To do that provide a driver creation function, and init your page with wrappedelements:
+```java
+    @BeforeClass
+    public void setUp() {
+        WrappedElements.config()
+                .driverCreator(() -> {
+                    WebDriverManager.chromedriver().setup();
+                    ChromeOptions options = new ChromeOptions();
+                    options.setImplicitWaitTimeout(Duration.ofSeconds(10));
+                    return new ChromeDriver();
+                });
+        loginPage = WrappedElements.initPage(LoginPage.class);
+    }
+```
+4. Enjoy writing your clean tests without any explicit waits!
+```java
+public class TestNGSmokeTest {
+
+    private LoginPage loginPage;
+
+    @BeforeClass
+    public void setUp() {
+        WrappedElements.config()
+                .driverCreator(() -> {
+                    WebDriverManager.chromedriver().setup();
+                    ChromeOptions options = new ChromeOptions();
+                    options.setImplicitWaitTimeout(Duration.ofSeconds(10));
+                    return new ChromeDriver();
+                })
+                .registerAnnotationProcessor(Button.class, new ButtonDecorator());
+
+        loginPage = WrappedElements.initPage(LoginPage.class);
+    }
+
+    @BeforeMethod
+    public void beforeMethod() {
+        loginPage.driver().get("https://www.saucedemo.com/");
+    }
+
+    @Test
+    public void simpleUIInteractionTest() {
+        loginPage.loginInput().sendKeys("standard_user");
+        loginPage.passwordInput().sendKeys("secret_sauce");
+        loginPage.loginButton().click();
+
+        Assert.assertEquals(loginPage.driver().getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        if (loginPage.driver() != null) {
+            loginPage.driver().quit();
+        }
+    }
+}
+```
 
 ## Quick overview
 TODO
 
-## Features overview with examples:
-TODO
-
+## Features overview
 ## Clear and simple Page object classes
 Imagine page object class as an interface! That makes page object classes clear and avoids additional code.
 WrappedElements framework will generate the exact implementation for you.
-```
+```java
 import ua.foggger.annotation.WebElement;
 import ua.foggger.element.clickable.ClickableElement;
 import ua.foggger.page.IPage;
@@ -61,7 +144,7 @@ public interface LoginPage extends IPage {
 ```
 ## No waiters on test level that leaves code clean and clear
 All element's interaction waiters encapsulated on page object layer. No additional waiters in element interaction code, - enjoy the usage:)
-```  
+```java  
 @Test
 public void simpleUIInteractionTest() {
     loginPage.loginInput().sendKeys("standard_user");
@@ -75,7 +158,7 @@ It is possible because of 'Interactor' mechanism, that allows you to configure w
 Example:
 
 Any time you perform any kind of physical interaction (click,sendKeys, etc.), on combo() element, it will wait for combo() to become clickable first, with 15 seconds timeout.
-```
+```java
 @WebElement(value = "//combo", waitUntil = UNTIL_CLICKABLE, timeout = 15)
 WrappedElement combo();
 ```
@@ -87,12 +170,30 @@ Available Interactor values:
 - UNTIL_CLICKABLE (waits for element to be displayed and be enabled)
 - VERTICAL_SCROLL_UNTIL_VISIBLE (scrolls down until the element will be visible in the view port)
 
+## Easy element's locator definition for different platforms
+It's quite common case - run ui mobile tests on different platforms. 
+Enjoy running same tests with different locators for different platforms without changing test logic:
+
+Page example:
+```java
+    @WebElement(value = "linkText=someLinkText", name = "Web element")
+    @AndroidElement(value = "//span/a", name = "Android element")
+    @IOSElement(value = "just_some_ios_element_id", name = "IOS element")
+    ClickableElement multiplatformElement();
+```
+To run tests on android just invoke:
+```java
+    WrappedElements.config().setPlatform(IKnowPlatforms.ANDROID);
+```
+And element locators will be picked up from @AndroidElement annotation. 
+Specify IOS platform, and framework will run tests with locators in  @IOSElement 
+
 ## Easy element's interaction setup
 You can easily create you own custom Decorators for specific webelements that you'll face during test automation.
 
 Let's say you need MyAwesomeButton implementation to be used by WrappedElements framework.
 1. Create **MyAweSomeButton** class (implement ClickableElement):
-```
+```java
 public class MyAwesomeButton extends ClickableElement {
 
     void setName(String name) {
@@ -115,16 +216,16 @@ public class MyAwesomeButton extends ClickableElement {
 }
 ```
 2. Create **MyAweSomeButtonDecorator** (implement IElementDecorator) that pass values from annotation to MyAweSomeButton object:
-```
+```java
 public class ButtonDecorator implements IElementDecorator {
-...
+
     @Override
     public <T> Object setValuesFromAnnotation(T element, Method method, Object[] args) {
         ButtonElement annotation = (ButtonElement) method.getAnnotation(getAnnotationClass());
         String name = "".equals(annotation.value()) ? elementNameResolver.resolve(method) : annotation.value();
         MyAwesomeButton button = (MyAwesomeButton) element;
         button.setName(name);
-        ...
+        //do something else with element
         return element;
     }
 
@@ -135,7 +236,7 @@ public class ButtonDecorator implements IElementDecorator {
 }
 ```
 3. Create your annotation (or use WrappedElements @WebElement annotation):
-```
+```java
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface ButtonElement {
@@ -144,12 +245,12 @@ public @interface ButtonElement {
 }
 ```
 4. Register your decorator for your class in WrappedElements framework:
-```
+```java
 WrappedElements.config().registerDecorator(MyAwesomeButton.class, new ButtonDecorator());
 ```
 5. Use it! 
 Declare your object page object layer:
-```
+```java
 public interface InventoryPage extends IPage {
 
     @ButtonElement("//*[@class='inventory_item']//button")
@@ -158,7 +259,7 @@ public interface InventoryPage extends IPage {
 }
 ```
 Test class
-```
+```java
 public class SmokeTest {
     private InventoryPage inventoryPage;
 
@@ -181,14 +282,11 @@ public class SmokeTest {
 }
 ```
 
-## Easy element's locator definition for different platforms
-In progress
-
 ## Dynamic locators support
 WrappedElements supports dynamical element locators, we know that sometimes you need some specific element that may be found only dynamically.
 
 Declaration example:
-```
+```java
 @WebElement(value = "//div[text() = '%s']|//span[contains(text(), '%s')]")
 ClickableElement elementWithText(String text);
 
@@ -199,12 +297,13 @@ ClickableElement elementWithDigits(int number);
 ClickableElement elementWithNamedParameter(@Parameter("last_name") String lastName, @Parameter("first_name") String firstName);
 ```
 Usage example:
-```
+```java
 String name = page.elementWithDigits(0).getText();
 String lastName = page.elementWithDigits(1).getText();
 String someOtherDynamicalText = page.elementWithNamedParameter(lastName, name).getText();
 elementWithText(someOtherDynamicalText).click();
 ```
+## Components design
 
 ## List elements support
 In progress
