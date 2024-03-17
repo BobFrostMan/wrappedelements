@@ -15,11 +15,6 @@ import java.util.logging.LogManager;
 
 /**
  * WebElement wrapper that provides next additional functionality for webElement:
- * - Scroll element into view before click;
- * - Checks elements visibility before interaction;
- * - Element visibility criteria can be specified explicitly with setVisibilityCondition(Function<WebDriver, Boolean> visibilityCondition);
- * - Preforms protection from StaleElementReferenceException | NoSuchElementException | ElementClickInterceptedException that occurs before http requests sending to selenium server;
- * - Introduce getLocator() method that returns By object, for some specific interactions.
  */
 public class ClickableElement implements WrappedElement {
 
