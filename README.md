@@ -162,7 +162,7 @@ public void simpleUIInteractionTest() {
 By default wrapped elements will wait for all element become clickable before any active interactions (click, sendKeys, etc).
 It is possible because of 'Interactor' mechanism, that allows you to configure waits for elements directly on page object layer. 
 
-####Question: How can I set some different waiter before elements interaction?
+#### Question: How can I set some different waiter before elements interaction?
 Feel free to use 'waitUntil' value of @WebElement annotation.
 
 For instance: 
@@ -179,7 +179,7 @@ Available values are next:
 - UNTIL_CLICKABLE (waits for element to be displayed and be enabled)
 - VERTICAL_SCROLL_UNTIL_VISIBLE (scrolls down until the element will be visible in the view port)
 
-####Question: What if I want to set some custom waiter for all elements by default?
+#### Question: What if I want to set some custom waiter for all elements by default?
 To do that:
 1. Implement your own Interactor class by implementing IElementInteractor interface and register it in WrappedElements framework:
 ```java
@@ -204,7 +204,7 @@ public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
 ```
 That's it. Your cutom waiter will be applied by default for all elements that doesn't have 'waitUntil' value specified explicitly.
 
-####Question: What if I want to set some custom waiter for element?
+#### Question: What if I want to set some custom waiter for element?
 You can create you own waiter and use it with wrappedelements.
 It is possible by implementing your IElementInteractor interface.
 Interactor - is the entity that describes the behavior with web element.
@@ -321,8 +321,8 @@ public interface InventoryPage extends IPage {
     List<ClickableElement> inventoryItems();
 ```
 Note that it's recommended to use xpath locator for list of components.
-## Builtin elements interaction logger
-Wrappedelements as a build in slf4-api logging interface, so you can see elements interaction's logs by adding different logging libraries to your dependencies:
+## Built-in elements interaction logger
+Wrappedelements as a build-in slf4-api logging interface, so you can see elements interaction's logs by adding different logging libraries to your dependencies:
 For instance to use logback logging just add next dependencies to your pom.xml
 ```
 <dependency>
