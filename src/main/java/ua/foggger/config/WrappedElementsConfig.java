@@ -47,13 +47,12 @@ public class WrappedElementsConfig {
     /**
      * Registers custom element annotation processor
      *
-     * @param clazz     class that will be handled
-     * @param decorator annotation processor that will be used for specified element clazz
+     * @param clazz               class that will be handled
+     * @param annotationProcessor annotation processor that will be used for specified element clazz
      * @return this
      */
-    //TODO: rename method, since annotation processor also renamed
-    public WrappedElementsConfig registerAnnotationProcessor(Class<? extends WrappedElement> clazz, IAnnotationProcessor decorator) {
-        settingsManager.addElementDecorator(clazz, decorator);
+    public WrappedElementsConfig registerAnnotationProcessor(Class<? extends WrappedElement> clazz, IAnnotationProcessor annotationProcessor) {
+        settingsManager.addElementDecorator(clazz, annotationProcessor);
         return this;
     }
 
@@ -82,6 +81,17 @@ public class WrappedElementsConfig {
      */
     public WrappedElementsConfig setPlatform(String platformName) {
         settingsManager.setPlatform(platformName);
+        return this;
+    }
+
+    /**
+     * Registers custom interactor class to be used in waitUntil values
+     *
+     * @param interactor custom element interactor to register
+     * @return this
+     */
+    public WrappedElementsConfig registerInteractor(IElementInteractor interactor) {
+        settingsManager.registerElementInteractor(interactor);
         return this;
     }
 }

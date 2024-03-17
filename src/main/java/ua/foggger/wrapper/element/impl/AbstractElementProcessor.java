@@ -2,6 +2,8 @@ package ua.foggger.wrapper.element.impl;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.foggger.annotation.AndroidElement;
 import ua.foggger.annotation.AnnotatedMethodMeta;
 import ua.foggger.annotation.IOSElement;
@@ -10,6 +12,7 @@ import ua.foggger.common.IKnowPlatforms;
 import ua.foggger.config.SettingsProvider;
 import ua.foggger.wrapper.IAnnotationProcessor;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
+import ua.foggger.wrapper.interactor.IElementInteractor;
 import ua.foggger.wrapper.interactor.Interactors;
 import ua.foggger.wrapper.locator.converter.XPathConverter;
 import ua.foggger.wrapper.page.ElementNameResolver;
@@ -18,6 +21,8 @@ import ua.foggger.wrapper.page.LocatorResolver;
 import java.lang.reflect.Method;
 
 public abstract class AbstractElementProcessor implements IAnnotationProcessor, IKnowPlatforms, SettingsProvider {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(AbstractElementProcessor.class);
 
     protected final LocatorResolver locatorResolver;
     protected final ElementNameResolver elementNameResolver;
@@ -39,16 +44,19 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
      */
     @Override
     public <T> Object setValuesFromAnnotation(WrappedBlockMeta parentBlockMeta, T element, Method method, Object[] args) {
+        LOGGER.atTrace().setMessage("Receiving method {} annotation information...").addArgument(method.getName()).log();
         AnnotatedMethodMeta meta = parseAnnotatedMeta(method, args);
         if (meta == null) {
+            LOGGER.atTrace().setMessage("No meta information available for {} method").addArgument(method.getName()).log();
             return null;
         }
+        LOGGER.atTrace().setMessage("Parsed meta information {}").addArgument(meta).log();
         By resolvedLocator = resolveLocator(parentBlockMeta, meta.getValue(), method, args);
         String resolvedName = resolveName(parentBlockMeta, meta.getName(), method, args);
         meta.setResolvedName(resolvedName);
         meta.setResolvedLocator(resolvedLocator);
-        meta.setResolvedInteractor(Interactors.getRegisteredInteractor(meta.getWaitUntil()));
-
+        LOGGER.atTrace().setMessage("Resolved element locator is {}").addArgument(resolvedLocator).log();
+        meta.setResolvedInteractor(resolveInteractor(meta.getWaitUntil()));
         return resolveElement(meta, element);
     }
 
@@ -71,7 +79,6 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
      */
     public AnnotatedMethodMeta parseAnnotatedMeta(Method method, Object[] args) {
         String platform = getSettings().getPlatform();
-        //TODO: Convert to map with platform related converters for increased flexibility
         switch (platform) {
             case WEB:
                 return parseWebAnnotatedMeta(method, args);
@@ -84,22 +91,17 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
         }
     }
 
+    public IElementInteractor resolveInteractor(String waitUntil) {
+        if ("default".equals(waitUntil)){
+            return getSettings().getDefaultElementInteractor();
+        } else {
+            return Interactors.getRegisteredInteractor(waitUntil);
+        }
+    }
+
     public By resolveLocator(final WrappedBlockMeta parentBlockMeta, String locatorValue, Method method, Object[] args) {
         By locator = locatorResolver.resolveLocator(locatorValue, method, args);
         return parentBlockMeta != null ? new ByChained(parentBlockMeta.getLocator(), locator) : locator;
-    }
-
-    private By resolveLocatorAsXpath(final WrappedBlockMeta parentBlockMeta, String locatorValue, Method method, Object[] args) {
-        XPathConverter xpathConverter = new XPathConverter();
-        By locator = locatorResolver.resolveLocator(locatorValue, method, args);
-        if (parentBlockMeta != null) {
-            String child = xpathConverter.convert(locator);
-            child = child.startsWith(".") ? child.substring(1) : child;
-            child = child.startsWith("/") ? child : "//" + child;
-            return By.xpath(xpathConverter.convert(parentBlockMeta.getLocator()) + child);
-        } else {
-            return By.xpath(xpathConverter.convert(locator));
-        }
     }
 
     public String resolveName(final WrappedBlockMeta parentBlockMeta, String elementName, Method method, Object[] args) {

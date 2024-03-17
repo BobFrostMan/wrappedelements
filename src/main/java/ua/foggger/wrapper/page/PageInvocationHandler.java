@@ -22,8 +22,6 @@ import java.util.List;
  */
 public class PageInvocationHandler implements InvocationHandler, IHaveReflectionAccess, SettingsProvider {
 
-    //TODO: How to avoid new objects creation on each method invocation? Shouldn't be so much objects or it's fine?
-    //TODO: each time reset the values from annotations is another drawback
     @SuppressWarnings({"unchecked"})
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -43,9 +41,6 @@ public class PageInvocationHandler implements InvocationHandler, IHaveReflection
             Type actualType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
             IAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             if (WrappedComponent.class.isAssignableFrom(Class.forName(actualType.getTypeName()))) {
-                //TODO:
-                //throw new UnsupportedOperationException("List of components is not supported yet!");
-
                 Object listToWrap = new ArrayList<>();
                 if (method.isDefault()) {
                     listToWrap = invokeDefaultMethodImpl(proxy, method, args);

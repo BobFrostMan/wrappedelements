@@ -6,6 +6,9 @@ import org.testng.annotations.Test;
 import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.ui.page.BreakingBadPage;
+import ua.foggger.wrapper.interactor.Interactors;
+import ua.foggger.wrapper.interactor.UntilClickableInteractor;
+import ua.foggger.wrapper.interactor.UntilVisibleInteractor;
 
 import java.util.ArrayList;
 
@@ -54,5 +57,17 @@ public class SmokeTest extends BaseTest {
         Assert.assertEquals(page.hobbits(), new ArrayList<>());
         Assert.assertNull(page.frodo());
     }
+
+    @Test
+    public void defaultWaiterIsOverridden() {
+        try {
+            Assert.assertEquals(getInteraction(page.heisenberg()).getClass(), Interactors.getRegisteredInteractor(UNTIL_CLICKABLE).getClass());
+            WrappedElements.config().defaultElementInteractor(new UntilVisibleInteractor());
+            Assert.assertEquals(getInteraction(page.heisenberg()).getClass(), Interactors.getRegisteredInteractor(UNTIL_VISIBLE).getClass());
+        } finally {
+            WrappedElements.config().defaultElementInteractor(Interactors.getRegisteredInteractor(UNTIL_CLICKABLE));
+        }
+    }
+
 
 }

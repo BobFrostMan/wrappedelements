@@ -41,7 +41,7 @@ public @interface WebElement {
      *
      * @return String condition name;
      */
-    String waitUntil() default "until_clickable";
+    String waitUntil() default "default";
 
     //TODO: Have to think about interval override
 

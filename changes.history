@@ -169,8 +169,13 @@ Restrictions:
 Seems like it's better to have one single annotations for both components/blocks and elements
 
 04.03.2024
-- Adapted xpath to css converter library from https://github.com/sam-rosenthal (thanks to him) to project needs
+- Adapted xpath to css converter library to project needs. Adapted from https://github.com/sam-rosenthal (thanks to him)
 
 05.03.2024
 - Fixed redundant xpath wraps for clickable elements in list
 - Added xpath conversion for list of blocks for proper interaction with elements
+
+17.03.2024
+- Added SL4J logging as logging interface
+- Added default element interactor feature
+- Reviewed and added documentation to README.md

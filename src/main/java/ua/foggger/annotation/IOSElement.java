@@ -16,8 +16,6 @@ import java.lang.annotation.Target;
  * }</pre>
  * As result awesomeButton() will return found selenium web element.
  */
-//TODO: should this support class target?
-//TODO: should this support field target?
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface IOSElement {
@@ -43,7 +41,7 @@ public @interface IOSElement {
      *
      * @return String condition name;
      */
-    String waitUntil() default "until_clickable";
+    String waitUntil() default "default";
 
     /**
      * Timeout for waitUntil detection function.

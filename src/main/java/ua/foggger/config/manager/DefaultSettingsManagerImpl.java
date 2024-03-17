@@ -6,6 +6,7 @@ import ua.foggger.config.repo.SettingsRepository;
 import ua.foggger.wrapper.IAnnotationProcessor;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.interactor.IElementInteractor;
+import ua.foggger.wrapper.interactor.Interactors;
 
 import java.util.function.Supplier;
 
@@ -48,7 +49,7 @@ public class DefaultSettingsManagerImpl implements SettingsManager {
     @Override
     public void setDefaultElementInteractor(IElementInteractor elementInteractor) {
         WrappedElementsSettings settings = settingsRepository.get();
-        settings.setElementInteractor(elementInteractor);
+        settings.setDefaultElementInteractor(elementInteractor);
         settingsRepository.save(settings);
     }
 
@@ -75,5 +76,15 @@ public class DefaultSettingsManagerImpl implements SettingsManager {
         WrappedElementsSettings settings = settingsRepository.get();
         settings.setPlatform(platformName);
         settingsRepository.save(settings);
+    }
+
+    /**
+     * Registers custom IElementInteractor in WrappedElements
+     *
+     * @param elementInteractor interactor to be used for as value for waitUntil
+     */
+    @Override
+    public void registerElementInteractor(IElementInteractor elementInteractor) {
+        Interactors.registerInteractor(elementInteractor);
     }
 }

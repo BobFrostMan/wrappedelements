@@ -41,7 +41,7 @@ public @interface AndroidElement {
      *
      * @return String condition name;
      */
-    String waitUntil() default "until_clickable";
+    String waitUntil() default "default";
 
     /**
      * Timeout for waitUntil detection function.

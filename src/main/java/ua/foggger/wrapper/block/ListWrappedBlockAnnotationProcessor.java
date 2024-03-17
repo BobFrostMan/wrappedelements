@@ -3,6 +3,8 @@ package ua.foggger.wrapper.block;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ByChained;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.foggger.annotation.AnnotatedMethodMeta;
 import ua.foggger.common.IHaveReflectionAccess;
 import ua.foggger.driver.DriverProvider;
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor implements IAnnotationProcessor, IHaveReflectionAccess {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(ListWrappedBlockAnnotationProcessor.class);
 
     private WrappedBlockMeta parentBlockMeta;
     private IAnnotationProcessor listElementsProcessor;
@@ -155,8 +159,8 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
      * @param elementIndex list item index
      * @return By.xpath for specified element and index
      */
-    //TODO: refactor resolve locator with index
     private By getXpathLocatorForListItem(By locator, int elementIndex) {
+        LOGGER.atTrace().setMessage("Converting {} to xpath for {} element").addArgument(locator).addArgument(elementIndex).log();
         List<By> locators = new ArrayList<>();
         putAsSeparateLocators(locator, locators);
         XPathConverter converter = new XPathConverter();
@@ -165,7 +169,9 @@ public class ListWrappedBlockAnnotationProcessor extends AbstractBlockProcessor 
             builder.append(converter.convert(by));
         }
         String xpath = builder.toString();
-        return By.xpath("(" + xpath + ")[" + elementIndex + "]");
+        By result = By.xpath("(" + xpath + ")[" + elementIndex + "]");
+        LOGGER.atTrace().setMessage("Converted xpath is {}").addArgument(result).log();
+        return result;
     }
 
     /**

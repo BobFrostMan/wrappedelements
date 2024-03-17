@@ -29,9 +29,9 @@ Glory to Ukraine!
 - Automatic web driver recreation if it's dead or quit
 - Your own custom blocks will be highly reusable
 
-## Getting started
+## Setup
 ### Maven
-1. Add wrappedelements and selenium java dependency to your pom file:
+Add wrappedelements and selenium java dependency to your pom file:
 ```maven
 <dependency>
     <groupId>ua.foggger</groupId>
@@ -44,17 +44,19 @@ Glory to Ukraine!
     <version>${selenium.version}</version>
 </dependency>
 ```
+## Getting started
+1. Add wrappedelements dependencies to your project (see Setup section)
 2. Create your own pageobject entities as interfaces (extend the IPage interface)
 ```java
 public interface LoginPage extends IPage {
 
-    @WebElement(value = "//form//input", name = "Login input on login page")
+    @WebElement(value = "//form//input")
     ClickableElement loginInput();
 
-    @WebElement(value = "(//form//input)[2]", name = "Password input on login page")
+    @WebElement(value = "(//form//input)[2]")
     ClickableElement passwordInput();
 
-    @WebElement(value = "//input[@type='submit']", name = "Login button")
+    @WebElement(value = "//input[@type='submit']")
     ClickableElement loginButton();
 
 } 
@@ -117,13 +119,11 @@ public class TestNGSmokeTest {
 }
 ```
 
-## Quick overview
-TODO
-
 ## Features overview
+
 ## Clear and simple Page object classes
-Imagine page object class as an interface! That makes page object classes clear and avoids additional code.
-WrappedElements framework will generate the exact implementation for you.
+Imagine page object model description as an interface! 
+That makes page object classes clear and avoids additional code.
 ```java
 import ua.foggger.annotation.WebElement;
 import ua.foggger.element.clickable.ClickableElement;
@@ -131,17 +131,23 @@ import ua.foggger.page.IPage;
 
 public interface LoginPage extends IPage {
 
-    @WebElement(value = "//form//input", name = "Login input on login page")
+    @WebElement(value = "//form//input")
     ClickableElement loginInput();
 
-    @WebElement(value = "(//form//input)[2]", name = "Password input on login page")
+    @WebElement(value = "(//form//input)[2]")
     ClickableElement passwordInput();
 
-    @WebElement(value = "//input[@type='submit']", name = "Login button")
+    @WebElement(value = "//input[@type='submit']")
     ClickableElement loginButton();
 
 }
 ```
+#### Question: How can I create instance of my page object interface?
+Quite simple:
+```java
+LoginPage loginPage = WrappedElements.initPage(LoginPage.class);
+```
+
 ## No waiters on test level that leaves code clean and clear
 All element's interaction waiters encapsulated on page object layer. No additional waiters in element interaction code, - enjoy the usage:)
 ```java  
@@ -153,22 +159,83 @@ public void simpleUIInteractionTest() {
     ...
 }
 ```
-It is possible because of 'Interactor' mechanism, that allows you to configure waits for elements directly on page object layer.
+By default wrapped elements will wait for all element become clickable before any active interactions (click, sendKeys, etc).
+It is possible because of 'Interactor' mechanism, that allows you to configure waits for elements directly on page object layer. 
 
-Example:
+####Question: How can I set some different waiter before elements interaction?
+Feel free to use 'waitUntil' value of @WebElement annotation.
 
-Any time you perform any kind of physical interaction (click,sendKeys, etc.), on combo() element, it will wait for combo() to become clickable first, with 15 seconds timeout.
+For instance: 
+You need to wait for element to become just visible (and may not be clickable) on some ui element called 'heisenberg'.
 ```java
-@WebElement(value = "//combo", waitUntil = UNTIL_CLICKABLE, timeout = 15)
-WrappedElement combo();
+@WebElement(value = "//div[@class='heisenberg']", waitUntil = UNTIL_VISIBLE, timeout = 15)
+WrappedElement heisenberg();
 ```
-Interactor - is the entity that describes the behavior with web element. 
-You can specify it in page object class using @WebElement 'waitUntil' value. 
+Any time you perform any kind of physical interaction (click, sendKeys, etc.), on heisenberg() element, it will wait for heisenberg() to become visible first, with 15 seconds timeout.
 
-Available Interactor values:
+Available values are next:
+- IMMEDIATELY (no waiters applied)
 - UNTIL_VISIBLE (waits for element to be displayed before physical interaction)
 - UNTIL_CLICKABLE (waits for element to be displayed and be enabled)
 - VERTICAL_SCROLL_UNTIL_VISIBLE (scrolls down until the element will be visible in the view port)
+
+####Question: What if I want to set some custom waiter for all elements by default?
+To do that:
+1. Implement your own Interactor class by implementing IElementInteractor interface and register it in WrappedElements framework:
+```java
+import ua.foggger.wrapper.interactor.IElementInteractor;
+
+public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
+
+    @Override
+    public String name() {
+        return "custom_wait";
+    }
+    
+    Override
+    public boolean isReadyForInteraction(String methodName, By by, WebDriver webDriver) {
+        //my interaction logic that says if method name is "click" or "sendKeys" or anything else, then wait for my custom conditions
+    }
+}
+```
+2. Register you interactor in WrappedElements class before your tests run with code:
+```java
+    WrappedElements.config().defaultElementInteractor(new WaitUntilMyCustomConditionsMet());
+```
+That's it. Your cutom waiter will be applied by default for all elements that doesn't have 'waitUntil' value specified explicitly.
+
+####Question: What if I want to set some custom waiter for element?
+You can create you own waiter and use it with wrappedelements.
+It is possible by implementing your IElementInteractor interface.
+Interactor - is the entity that describes the behavior with web element.
+
+To do that: 
+1. Implement your own Interactor class by implementing IElementInteractor interface and register it in WrappedElements framework:
+```java
+import ua.foggger.wrapper.interactor.IElementInteractor;
+
+public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
+
+    @Override
+    public String name() {
+        return "custom_wait";
+    }
+    
+    Override
+    public boolean isReadyForInteraction(String methodName, By by, WebDriver webDriver) {
+        //my interaction logic that says if method name is "click" or "sendKeys" or anything else, then wait for my custom conditions
+    }
+}
+```
+2. Register you interactor in WrappedElements class before your tests run with code:
+```java
+    WrappedElements.config().registerInteractor(new WaitUntilMyCustomConditionsMet());
+```
+3. Now you can specify it in page object class using @WebElement 'waitUntil' value.
+```java
+    @WebElement(value = "//div[@class='heisenberg']", waitUntil = "custom_wait")
+    WrappedElement heisenberg();
+```
 
 ## Easy element's locator definition for different platforms
 It's quite common case - run ui mobile tests on different platforms. 
@@ -186,115 +253,21 @@ To run tests on android just invoke:
     WrappedElements.config().setPlatform(IKnowPlatforms.ANDROID);
 ```
 And element locators will be picked up from @AndroidElement annotation. 
-Specify IOS platform, and framework will run tests with locators in  @IOSElement 
-
-## Easy element's interaction setup
-You can easily create you own custom Decorators for specific webelements that you'll face during test automation.
-
-Let's say you need MyAwesomeButton implementation to be used by WrappedElements framework.
-1. Create **MyAweSomeButton** class (implement ClickableElement):
-```java
-public class MyAwesomeButton extends ClickableElement {
-
-    void setName(String name) {
-        this.name = name;
-    }
-
-    void setLocator(By by) {
-        this.locator = by;
-    }
-
-    void setTimeoutInSeconds(int timeoutInSeconds) {
-        this.timeoutInSeconds = timeoutInSeconds;
-    }
-
-    void setInteractor(IElementInteractor interactor){
-        this.detection = interactor;
-    }
-    
-    //some awesome button logic there
-}
-```
-2. Create **MyAweSomeButtonDecorator** (implement IElementDecorator) that pass values from annotation to MyAweSomeButton object:
-```java
-public class ButtonDecorator implements IElementDecorator {
-
-    @Override
-    public <T> Object setValuesFromAnnotation(T element, Method method, Object[] args) {
-        ButtonElement annotation = (ButtonElement) method.getAnnotation(getAnnotationClass());
-        String name = "".equals(annotation.value()) ? elementNameResolver.resolve(method) : annotation.value();
-        MyAwesomeButton button = (MyAwesomeButton) element;
-        button.setName(name);
-        //do something else with element
-        return element;
-    }
-
-    @Override
-    public Class<? extends Annotation> getAnnotationClass() {
-        return ButtonElement.class;
-    }
-}
-```
-3. Create your annotation (or use WrappedElements @WebElement annotation):
-```java
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface ButtonElement {
-    String value();
-    //other awesome fields, that you may need for your awesome web element
-}
-```
-4. Register your decorator for your class in WrappedElements framework:
-```java
-WrappedElements.config().registerDecorator(MyAwesomeButton.class, new ButtonDecorator());
-```
-5. Use it! 
-Declare your object page object layer:
-```java
-public interface InventoryPage extends IPage {
-
-    @ButtonElement("//*[@class='inventory_item']//button")
-    MyAwesomeButton addToCartButton();
-
-}
-```
-Test class
-```java
-public class SmokeTest {
-    private InventoryPage inventoryPage;
-
-    @BeforeClass
-    public void setUp() {
-        WrappedElements.config()
-                .driverCreator(() -> createChromeDriver())
-                .registerDecorator(MyAwesomeButton.class, new ButtonDecorator());
-
-        inventoryPage = WrappedElements.initPage(InventoryPage.class);
-    }
-
-    @Test
-    public void someAwesomeTest() {
-        //some logic before
-        inventoryPage.addToCartButton().click();
-        //some logic after
-    }
-    //some other test methods
-}
-```
+Specify IOS platform, and framework will run tests with locators in  @IOSElement
 
 ## Dynamic locators support
 WrappedElements supports dynamical element locators, we know that sometimes you need some specific element that may be found only dynamically.
 
 Declaration example:
 ```java
-@WebElement(value = "//div[text() = '%s']|//span[contains(text(), '%s')]")
-ClickableElement elementWithText(String text);
-
-@WebElement(value = "//div[text() = '%d']|//span[contains(text(), '%d')]")
-ClickableElement elementWithDigits(int number);
-
-@WebElement(value = "//li/a[contains(text(), '${first_name} ${ last_name }')]")
-ClickableElement elementWithNamedParameter(@Parameter("last_name") String lastName, @Parameter("first_name") String firstName);
+    @WebElement(value = "//div[text() = '%s']|//span[contains(text(), '%s')]")
+    ClickableElement elementWithText(String text);
+    
+    @WebElement(value = "//div[text() = '%d']|//span[contains(text(), '%d')]")
+    ClickableElement elementWithDigits(int number);
+    
+    @WebElement(value = "//li/a[contains(text(), '${first_name} ${ last_name }')]")
+    ClickableElement elementWithNamedParameter(@Parameter("last_name") String lastName, @Parameter("first_name") String firstName);
 ```
 Usage example:
 ```java
@@ -304,11 +277,65 @@ String someOtherDynamicalText = page.elementWithNamedParameter(lastName, name).g
 elementWithText(someOtherDynamicalText).click();
 ```
 ## Components design
+It's quite common case when you have some component on the page that duplicated on different page, and may contain elements that duplicates from page to page.
+For instance: in your header you have a basket button that contains from basket element button and products count label.
+
+To create BasketButton component you need:
+1. Extend WrappedComponent interface:
+```java
+public interface BasketButton extends WrappedComponent {
+
+    @WebElement(value = ".//span[@class=\"shopping_cart_badge\"]", waitUntil = IMMEDIATELY)
+    ClickableElement notificationsCountLabel();
+
+    @WebElement(value = ".//a[@class=\"shopping_cart_link\"]", waitUntil = VERTICAL_SCROLL_UNTIL_VISIBLE)
+    ClickableElement basketButton();
+
+}
+```
+2. Specify locator for your basket button on the page use @WebComponent annotation
+```java
+public interface Header extends WrappedComponent {
+
+    @WebComponent("//div[@class='basket_button_locator']")
+    BasketButton basket();
+    
+}
+```
+In such way your Wrappedelelements will search basketButton() and notificationsCountLabel() by relative locator from from BasketButton component.
+
+Such approach allows you to reuse component with different locators on different pages.
+WrappedComponents also supports @IOSComponent and @AndroidComponent annotations, so you can define same component with different locators for different platforms
 
 ## List elements support
-In progress
+Common case when you need to find a list of components or elements on the page, Wrappedelements also supports such functionality
 
-## More documentation
-TODO
-## Videos guides
-TODO
+```java
+import ua.foggger.wrapper.element.impl.ClickableElement;
+
+public interface InventoryPage extends IPage {
+    @WebComponent("//*[@class='inventory_item']")
+    List<InventoryItem> inventoryItems();
+
+    @WebElement(".inventory_item")
+    List<ClickableElement> inventoryItems();
+```
+Note that it's recommended to use xpath locator for list of components.
+## Builtin elements interaction logger
+Wrappedelements as a build in slf4-api logging interface, so you can see elements interaction's logs by adding different logging libraries to your dependencies:
+For instance to use logback logging just add next dependencies to your pom.xml
+```
+<dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-core</artifactId>
+    <version>${your_logback_version}</version>
+</dependency>
+<dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-classic</artifactId>
+    <version>${your_logback_version}</version>
+</dependency>
+```
+
+## Feedback 
+I'm glad to hear any feedback from you via [Facebook](https://www.facebook.com/maksym.zaverukha.37) or Telegram (@foggger)

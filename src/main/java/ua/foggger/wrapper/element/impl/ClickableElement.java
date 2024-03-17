@@ -3,12 +3,15 @@ package ua.foggger.wrapper.element.impl;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.foggger.driver.DriverProvider;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.interactor.IElementInteractor;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.logging.LogManager;
 
 /**
  * WebElement wrapper that provides next additional functionality for webElement:
@@ -20,17 +23,19 @@ import java.util.function.Function;
  */
 public class ClickableElement implements WrappedElement {
 
+    private static Logger LOGGER = LoggerFactory.getLogger(ClickableElement.class);
+
     protected String name;
     protected By locator;
     protected IElementInteractor interactor;
     protected int timeoutInSeconds;
-    private WebElement innerElement;
+    protected WebElement innerElement;
 
-    private Function<String, WebElement> detectionFunction;
+    protected Function<String, WebElement> detectionFunction;
 
     public ClickableElement() {
         detectionFunction = (methodName) -> {
-            boolean isReady = waitFor(() -> interactor.isReadyForInteraction(methodName, locator, DriverProvider.get()), timeoutInSeconds);
+            boolean isReady = waitFor(() -> interactor.isReadyForInteraction(methodName, locator, driver()), timeoutInSeconds);
             if (isReady) {
                 innerElement = driver().findElement(locator);
                 return innerElement;
@@ -70,21 +75,28 @@ public class ClickableElement implements WrappedElement {
 
     @Override
     public void click() {
+        LOGGER.atDebug().setMessage("Click on {}").addArgument(name).log();
+        LOGGER.atInfo().setMessage("Click on {}").addArgument(name).log();
         detectElement("click").click();
     }
 
     @Override
     public void submit() {
+        LOGGER.atDebug().setMessage("Perform submit action on {}").addArgument(name).log();
         detectElement("submit").submit();
     }
 
     @Override
     public void sendKeys(CharSequence... keysToSend) {
+        LOGGER.atDebug().setMessage("Sending keys {} to {}").addArgument(keysToSend).addArgument(name).log();
+        LOGGER.atInfo().setMessage("Typing text {} to {}").addArgument(keysToSend).addArgument(name).log();
         detectElement("sendKeys").sendKeys(keysToSend);
     }
 
     @Override
     public void clear() {
+        LOGGER.atDebug().setMessage("Perform clear action on {}").addArgument(name).log();
+        LOGGER.atInfo().setMessage("Clear the {}").addArgument(name).log();
         detectElement("clear").clear();
     }
 
@@ -110,7 +122,10 @@ public class ClickableElement implements WrappedElement {
 
     @Override
     public String getText() {
-        return detectElement("getText").getText();
+        LOGGER.atDebug().setMessage("Getting text from {}...").addArgument(name).log();
+        String text = detectElement("getText").getText();
+        LOGGER.atDebug().setMessage("Text received from {} is '{}'").addArgument(name).addArgument(text).log();
+        return text;
     }
 
     @Override
@@ -145,11 +160,15 @@ public class ClickableElement implements WrappedElement {
 
     @Override
     public String getCssValue(String propertyName) {
-        return detectElement("getCssValue").getCssValue(propertyName);
+        LOGGER.atDebug().setMessage("Getting css value from {}...").addArgument(name).log();
+        String cssValue =  detectElement("getCssValue").getCssValue(propertyName);
+        LOGGER.atDebug().setMessage("Css {} value received from {} is {}").addArgument(propertyName).addArgument(name).addArgument(cssValue).log();
+        return cssValue;
     }
 
     @Override
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+        LOGGER.atDebug().setMessage("Making screenshot on target {}").addArgument(target).log();
         return detectElement("getScreenshotAs").getScreenshotAs(target);
     }
 
@@ -164,7 +183,6 @@ public class ClickableElement implements WrappedElement {
     }
 
     protected WebElement detectElement(String methodName) {
-        System.out.println("Performing "+ methodName + " for " + name);
         return detectionFunction.apply(methodName);
     }
 }

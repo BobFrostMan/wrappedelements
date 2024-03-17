@@ -46,9 +46,6 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
             Type actualType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
             IAnnotationProcessor annotationProcessor = getSettings().getAnnotationProcessors().get(Class.forName(actualType.getTypeName()));
             if (WrappedComponent.class.isAssignableFrom(Class.forName(actualType.getTypeName()))) {
-                //TODO:
-                //throw new UnsupportedOperationException("List of components is not supported yet!");
-
                 Object listToWrap = new ArrayList<>();
                 if (method.isDefault()) {
                     listToWrap = invokeDefaultMethodImpl(proxy, method, args);
@@ -84,7 +81,6 @@ public class WrappedBlockInvocationHandler implements InvocationHandler, IHaveRe
             }
         }
 
-        //TODO: some annotation value to just invoke default impl without attempts to set annotations
         //no annotationProcessor - do nothing with method just invoke if it has default implementation
         if (method.isDefault()) {
             return invokeDefaultMethodImpl(proxy, method, args);

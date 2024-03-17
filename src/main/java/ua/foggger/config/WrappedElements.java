@@ -44,7 +44,7 @@ public final class WrappedElements {
 
         WrappedElementsSettings wrappedElementsSettings = new WrappedElementsSettings();
         wrappedElementsSettings.setPlatform(IKnowPlatforms.WEB);
-        wrappedElementsSettings.setElementInteractor(Interactors.getRegisteredInteractor(IKnowInteractors.UNTIL_CLICKABLE));
+        wrappedElementsSettings.setDefaultElementInteractor(Interactors.getRegisteredInteractor(IKnowInteractors.UNTIL_CLICKABLE));
         wrappedElementsSettings.addWrapperAnnotationProcessor(WrappedElement.class, new ClickableElementAnnotationProcessor());
         wrappedElementsSettings.addWrapperAnnotationProcessor(ClickableElement.class, new ClickableElementAnnotationProcessor());
         wrappedElementsSettings.addWrapperAnnotationProcessor(WrappedComponent.class, new WrappedBlockAnnotationProcessor());
