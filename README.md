@@ -91,8 +91,7 @@ public class TestNGSmokeTest {
                     ChromeOptions options = new ChromeOptions();
                     options.setImplicitWaitTimeout(Duration.ofSeconds(10));
                     return new ChromeDriver();
-                })
-                .registerAnnotationProcessor(Button.class, new ButtonDecorator());
+                });
 
         loginPage = WrappedElements.initPage(LoginPage.class);
     }
@@ -170,7 +169,7 @@ For instance:
 You need to wait for element to become just visible (and may not be clickable) on some ui element called 'heisenberg'.
 ```java
 @WebElement(value = "//div[@class='heisenberg']", waitUntil = UNTIL_VISIBLE, timeout = 15)
-WrappedElement heisenberg();
+ClickableElement heisenberg();
 ```
 Any time you perform any kind of physical interaction (click, sendKeys, etc.), on heisenberg() element, it will wait for heisenberg() to become visible first, with 15 seconds timeout.
 
@@ -235,7 +234,7 @@ public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
 3. Now you can specify it in page object class using @WebElement 'waitUntil' value.
 ```java
     @WebElement(value = "//div[@class='heisenberg']", waitUntil = "custom_wait")
-    WrappedElement heisenberg();
+    ClickableElement heisenberg();
 ```
 
 ## Easy element's locator definition for different platforms
@@ -320,6 +319,7 @@ public interface InventoryPage extends IPage {
 
     @WebElement(".inventory_item")
     List<ClickableElement> inventoryItems();
+}
 ```
 Note that it's recommended to use xpath locator for list of components.
 ## Built-in elements interaction logger
