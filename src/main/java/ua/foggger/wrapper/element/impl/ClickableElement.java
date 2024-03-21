@@ -5,13 +5,11 @@ import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.foggger.driver.DriverProvider;
 import ua.foggger.wrapper.element.WrappedElement;
 import ua.foggger.wrapper.interactor.IElementInteractor;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.logging.LogManager;
 
 /**
  * WebElement wrapper that provides next additional functionality for webElement:
@@ -156,7 +154,7 @@ public class ClickableElement implements WrappedElement {
     @Override
     public String getCssValue(String propertyName) {
         LOGGER.atDebug().setMessage("Getting css value from {}...").addArgument(name).log();
-        String cssValue =  detectElement("getCssValue").getCssValue(propertyName);
+        String cssValue = detectElement("getCssValue").getCssValue(propertyName);
         LOGGER.atDebug().setMessage("Css {} value received from {} is {}").addArgument(propertyName).addArgument(name).addArgument(cssValue).log();
         return cssValue;
     }

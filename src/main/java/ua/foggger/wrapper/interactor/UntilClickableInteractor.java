@@ -3,11 +3,12 @@ package ua.foggger.wrapper.interactor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import ua.foggger.common.IKnowInteractors;
 
 /**
  * Any active interactions will be performed after wait for element to become clickable.
  */
-public class UntilClickableInteractor implements IElementInteractor {
+public class UntilClickableInteractor implements IElementInteractor, IKnowInteractors {
     /**
      * Returns name of this element detection implementation
      *
@@ -15,7 +16,7 @@ public class UntilClickableInteractor implements IElementInteractor {
      */
     @Override
     public String name() {
-        return "until_clickable";
+        return UNTIL_CLICKABLE;
     }
 
     /**

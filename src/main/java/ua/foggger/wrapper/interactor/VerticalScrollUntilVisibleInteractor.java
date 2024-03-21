@@ -4,11 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import ua.foggger.common.IKnowInteractors;
 
 /**
  * Before any active interaction webdriver will try to bring element into a view port and make sure that element is visible.
  */
-public class VerticalScrollUntilVisibleInteractor implements IElementInteractor {
+public class VerticalScrollUntilVisibleInteractor implements IElementInteractor, IKnowInteractors {
     /**
      * Returns name of this element detection implementation
      *
@@ -16,7 +17,7 @@ public class VerticalScrollUntilVisibleInteractor implements IElementInteractor 
      */
     @Override
     public String name() {
-        return "vertical_scroll";
+        return VERTICAL_SCROLL_UNTIL_VISIBLE;
     }
 
     /**

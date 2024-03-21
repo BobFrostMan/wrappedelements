@@ -1,6 +1,7 @@
 package ua.foggger.wrapper.locator.converter.css.model;
 
 public enum CssAttributeValueType {
+
     EQUAL("="),
     TILDA_EQUAL("~="),
     PIPE_EQUAL("|="),

@@ -53,6 +53,7 @@ public interface SettingsManager {
 
     /**
      * Registers custom IElementInteractor in WrappedElements
+     *
      * @param elementInteractor interactor to be used for as value for waitUntil
      */
     void registerElementInteractor(IElementInteractor elementInteractor);

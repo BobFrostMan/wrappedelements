@@ -1,29 +1,30 @@
 package ua.foggger.wrapper.locator.converter.css.model;
 
 public class CssAttributePsuedoClass extends CssAttribute {
-    private CssPsuedoClassType psuedoClassType;
+
+    private CssPsuedoClassType pseudoClassType;
     private String element;
     private String parenthesisExpression;
 
     public CssAttributePsuedoClass(CssPsuedoClassType psuedoClassTypeIn, String elementIn, String parenthesisExpressionIn) {
         super(null, null, (CssAttributeValueType) null);
-        psuedoClassType = psuedoClassTypeIn;
+        pseudoClassType = psuedoClassTypeIn;
         element = elementIn;
         parenthesisExpression = parenthesisExpressionIn;
     }
 
     public String getXPath() {
-        return psuedoClassType.getXpath(element, parenthesisExpression);
+        return pseudoClassType.getXpath(element, parenthesisExpression);
 
     }
 
     public CssPsuedoClassType getCssPsuedoClassType() {
-        return psuedoClassType;
+        return pseudoClassType;
     }
 
     @Override
     public String toString() {
-        return "Psuedo Class = " + psuedoClassType;
+        return "Psuedo Class = " + pseudoClassType;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class CssAttributePsuedoClass extends CssAttribute {
         } else if (!this.parenthesisExpression.equals(obj.parenthesisExpression)) {
             return false;
         }
-        return this.psuedoClassType.equals(obj.psuedoClassType);
+        return this.pseudoClassType.equals(obj.pseudoClassType);
     }
 
 }

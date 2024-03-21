@@ -1,7 +1,7 @@
 package ua.foggger.common;
 
 /**
- * Internal interface to hold default Interactors values for convenience
+ * Internal interface to hold default Interactor's values for convenience
  */
 public interface IKnowInteractors {
 

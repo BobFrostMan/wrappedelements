@@ -7,7 +7,6 @@ import ua.foggger.BaseTest;
 import ua.foggger.config.WrappedElements;
 import ua.foggger.ui.page.BreakingBadPage;
 import ua.foggger.wrapper.interactor.Interactors;
-import ua.foggger.wrapper.interactor.UntilClickableInteractor;
 import ua.foggger.wrapper.interactor.UntilVisibleInteractor;
 
 import java.util.ArrayList;

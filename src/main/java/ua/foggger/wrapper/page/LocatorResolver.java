@@ -1,7 +1,6 @@
 package ua.foggger.wrapper.page;
 
 import org.openqa.selenium.By;
-import ua.foggger.wrapper.locator.converter.XPathConverter;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

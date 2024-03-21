@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public class CssElementAttributes {
+
     private String element;
     private List<CssAttribute> cssAttributeList;
 

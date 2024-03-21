@@ -1,6 +1,6 @@
 package ua.foggger.wrapper.locator.converter.css.model;
 
-public class CssPsuedoClassNthToXpath implements CssPsuedoClassToXpath {
+public class CssPsuedoClassNthToXpath implements CssPseudoClassToXpath {
 
     private boolean last;
 

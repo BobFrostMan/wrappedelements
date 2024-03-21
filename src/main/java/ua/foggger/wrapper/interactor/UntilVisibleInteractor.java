@@ -4,11 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import ua.foggger.common.IKnowInteractors;
 
 /**
  * Any active interactions will be performed after wait for element to become visible.
  */
-public class UntilVisibleInteractor implements IElementInteractor {
+public class UntilVisibleInteractor implements IElementInteractor, IKnowInteractors {
 
     /**
      * Returns name of this element detection implementation
@@ -17,7 +18,7 @@ public class UntilVisibleInteractor implements IElementInteractor {
      */
     @Override
     public String name() {
-        return "until_visible";
+        return UNTIL_VISIBLE;
     }
 
     /**

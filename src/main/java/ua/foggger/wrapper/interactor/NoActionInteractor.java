@@ -2,11 +2,12 @@ package ua.foggger.wrapper.interactor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import ua.foggger.common.IKnowInteractors;
 
 /**
  * Interaction with web elements will be without any additional logic, (usual web driver usage)
  */
-public class NoActionInteractor implements IElementInteractor {
+public class NoActionInteractor implements IElementInteractor, IKnowInteractors {
 
     /**
      * Returns name of this element detection implementation
@@ -15,7 +16,7 @@ public class NoActionInteractor implements IElementInteractor {
      */
     @Override
     public String name() {
-        return "no_action";
+        return IMMEDIATELY;
     }
 
     /**

@@ -14,7 +14,6 @@ import ua.foggger.wrapper.IAnnotationProcessor;
 import ua.foggger.wrapper.block.WrappedBlockMeta;
 import ua.foggger.wrapper.interactor.IElementInteractor;
 import ua.foggger.wrapper.interactor.Interactors;
-import ua.foggger.wrapper.locator.converter.XPathConverter;
 import ua.foggger.wrapper.page.ElementNameResolver;
 import ua.foggger.wrapper.page.LocatorResolver;
 
@@ -92,7 +91,7 @@ public abstract class AbstractElementProcessor implements IAnnotationProcessor, 
     }
 
     public IElementInteractor resolveInteractor(String waitUntil) {
-        if ("default".equals(waitUntil)){
+        if ("default".equals(waitUntil)) {
             return getSettings().getDefaultElementInteractor();
         } else {
             return Interactors.getRegisteredInteractor(waitUntil);

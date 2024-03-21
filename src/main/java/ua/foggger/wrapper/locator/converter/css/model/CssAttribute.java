@@ -1,6 +1,7 @@
 package ua.foggger.wrapper.locator.converter.css.model;
 
 public class CssAttribute {
+
     private String name;
     private String value;
     private CssAttributeValueType type;

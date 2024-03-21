@@ -18,9 +18,9 @@ public enum CssPsuedoClassType {
 
 
     private String typeString;
-    private CssPsuedoClassToXpath toXpath;
+    private CssPseudoClassToXpath toXpath;
 
-    CssPsuedoClassType(String typeStringIn, CssPsuedoClassToXpath toXpathIn) {
+    CssPsuedoClassType(String typeStringIn, CssPseudoClassToXpath toXpathIn) {
         this.typeString = typeStringIn;
         this.toXpath = toXpathIn;
     }

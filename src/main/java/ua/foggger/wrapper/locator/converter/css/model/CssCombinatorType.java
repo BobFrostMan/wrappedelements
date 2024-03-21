@@ -1,6 +1,7 @@
 package ua.foggger.wrapper.locator.converter.css.model;
 
 public enum CssCombinatorType {
+
     SPACE(' ', "//"),
     PLUS('+', "/following-sibling::*[1]/self::"),
     GREATER_THAN('>', "/"),
