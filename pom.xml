@@ -7,6 +7,33 @@
     <groupId>ua.foggger</groupId>
     <artifactId>wrappedelements</artifactId>
     <version>0.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>wrappedelements</name>
+    <description>Deployment to the Central Repository</description>
+    <url>https://github.com/BobFrostMan/wrappedelements</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Maksym Zaverukha</name>
+            <email>killingfrostman@gmail.com</email>
+            <organization>None</organization>
+            <organizationUrl>https://github.com/BobFrostMan</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/BobFrostMan/wrappedelements.git</connection>
+        <developerConnection>scm:git:ssh://github.com:BobFrostMan/wrappedelements.git</developerConnection>
+        <url>http://github.com/BobFrostMan/wrappedelements/tree/master</url>
+    </scm>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

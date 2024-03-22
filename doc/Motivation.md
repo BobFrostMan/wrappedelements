@@ -25,8 +25,23 @@ For test automation engineer who:
 - [ ] Built-in reporting for element interactions (nice to have)
 - [X] List elements support (must have)
 - [X] List custom components support (must have)
-- [X] Widespread web elements wrappers support (nice to have)
+- [ ] Widespread web elements wrappers support (nice to have)
 - [ ] Dropdown support (nice to have)
 - [ ] Multiselect support (nice to have)
 - [ ] Autocomplete elements support (nice to have)
 - [ ] Tables support (nice to have)
+
+### Why it's convenient should use wrappedelements framework? 
+The main drawback of web/mobile ui test automation is slow implementation and it's quite high support cost.
+wrapedelements designed to minimise drawbacks. It also and provides some juicy features to do that that other selenium webdriver wrappers frameworks don't have. 
+
+| Features           							                                        | wrappedelements	         | htmlelements             | Selenide                 |
+|-------------------------------------------------------------------|--------------------------|--------------------------|--------------------------|
+| Supported drivers                         				                    | Chrome, FF, Safari, Edge | Chrome, FF, Safari, Edge | Chrome, FF, Safari, Edge |
+| Waiters and timeouts configuration in page object classes		       | Yes            	         | 	No     		               | 	No		                    |
+| No web element synchronization code in tests				                  | Yes	          	          | 	No		                    | 	No		                    |
+| Dynamic locators support       	      				                        | Yes                      | 	Yes		                   | 	No           	          |
+| Automatic web driver recreation (if dead)				                     | Yes	          	          | 	No		                    | 	No	                     |
+| Custom components reusable						                                  | Yes	          	          | 	Yes		                   | 	No	       	             |
+| Page classes reusable for different platforms (Android, IOS, Web) | Yes	                     | 	No                      | 	No                      |
+| Built-in web elements logging 				                                | Yes	                     | 	No                      | 	No                      |

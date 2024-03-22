@@ -165,7 +165,7 @@ Default identification mechanism, try to categorize provided locator is it xpath
 Restrictions:
   - xpath supported only
   - nested list of components in list of components is not supported yet
-- Drawback: you have to use different annotations for blocks and elements it's kinda source of potential copy-paste errors
+Drawback: you have to use different annotations for blocks and elements it's kinda source of potential copy-paste errors
 Seems like it's better to have one single annotations for both components/blocks and elements
 
 04.03.2024
@@ -179,3 +179,11 @@ Seems like it's better to have one single annotations for both components/blocks
 - Added SL4J logging as logging interface
 - Added default element interactor feature
 - Reviewed and added documentation to README.md
+
+21.03.2024
+- Added license copyright files for java-css2xpath
+- Added MIT licence file
+
+22.03.2024
+- Added comparison framework wrapper comparison table
+- Added additional package information to pom.xml
