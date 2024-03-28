@@ -35,7 +35,7 @@ Glory to Ukraine!
 Add wrappedelements and selenium java dependency to your pom file:
 ```maven
 <dependency>
-    <groupId>io.foggger</groupId>
+    <groupId>io.github.bobfrostman</groupId>
     <artifactId>wrappedelements</artifactId>
     <version>${wrappedelements.version}</version>
 </dependency>
