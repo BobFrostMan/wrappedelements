@@ -13,14 +13,14 @@ public class LocatorResolver {
     /**
      * Resolves locatorString as By object for specified method using arguments to resolve placeholders in locator string.
      * For example:
-     * <pre>
+     * <pre>{@code
      *  @WebElement(value = "//div[text()='%s']|//span[contains(text(), '%s')]")
      *  ClickableElement elementWithFewPlaceHoldersAndOneParameter(String text);
-     * </pre>
+     * }</pre>
      * Invocation:
-     * <pre>
+     * <pre>{@code
      *     page.elementWithFewPlaceHoldersAndOneParameter("someText")
-     * </pre>
+     * }</pre>
      * Output value will be object:
      * By.xpath("//div[text()='someText']|//span[contains(text(), 'someText')])
      * <p>

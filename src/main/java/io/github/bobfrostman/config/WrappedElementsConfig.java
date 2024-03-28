@@ -23,7 +23,7 @@ public class WrappedElementsConfig {
      * Sets default driver creation function.
      * For instance () -> new ChromeDriver();
      *
-     * @param driverSupplier driver creation function as Supplier<WebDriver>
+     * @param driverSupplier driver creation function as Supplier for WebDriver
      * @return this
      */
 
