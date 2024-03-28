@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>wrappedelements</name>
-    <description>Deployment to the Central Repository</description>
+    <description>WrappedElements framework for selenium-based UI testing</description>
     <url>https://github.com/BobFrostMan/wrappedelements</url>
 
     <licenses>
