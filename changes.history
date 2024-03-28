@@ -51,7 +51,7 @@ Available prefixes:
  "css="
  "linkText="
 Default identification mechanism, try to categorize provided locator is it xpath or css, otherwise tries to search by locator as id, name, tagName, or class.
-- Found stability issue with static blocks initialization caught by tests 'java.lang.AssertionError: expected object to not be null', or 'java.lang.NullPointerException: Cannot invoke "ua.foggger.config.WrappedElementsSettings.getElementDetection()" because the return value of "ua.foggger.InternalSettingsProvider.provide()" is null' Config module should be redesigned.
+- Found stability issue with static blocks initialization caught by tests 'java.lang.AssertionError: expected object to not be null', or 'java.lang.NullPointerException: Cannot invoke "WrappedElementsSettings.getElementDetection()" because the return value of "io.github.bobfrostman.InternalSettingsProvider.provide()" is null' Config module should be redesigned.
 - testng dependency now has test scope
 
 22.12.2023
@@ -187,3 +187,6 @@ Seems like it's better to have one single annotations for both components/blocks
 22.03.2024
 - Added comparison framework wrapper comparison table
 - Added additional package information to pom.xml
+
+28.03.2024
+- Renamed package from ua.foggger to io.github.bobfrostman for publishing artifact

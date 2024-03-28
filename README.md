@@ -35,7 +35,7 @@ Glory to Ukraine!
 Add wrappedelements and selenium java dependency to your pom file:
 ```maven
 <dependency>
-    <groupId>ua.foggger</groupId>
+    <groupId>io.foggger</groupId>
     <artifactId>wrappedelements</artifactId>
     <version>${wrappedelements.version}</version>
 </dependency>
@@ -124,10 +124,11 @@ public class TestNGSmokeTest {
 ## Clear and simple Page object classes
 Imagine page object model description as an interface! 
 That makes page object classes clear and avoids additional code.
+
 ```java
-import ua.foggger.annotation.WebElement;
-import ua.foggger.element.clickable.ClickableElement;
-import ua.foggger.page.IPage;
+import WebElement;
+import io.github.bobfrostman.element.clickable.ClickableElement;
+import io.github.bobfrostman.page.IPage;
 
 public interface LoginPage extends IPage {
 
@@ -182,8 +183,9 @@ Available values are next:
 #### Question: What if I want to set some custom waiter for all elements by default?
 To do that:
 1. Implement your own Interactor class by implementing IElementInteractor interface and register it in WrappedElements framework:
+
 ```java
-import ua.foggger.wrapper.interactor.IElementInteractor;
+import IElementInteractor;
 
 public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
 
@@ -191,8 +193,9 @@ public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
     public String name() {
         return "custom_wait";
     }
-    
+
     Override
+
     public boolean isReadyForInteraction(String methodName, By by, WebDriver webDriver) {
         //my interaction logic that says if method name is "click" or "sendKeys" or anything else, then wait for my custom conditions
     }
@@ -211,8 +214,9 @@ Interactor - is the entity that describes the behavior with web element.
 
 To do that: 
 1. Implement your own Interactor class by implementing IElementInteractor interface and register it in WrappedElements framework:
+
 ```java
-import ua.foggger.wrapper.interactor.IElementInteractor;
+import IElementInteractor;
 
 public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
 
@@ -220,8 +224,9 @@ public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
     public String name() {
         return "custom_wait";
     }
-    
+
     Override
+
     public boolean isReadyForInteraction(String methodName, By by, WebDriver webDriver) {
         //my interaction logic that says if method name is "click" or "sendKeys" or anything else, then wait for my custom conditions
     }
@@ -311,7 +316,7 @@ WrappedComponents also supports @IOSComponent and @AndroidComponent annotations,
 Common case when you need to find a list of components or elements on the page, Wrappedelements also supports such functionality
 
 ```java
-import ua.foggger.wrapper.element.impl.ClickableElement;
+import ClickableElement;
 
 public interface InventoryPage extends IPage {
     @WebComponent("//*[@class='inventory_item']")
