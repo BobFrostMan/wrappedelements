@@ -292,6 +292,7 @@ String lastName = page.elementWithDigits(1).getText();
 String someOtherDynamicalText = page.elementWithNamedParameter(lastName, name).getText();
 elementWithText(someOtherDynamicalText).click();
 ```
+
 ## Components design
 It's quite common case when you have some component on the page that duplicated on different page, and may contain elements that duplicates from page to page.
 For instance: in your header you have a basket button that contains from basket element button and products count label.

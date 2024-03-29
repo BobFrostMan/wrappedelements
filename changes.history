@@ -192,4 +192,4 @@ Seems like it's better to have one single annotations for both components/blocks
 - Renamed package from ua.foggger to io.github.bobfrostman for publishing artifact
 
 29.03.2024
-- First release to maven central
+- First release to maven central https://repo1.maven.org/maven2/io/github/bobfrostman/wrappedelements/0.0.1/
