@@ -190,3 +190,6 @@ Seems like it's better to have one single annotations for both components/blocks
 
 28.03.2024
 - Renamed package from ua.foggger to io.github.bobfrostman for publishing artifact
+
+29.03.2024
+- First release to maven central

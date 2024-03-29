@@ -31,8 +31,9 @@ Glory to Ukraine!
 - Your own custom blocks will be highly reusable
 
 ## Setup
+Add wrappedelements and selenium-java dependency to assembler build file.
+It's optional to add any additional logger dependency to activate built-in logging.
 ### Maven
-Add wrappedelements and selenium java dependency to your pom file:
 ```maven
 <dependency>
     <groupId>io.github.bobfrostman</groupId>
@@ -44,6 +45,16 @@ Add wrappedelements and selenium java dependency to your pom file:
     <artifactId>selenium-java</artifactId>
     <version>${selenium.version}</version>
 </dependency>
+```
+### Gradle
+```gradle
+implementation group: 'io.github.bobfrostman', name: 'wrappedelements', version: '${wrappedelements.version}'
+implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '${selenium.version}'
+```
+### Ivy
+```
+<dependency org="io.github.bobfrostman" name="wrappedelements" rev="${wrappedelements.version}"/>
+<dependency org="org.seleniumhq.selenium" name="selenium-java" rev="${selenium.version}"/>
 ```
 ## Getting started
 1. Add wrappedelements dependencies to your project (see Setup section)
@@ -126,7 +137,7 @@ Imagine page object model description as an interface!
 That makes page object classes clear and avoids additional code.
 
 ```java
-import WebElement;
+import io.github.bobfrostman.annotation.WebElement;
 import io.github.bobfrostman.element.clickable.ClickableElement;
 import io.github.bobfrostman.page.IPage;
 
@@ -185,7 +196,7 @@ To do that:
 1. Implement your own Interactor class by implementing IElementInteractor interface and register it in WrappedElements framework:
 
 ```java
-import IElementInteractor;
+import io.github.bobfrostman.wrapper.interactor.IElementInteractor;
 
 public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
 
@@ -216,7 +227,7 @@ To do that:
 1. Implement your own Interactor class by implementing IElementInteractor interface and register it in WrappedElements framework:
 
 ```java
-import IElementInteractor;
+import io.github.bobfrostman.wrapper.interactor.IElementInteractor;
 
 public class WaitUntilMyCustomConditionsMet implements IElementInteractor {
 
@@ -316,7 +327,7 @@ WrappedComponents also supports @IOSComponent and @AndroidComponent annotations,
 Common case when you need to find a list of components or elements on the page, Wrappedelements also supports such functionality
 
 ```java
-import ClickableElement;
+import io.github.bobfrostman.wrapper.element.impl.ClickableElement;
 
 public interface InventoryPage extends IPage {
     @WebComponent("//*[@class='inventory_item']")
@@ -327,6 +338,7 @@ public interface InventoryPage extends IPage {
 }
 ```
 Note that it's recommended to use xpath locator for list of components.
+
 ## Built-in elements interaction logger
 Wrappedelements as a build-in slf4-api logging interface, so you can see elements interaction's logs by adding different logging libraries to your dependencies:
 For instance to use logback logging just add next dependencies to your pom.xml
