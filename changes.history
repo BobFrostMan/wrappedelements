@@ -193,3 +193,7 @@ Seems like it's better to have one single annotations for both components/blocks
 
 29.03.2024
 - First release to maven central https://repo1.maven.org/maven2/io/github/bobfrostman/wrappedelements/0.0.1/
+
+02.04.2024
+- Artifact indexed in maven central repo and visible https://mvnrepository.com/artifact/io.github.bobfrostman/wrappedelements
+- Documentation site is up and running: https://bobfrostman.github.io/wrappedelements-site/index.html

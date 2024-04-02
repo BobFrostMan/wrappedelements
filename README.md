@@ -1,14 +1,15 @@
 # wrappedelements
 
+[![Status](https://img.shields.io/badge/status-active-47c219.svg)](https://github.com/Tyrrrz/.github/blob/master/docs/project-status.md)
+[![Made in Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://tyrrrz.me/ukraine)
+[![Fuck Russia](https://img.shields.io/badge/fuck-russia-e4181c.svg?labelColor=000000)](https://twitter.com/tyrrrz/status/1495972128977571848)
+
 A convenient framework wrapper for pages and selenium webelements, that reduces usual waiter, and initialization routine. It will help you to get rid of boilerplate code in UI test automation frameworks.
+For more information see [documentation](https://bobfrostman.github.io/wrappedelements-site/) and [examples](https://github.com/BobFrostMan/wrappedelements-examples). 
 
 Inspired by [Burning wave](https://www.burningwave.org/getstarted/).
 
 Special thanks to [Tyrrz](https://github.com/Tyrrrz) for Terms of use, and [Sam Rosental](https://github.com/sam-rosenthal) for opensource [css to xpath converter](https://github.com/sam-rosenthal/java-cssSelector-to-xpath).
-
-[![Status](https://img.shields.io/badge/status-active-47c219.svg)](https://github.com/Tyrrrz/.github/blob/master/docs/project-status.md)
-[![Made in Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://tyrrrz.me/ukraine)
-[![Fuck Russia](https://img.shields.io/badge/fuck-russia-e4181c.svg?labelColor=000000)](https://twitter.com/tyrrrz/status/1495972128977571848)
 
 ## Terms of use
 By using this project or its source code, for any purpose and in any shape or form, you grant your **implicit agreement** to all the following statements:
